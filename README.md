@@ -1,5 +1,7 @@
 # @travi/cli
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/travi/cli.svg)](https://greenkeeper.io/)
+
 cli for my various tools
 
 [![license](https://img.shields.io/github/license/travi/cli.svg)](LICENSE)
