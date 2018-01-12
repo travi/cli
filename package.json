@@ -12,7 +12,9 @@
     "test": "run-s lint:* coverage",
     "coverage": "nyc run-s tests:unit",
     "commitmsg": "commitlint -e",
-    "precommit": "npm test"
+    "precommit": "npm test",
+    "greenkeeper:update-lockfile": "greenkeeper-lockfile-update",
+    "greenkeeper:upload-lockfile": "greenkeeper-lockfile-upload"
   },
   "config": {
     "commitizen": {
@@ -25,6 +27,7 @@
     "commitlint-config-travi": "1.2.19",
     "cz-conventional-changelog": "2.1.0",
     "globstar": "1.0.0",
+    "greenkeeper-lockfile": "1.12.0",
     "husky": "0.14.3",
     "markdownlint-cli": "0.6.0",
     "mocha": "4.1.0",

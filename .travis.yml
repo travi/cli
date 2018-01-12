@@ -4,4 +4,7 @@ notifications:
 branches:
   except:
   - "/^v\\d+\\.\\d+\\.\\d+$/"
-before_script: npm ls >/dev/null
+before_script:
+- npm ls >/dev/null
+- npm run greenkeeper:update-lockfile
+after_script: npm run greenkeeper:upload-lockfile
