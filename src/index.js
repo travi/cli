@@ -1,8 +1,6 @@
-#!/usr/bin/env node
-
 import program from 'commander';
-import {version} from '../package.json';
+import pkg from '../package.json';
 
 program
-  .version(version)
+  .version(pkg.version)
   .parse(process.argv);
