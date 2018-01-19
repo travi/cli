@@ -51,6 +51,7 @@
     "rollup-plugin-json": "2.3.0"
   },
   "dependencies": {
-    "commander": "2.13.0"
+    "commander": "2.13.0",
+    "update-notifier": "2.3.0"
   }
 }
