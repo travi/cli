@@ -16,6 +16,12 @@
     "greenkeeper:update-lockfile": "greenkeeper-lockfile-update",
     "greenkeeper:upload-lockfile": "greenkeeper-lockfile-upload"
   },
+  "bin": {
+    "travi": "bin/travi.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
@@ -33,5 +39,8 @@
     "mocha": "4.1.0",
     "npm-run-all": "4.1.2",
     "nyc": "11.4.1"
+  },
+  "dependencies": {
+    "commander": "2.13.0"
   }
 }
