@@ -17,6 +17,7 @@
     "build:js": "rollup -c",
     "build": "run-s clean build:*",
     "watch": "run-s 'build:js -- --watch'",
+    "semantic-release": "semantic-release",
     "greenkeeper:update-lockfile": "greenkeeper-lockfile-update",
     "greenkeeper:upload-lockfile": "greenkeeper-lockfile-upload"
   },
@@ -48,7 +49,8 @@
     "rimraf": "2.6.2",
     "rollup": "0.54.1",
     "rollup-plugin-babel": "3.0.3",
-    "rollup-plugin-json": "2.3.0"
+    "rollup-plugin-json": "2.3.0",
+    "semantic-release": "12.2.2"
   },
   "dependencies": {
     "commander": "2.13.0",
