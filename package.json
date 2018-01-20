@@ -17,6 +17,7 @@
     "build:js": "rollup -c",
     "build": "run-s clean build:*",
     "watch": "run-s 'build:js -- --watch'",
+    "prepublishOnly": "run-s build",
     "semantic-release": "semantic-release",
     "greenkeeper:update-lockfile": "greenkeeper-lockfile-update",
     "greenkeeper:upload-lockfile": "greenkeeper-lockfile-upload"
