@@ -1,6 +1,7 @@
 {
   "name": "@travi/cli",
   "description": "cli for my various tools",
+  "version": "0.0.0-semantically-released",
   "license": "MIT",
   "author": "Matt Travi",
   "repository": "travi/cli",
