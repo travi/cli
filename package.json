@@ -55,7 +55,7 @@
     "semantic-release": "12.4.1"
   },
   "dependencies": {
-    "commander": "2.13.0",
+    "commander": "2.14.0",
     "update-notifier": "2.3.0"
   }
 }
