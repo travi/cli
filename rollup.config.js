@@ -4,7 +4,12 @@ import json from 'rollup-plugin-json';
 
 export default {
   input: 'src/index.js',
-  external: ['commander'],
+  external: [
+    'commander',
+    'inquander',
+    'chalk',
+    'update-notifier'
+  ],
   plugins: [
     json(),
     babel({

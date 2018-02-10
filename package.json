@@ -55,7 +55,9 @@
     "semantic-release": "12.4.1"
   },
   "dependencies": {
+    "chalk": "2.3.0",
     "commander": "2.14.1",
+    "inquander": "1.1.1",
     "update-notifier": "2.3.0"
   }
 }
