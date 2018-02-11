@@ -12,6 +12,6 @@ program
   .description('scaffold a new project')
   .action(() => console.log(chalk.blue('Hello world!')));
 
-inquander.parse(program, process.argv);
+// inquander.parse(program, process.argv);
 
 updateNotifier({pkg}).notify();
