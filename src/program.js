@@ -1,13 +1,7 @@
-import program from 'commander';
-import chalk from 'chalk';
+import scaffoldProject from './scaffold-project';
 
-export default function ({version}) {
+export default function (program, {version}) {
   program.version(version);
 
-  program
-    .command('scaffold')
-    .description('scaffold a new project')
-    .action(() => console.log(chalk.blue('Hello world!')));
-
-  return program;
+  scaffoldProject(program);
 }

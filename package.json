@@ -37,6 +37,7 @@
   "devDependencies": {
     "@travi/any": "1.7.2",
     "babel-core": "6.26.0",
+    "babel-plugin-transform-object-rest-spread": "6.26.0",
     "babel-preset-env": "1.6.1",
     "chai": "4.1.2",
     "commitlint-config-travi": "1.2.25",
