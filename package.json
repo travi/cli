@@ -59,7 +59,7 @@
     "sinon": "4.3.0"
   },
   "dependencies": {
-    "chalk": "2.3.0",
+    "chalk": "2.3.1",
     "commander": "2.14.1",
     "inquander": "1.1.1",
     "inquirer": "5.1.0",
