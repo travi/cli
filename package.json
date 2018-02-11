@@ -59,6 +59,7 @@
     "chalk": "2.3.0",
     "commander": "2.14.1",
     "inquander": "1.1.1",
+    "inquirer": "5.1.0",
     "update-notifier": "2.3.0"
   }
 }

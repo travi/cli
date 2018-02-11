@@ -1,7 +1,8 @@
 import program from 'commander';
-import pkg from '../../package.json';
 import sinon from 'sinon';
 import {assert} from 'chai';
+import any from '@travi/any';
+import configureProgram from '../../src/program';
 
 suite('cli', () => {
   let sandbox;
@@ -12,9 +13,11 @@ suite('cli', () => {
     sandbox.stub(program, 'version');
   });
 
-  test('that the version is defined based on the package file', () => {
-    require('../../src');
+  teardown(() => sandbox.restore());
 
-    assert.calledWith(program.version, pkg.version);
+  test('that the version is defined based on the package file', () => {
+    const version = any.string();
+
+    assert.calledWith(configureProgram({version}).version, version);
   });
 });
