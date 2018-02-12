@@ -7,7 +7,9 @@ import executable from "rollup-plugin-executable"
 export default {
   input: 'src/index.js',
   external: [
+    'path',
     'commander',
+    'inquirer',
     'inquander',
     'chalk',
     'update-notifier'
