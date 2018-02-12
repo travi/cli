@@ -11,7 +11,7 @@
     "clean": "rimraf bin/",
     "lint:md": "globstar --node -- markdownlint **/*.md",
     "tests:unit": "mocha --recursive test/unit",
-    "test": "run-s lint:* coverage",
+    "test": "run-s lint:* coverage build",
     "coverage": "nyc run-s tests:unit",
     "commitmsg": "commitlint -e",
     "precommit": "npm test",
