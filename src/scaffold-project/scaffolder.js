@@ -24,6 +24,6 @@ export default async function () {
 
   return Promise.all([
     scaffoldReadme({projectName: answers[questionNames.PROJECT_NAME], projectRoot}),
-    scaffoldGit({projectRoot})
+    answers[questionNames.GIT_REPO] ? scaffoldGit({projectRoot}) : undefined
   ]);
 }

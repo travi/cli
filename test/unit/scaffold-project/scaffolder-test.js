@@ -52,7 +52,10 @@ suite('project scaffolder', () => {
 
   test('that project files are generated', () => {
     const projectName = any.string();
-    inquirer.prompt.resolves({[questionNames.PROJECT_NAME]: projectName});
+    inquirer.prompt.resolves({
+      [questionNames.PROJECT_NAME]: projectName,
+      [questionNames.GIT_REPO]: true
+    });
     readmeScaffolder.default.resolves();
     gitScaffolder.default.resolves();
 
@@ -60,5 +63,14 @@ suite('project scaffolder', () => {
       assert.calledWith(gitScaffolder.default, {projectRoot: projectPath});
       assert.calledWith(readmeScaffolder.default, {projectName, projectRoot: projectPath});
     });
-  })
+  });
+
+  test('that the git repo is not initialized if not requested', () => {
+    inquirer.prompt.resolves({
+      [questionNames.GIT_REPO]: false
+    });
+    readmeScaffolder.default.resolves();
+
+    return scaffolder().then(() => assert.notCalled(gitScaffolder.default));
+  });
 });
