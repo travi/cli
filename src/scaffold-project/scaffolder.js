@@ -1,3 +1,4 @@
+import {basename} from 'path';
 import {prompt} from 'inquirer';
 import chalk from 'chalk';
 
@@ -8,9 +9,8 @@ export const questionNames = {
 };
 
 export default async function () {
-
   const answers = await prompt([
-    {name: questionNames.PROJECT_NAME, message: 'What is the name of this project?'},
+    {name: questionNames.PROJECT_NAME, message: 'What is the name of this project?', default: basename(process.cwd())},
     {name: questionNames.GIT_REPO, type: 'confirm', default: true, message: 'Should a git repository be initialized?'},
     {
       name: questionNames.REPO_HOST,
