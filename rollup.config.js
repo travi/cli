@@ -13,7 +13,8 @@ export default {
     'inquander',
     'chalk',
     'update-notifier',
-    'mz/fs'
+    'mz/fs',
+    'nodegit'
   ],
   plugins: [
     nodeResolve({
