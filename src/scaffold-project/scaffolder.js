@@ -1,7 +1,7 @@
 import {basename} from 'path';
 import {prompt} from 'inquirer';
-import chalk from 'chalk';
 import scaffoldReadme from './readme';
+import scaffoldGit from './git';
 
 export const questionNames = {
   PROJECT_NAME: 'projectName',
@@ -22,5 +22,8 @@ export default async function () {
     }
   ]);
 
-  return scaffoldReadme({projectName: answers[questionNames.PROJECT_NAME], projectRoot});
+  return Promise.all([
+    scaffoldReadme({projectName: answers[questionNames.PROJECT_NAME], projectRoot}),
+    scaffoldGit({projectRoot})
+  ]);
 }

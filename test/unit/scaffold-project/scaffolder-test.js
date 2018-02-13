@@ -4,6 +4,7 @@ import sinon from 'sinon';
 import {assert} from 'chai';
 import any from '@travi/any';
 import * as readmeScaffolder from '../../../src/scaffold-project/readme';
+import * as gitScaffolder from '../../../src/scaffold-project/git';
 import scaffolder, {questionNames} from '../../../src/scaffold-project/scaffolder';
 
 suite('project scaffolder', () => {
@@ -17,6 +18,7 @@ suite('project scaffolder', () => {
     sandbox.stub(process, 'cwd');
     sandbox.stub(path, 'basename');
     sandbox.stub(readmeScaffolder, 'default');
+    sandbox.stub(gitScaffolder, 'default');
 
     process.cwd.returns(projectPath);
   });
@@ -48,14 +50,15 @@ suite('project scaffolder', () => {
     ));
   });
 
-  test('that the readme is generated', () => {
+  test('that project files are generated', () => {
     const projectName = any.string();
     inquirer.prompt.resolves({[questionNames.PROJECT_NAME]: projectName});
     readmeScaffolder.default.resolves();
+    gitScaffolder.default.resolves();
 
-    return scaffolder().then(() => assert.calledWith(
-      readmeScaffolder.default,
-      {projectName, projectRoot: projectPath}
-    ));
+    return scaffolder().then(() => {
+      assert.calledWith(gitScaffolder.default, {projectRoot: projectPath});
+      assert.calledWith(readmeScaffolder.default, {projectName, projectRoot: projectPath});
+    });
   })
 });
