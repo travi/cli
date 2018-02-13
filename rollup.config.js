@@ -12,7 +12,8 @@ export default {
     'inquirer',
     'inquander',
     'chalk',
-    'update-notifier'
+    'update-notifier',
+    'mz/fs'
   ],
   plugins: [
     nodeResolve({

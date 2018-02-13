@@ -3,10 +3,12 @@ import path from 'path';
 import sinon from 'sinon';
 import {assert} from 'chai';
 import any from '@travi/any';
+import * as readmeScaffolder from '../../../src/scaffold-project/readme';
 import scaffolder, {questionNames} from '../../../src/scaffold-project/scaffolder';
 
 suite('project scaffolder', () => {
   let sandbox;
+  const projectPath = any.string();
 
   setup(() => {
     sandbox = sinon.sandbox.create();
@@ -14,16 +16,17 @@ suite('project scaffolder', () => {
     sandbox.stub(inquirer, 'prompt');
     sandbox.stub(process, 'cwd');
     sandbox.stub(path, 'basename');
+    sandbox.stub(readmeScaffolder, 'default');
+
+    process.cwd.returns(projectPath);
   });
 
   teardown(() => sandbox.restore());
 
   test('that the user is prompted for the necessary details', () => {
     const directoryName = any.string();
-    const projectPath = any.string();
-    process.cwd.returns(projectPath);
     path.basename.withArgs(projectPath).returns(directoryName);
-    inquirer.prompt.resolves();
+    inquirer.prompt.resolves({});
 
     return scaffolder().then(() => assert.calledWith(
       inquirer.prompt,
@@ -44,4 +47,15 @@ suite('project scaffolder', () => {
       ]
     ));
   });
+
+  test('that the readme is generated', () => {
+    const projectName = any.string();
+    inquirer.prompt.resolves({[questionNames.PROJECT_NAME]: projectName});
+    readmeScaffolder.default.resolves();
+
+    return scaffolder().then(() => assert.calledWith(
+      readmeScaffolder.default,
+      {projectName, projectRoot: projectPath}
+    ));
+  })
 });

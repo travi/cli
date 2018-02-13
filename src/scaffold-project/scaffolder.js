@@ -1,6 +1,7 @@
 import {basename} from 'path';
 import {prompt} from 'inquirer';
 import chalk from 'chalk';
+import scaffoldReadme from './readme';
 
 export const questionNames = {
   PROJECT_NAME: 'projectName',
@@ -9,8 +10,9 @@ export const questionNames = {
 };
 
 export default async function () {
+  const projectRoot = process.cwd();
   const answers = await prompt([
-    {name: questionNames.PROJECT_NAME, message: 'What is the name of this project?', default: basename(process.cwd())},
+    {name: questionNames.PROJECT_NAME, message: 'What is the name of this project?', default: basename(projectRoot)},
     {name: questionNames.GIT_REPO, type: 'confirm', default: true, message: 'Should a git repository be initialized?'},
     {
       name: questionNames.REPO_HOST,
@@ -20,7 +22,5 @@ export default async function () {
     }
   ]);
 
-  console.log(chalk.blue('Generating README'));
-  console.log(chalk.green(answers))
-
+  return scaffoldReadme({projectName: answers[questionNames.PROJECT_NAME], projectRoot});
 }
