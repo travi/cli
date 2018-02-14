@@ -4,5 +4,5 @@ export default function (program) {
   program
     .command('scaffold')
     .description('scaffold a new project')
-    .action(scaffolder)
+    .action(scaffolder);
 }

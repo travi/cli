@@ -2,3 +2,5 @@ node_modules/
 lib/
 bin/
 .nyc_output/
+
+.eslintcache
