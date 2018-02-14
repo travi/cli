@@ -8,6 +8,7 @@ before_script:
 - npm ls >/dev/null
 - npm run greenkeeper:update-lockfile
 after_script: npm run greenkeeper:upload-lockfile
+after_success: npm run coverage:report
 deploy:
   provider: script
   skip_cleanup: true
