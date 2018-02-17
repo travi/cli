@@ -1,5 +1,6 @@
 import inquirer from 'inquirer';
 import path from 'path';
+import spdxLicenseList from 'spdx-license-list/simple';
 import sinon from 'sinon';
 import {assert} from 'chai';
 import any from '@travi/any';
@@ -34,6 +35,13 @@ suite('project scaffolder', () => {
       inquirer.prompt,
       [
         {name: questionNames.PROJECT_NAME, message: 'What is the name of this project?', default: directoryName},
+        {
+          name: questionNames.LICENSE,
+          message: 'How should this this project be licensed?',
+          type: 'list',
+          choices: [...Array.from(spdxLicenseList), 'UNLICENSED'],
+          default: 'UNLICENSED'
+        },
         {
           name: questionNames.GIT_REPO,
           type: 'confirm',

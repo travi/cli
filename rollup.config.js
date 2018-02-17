@@ -14,7 +14,8 @@ export default {
     'chalk',
     'update-notifier',
     'mz/fs',
-    'nodegit'
+    'nodegit',
+    'spdx-license-list/simple'
   ],
   plugins: [
     nodeResolve({
