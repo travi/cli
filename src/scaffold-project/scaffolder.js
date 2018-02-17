@@ -7,6 +7,7 @@ import {vcsHostPromptShouldBePresented} from './prompt-conditionals';
 
 export const questionNames = {
   PROJECT_NAME: 'projectName',
+  VISIBILITY: 'visibility',
   GIT_REPO: 'gitRepo',
   REPO_HOST: 'repoHost',
   LICENSE: 'license'
@@ -16,6 +17,13 @@ export default async function () {
   const projectRoot = process.cwd();
   const answers = await prompt([
     {name: questionNames.PROJECT_NAME, message: 'What is the name of this project?', default: basename(projectRoot)},
+    {
+      name: questionNames.VISIBILITY,
+      message: 'Should this project be public or private?',
+      type: 'list',
+      choices: ['Public', 'Private'],
+      default: 'Private'
+    },
     {
       name: questionNames.LICENSE,
       message: 'How should this this project be licensed?',
