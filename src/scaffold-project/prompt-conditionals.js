@@ -7,3 +7,7 @@ export function vcsHostPromptShouldBePresented(answers) {
 export function unlicensedConfirmationShouldBePresented(answers) {
   return 'Private' === answers[questionNames.VISIBILITY];
 }
+
+export function licenseChoicesShouldBePresented(answers) {
+  return 'Public' === answers[questionNames.VISIBILITY] || !answers[questionNames.UNLICENSED];
+}

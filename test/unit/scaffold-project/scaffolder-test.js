@@ -7,7 +7,10 @@ import any from '@travi/any';
 import * as readmeScaffolder from '../../../src/scaffold-project/readme';
 import * as gitScaffolder from '../../../src/scaffold-project/git';
 import scaffolder, {questionNames} from '../../../src/scaffold-project/scaffolder';
-import {vcsHostPromptShouldBePresented} from '../../../src/scaffold-project/prompt-conditionals';
+import {
+  licenseChoicesShouldBePresented, unlicensedConfirmationShouldBePresented,
+  vcsHostPromptShouldBePresented
+} from '../../../src/scaffold-project/prompt-conditionals';
 
 suite('project scaffolder', () => {
   let sandbox;
@@ -47,14 +50,16 @@ suite('project scaffolder', () => {
           name: questionNames.UNLICENSED,
           message: 'Since this is a private project, should it be unlicensed?',
           type: 'confirm',
+          when: unlicensedConfirmationShouldBePresented,
           default: true
         },
         {
           name: questionNames.LICENSE,
           message: 'How should this this project be licensed?',
           type: 'list',
-          choices: [...Array.from(spdxLicenseList), 'UNLICENSED'],
-          default: 'UNLICENSED'
+          when: licenseChoicesShouldBePresented,
+          choices: Array.from(spdxLicenseList),
+          default: 'MIT'
         },
         {
           name: questionNames.GIT_REPO,

@@ -3,7 +3,11 @@ import {prompt} from 'inquirer';
 import spdxLicenseList from 'spdx-license-list/simple';
 import scaffoldReadme from './readme';
 import scaffoldGit from './git';
-import {vcsHostPromptShouldBePresented} from './prompt-conditionals';
+import {
+  licenseChoicesShouldBePresented,
+  unlicensedConfirmationShouldBePresented,
+  vcsHostPromptShouldBePresented
+} from './prompt-conditionals';
 
 export const questionNames = {
   PROJECT_NAME: 'projectName',
@@ -29,14 +33,16 @@ export default async function () {
       name: questionNames.UNLICENSED,
       message: 'Since this is a private project, should it be unlicensed?',
       type: 'confirm',
+      when: unlicensedConfirmationShouldBePresented,
       default: true
     },
     {
       name: questionNames.LICENSE,
       message: 'How should this this project be licensed?',
       type: 'list',
-      choices: [...Array.from(spdxLicenseList), 'UNLICENSED'],
-      default: 'UNLICENSED'
+      when: licenseChoicesShouldBePresented,
+      choices: Array.from(spdxLicenseList),
+      default: 'MIT'
     },
     {name: questionNames.GIT_REPO, type: 'confirm', default: true, message: 'Should a git repository be initialized?'},
     {
