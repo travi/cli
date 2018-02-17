@@ -3,6 +3,7 @@ import {prompt} from 'inquirer';
 import spdxLicenseList from 'spdx-license-list/simple';
 import scaffoldReadme from './readme';
 import scaffoldGit from './git';
+import {vcsHostPromptShouldBePresented} from './prompt-conditionals';
 
 export const questionNames = {
   PROJECT_NAME: 'projectName',
@@ -26,6 +27,7 @@ export default async function () {
     {
       name: questionNames.REPO_HOST,
       type: 'list',
+      when: vcsHostPromptShouldBePresented,
       message: 'Where will the repository be hosted?',
       choices: ['GitHub', 'BitBucket', 'GitLab', 'KeyBase']
     }
