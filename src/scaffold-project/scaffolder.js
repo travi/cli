@@ -10,6 +10,7 @@ export const questionNames = {
   VISIBILITY: 'visibility',
   GIT_REPO: 'gitRepo',
   REPO_HOST: 'repoHost',
+  UNLICENSED: 'unlicensed',
   LICENSE: 'license'
 };
 
@@ -23,6 +24,12 @@ export default async function () {
       type: 'list',
       choices: ['Public', 'Private'],
       default: 'Private'
+    },
+    {
+      name: questionNames.UNLICENSED,
+      message: 'Since this is a private project, should it be unlicensed?',
+      type: 'confirm',
+      default: true
     },
     {
       name: questionNames.LICENSE,

@@ -1,6 +1,9 @@
 import {assert} from 'chai';
 import {questionNames} from '../../../src/scaffold-project/scaffolder';
-import {vcsHostPromptShouldBePresented} from '../../../src/scaffold-project/prompt-conditionals';
+import {
+  vcsHostPromptShouldBePresented,
+  unlicensedConfirmationShouldBePresented
+} from '../../../src/scaffold-project/prompt-conditionals';
 
 suite('prompt conditionals', () => {
   suite('vcs host', () => {
@@ -10,6 +13,16 @@ suite('prompt conditionals', () => {
 
     test('that the prompt is not shown when a repository is not initialized', () => {
       assert.isFalse(vcsHostPromptShouldBePresented({[questionNames.GIT_REPO]: false}));
+    });
+  });
+
+  suite('unlicensed confirmation', () => {
+    test('that the unlicensed confirmation is shown for a private project', () => {
+      assert.isTrue(unlicensedConfirmationShouldBePresented({[questionNames.VISIBILITY]: 'Private'}));
+    });
+
+    test('that the unlicensed confirmation is not shown for a public project', () => {
+      assert.isFalse(unlicensedConfirmationShouldBePresented({[questionNames.VISIBILITY]: 'Public'}));
     });
   });
 });

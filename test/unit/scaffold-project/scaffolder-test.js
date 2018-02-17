@@ -44,6 +44,12 @@ suite('project scaffolder', () => {
           default: 'Private'
         },
         {
+          name: questionNames.UNLICENSED,
+          message: 'Since this is a private project, should it be unlicensed?',
+          type: 'confirm',
+          default: true
+        },
+        {
           name: questionNames.LICENSE,
           message: 'How should this this project be licensed?',
           type: 'list',
