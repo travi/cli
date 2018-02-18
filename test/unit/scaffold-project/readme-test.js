@@ -27,6 +27,12 @@ suite('scaffold readme', () => {
       `# ${projectName}
 
 ${description}
+
+<!-- consumer badges -->
+
+<!-- status badges -->
+
+<!-- contribution badges -->
 `
     ));
   });
