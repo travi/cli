@@ -31,7 +31,7 @@ suite('license', () => {
     return scaffoldLicense({projectRoot, license}).then(() => assert.calledWith(
       fs.writeFile,
       `${projectRoot}/LICENSE`,
-      spdxLicenseListWithContent[license].licenseText
+      `${spdxLicenseListWithContent[license].licenseText}\n`.replace(/\n/gm, '\n\n')
     ));
   });
 });
