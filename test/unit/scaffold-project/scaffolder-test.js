@@ -6,9 +6,11 @@ import {assert} from 'chai';
 import any from '@travi/any';
 import * as readmeScaffolder from '../../../src/scaffold-project/readme';
 import * as gitScaffolder from '../../../src/scaffold-project/git';
+import * as licenseScaffolder from '../../../src/scaffold-project/license';
 import scaffolder, {questionNames} from '../../../src/scaffold-project/scaffolder';
 import {
-  licenseChoicesShouldBePresented, unlicensedConfirmationShouldBePresented,
+  licenseChoicesShouldBePresented,
+  unlicensedConfirmationShouldBePresented,
   vcsHostPromptShouldBePresented
 } from '../../../src/scaffold-project/prompt-conditionals';
 
@@ -24,6 +26,7 @@ suite('project scaffolder', () => {
     sandbox.stub(path, 'basename');
     sandbox.stub(readmeScaffolder, 'default');
     sandbox.stub(gitScaffolder, 'default');
+    sandbox.stub(licenseScaffolder, 'default');
 
     process.cwd.returns(projectPath);
   });
@@ -80,16 +83,20 @@ suite('project scaffolder', () => {
 
   test('that project files are generated', () => {
     const projectName = any.string();
+    const license = any.string();
     inquirer.prompt.resolves({
       [questionNames.PROJECT_NAME]: projectName,
-      [questionNames.GIT_REPO]: true
+      [questionNames.GIT_REPO]: true,
+      [questionNames.LICENSE]: license
     });
     readmeScaffolder.default.resolves();
     gitScaffolder.default.resolves();
+    licenseScaffolder.default.resolves();
 
     return scaffolder().then(() => {
       assert.calledWith(gitScaffolder.default, {projectRoot: projectPath});
       assert.calledWith(readmeScaffolder.default, {projectName, projectRoot: projectPath});
+      assert.calledWith(licenseScaffolder.default, {projectRoot: projectPath, license});
     });
   });
 

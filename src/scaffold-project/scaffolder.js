@@ -3,6 +3,7 @@ import {prompt} from 'inquirer';
 import spdxLicenseList from 'spdx-license-list/simple';
 import scaffoldReadme from './readme';
 import scaffoldGit from './git';
+import scaffoldLicense from './license';
 import {
   licenseChoicesShouldBePresented,
   unlicensedConfirmationShouldBePresented,
@@ -56,6 +57,7 @@ export default async function () {
 
   return Promise.all([
     scaffoldReadme({projectName: answers[questionNames.PROJECT_NAME], projectRoot}),
-    answers[questionNames.GIT_REPO] ? scaffoldGit({projectRoot}) : undefined
+    answers[questionNames.GIT_REPO] ? scaffoldGit({projectRoot}) : undefined,
+    scaffoldLicense({projectRoot, license: answers[questionNames.LICENSE]})
   ]);
 }

@@ -15,7 +15,8 @@ export default {
     'update-notifier',
     'mz/fs',
     'nodegit',
-    'spdx-license-list/simple'
+    'spdx-license-list/simple',
+    'spdx-license-list/full'
   ],
   plugins: [
     nodeResolve({
