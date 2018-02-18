@@ -43,6 +43,10 @@ suite('project scaffolder', () => {
       [
         {name: questionNames.PROJECT_NAME, message: 'What is the name of this project?', default: directoryName},
         {
+          name: questionNames.DESCRIPTION,
+          message: 'How should this project be described?'
+        },
+        {
           name: questionNames.VISIBILITY,
           message: 'Should this project be public or private?',
           type: 'list',
