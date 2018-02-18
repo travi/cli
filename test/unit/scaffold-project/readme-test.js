@@ -18,12 +18,16 @@ suite('scaffold readme', () => {
   test('that the README has a top-level heading of the project name', () => {
     const projectName = any.string();
     const projectRoot = any.string();
+    const description = any.string();
     fs.writeFile.resolves();
 
-    return scaffoldReadme({projectName, projectRoot}).then(() => assert.calledWith(
+    return scaffoldReadme({projectName, projectRoot, description}).then(() => assert.calledWith(
       fs.writeFile,
       `${projectRoot}/README.md`,
-      `# ${projectName}\n`
+      `# ${projectName}
+
+${description}
+`
     ));
   });
 });

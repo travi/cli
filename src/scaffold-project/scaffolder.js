@@ -66,7 +66,11 @@ export default async function () {
   ]);
 
   return Promise.all([
-    scaffoldReadme({projectName: answers[questionNames.PROJECT_NAME], projectRoot}),
+    scaffoldReadme({
+      projectName: answers[questionNames.PROJECT_NAME],
+      projectRoot,
+      description: answers[questionNames.DESCRIPTION]
+    }),
     answers[questionNames.GIT_REPO] ? scaffoldGit({projectRoot}) : undefined,
     scaffoldLicense({projectRoot, license: answers[questionNames.LICENSE]})
   ]);

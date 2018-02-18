@@ -16,7 +16,8 @@ export default {
     'mz/fs',
     'nodegit',
     'spdx-license-list/simple',
-    'spdx-license-list/full'
+    'spdx-license-list/full',
+    'mustache'
   ],
   plugins: [
     nodeResolve({
