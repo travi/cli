@@ -1,9 +1,11 @@
 import {assert} from 'chai';
+import any from '@travi/any';
 import {questionNames} from '../../../src/scaffold-project/scaffolder';
 import {
   vcsHostPromptShouldBePresented,
   unlicensedConfirmationShouldBePresented,
-  licenseChoicesShouldBePresented
+  licenseChoicesShouldBePresented,
+  copyrightInformationShouldBeRequested
 } from '../../../src/scaffold-project/prompt-conditionals';
 
 suite('prompt conditionals', () => {
@@ -43,6 +45,20 @@ suite('prompt conditionals', () => {
       assert.isFalse(licenseChoicesShouldBePresented({
         [questionNames.VISIBILITY]: 'Private',
         [questionNames.UNLICENSED]: true
+      }));
+    });
+  });
+
+  suite('copyright', () => {
+    test('that the copyright information is requested when the project is licensed', () => {
+      assert.isTrue(copyrightInformationShouldBeRequested({
+        [questionNames.LICENSE]: any.string()
+      }));
+    });
+
+    test('that the copyright information is not requested when the project is not licensed', () => {
+      assert.isFalse(copyrightInformationShouldBeRequested({
+        [questionNames.LICENSE]: undefined
       }));
     });
   });

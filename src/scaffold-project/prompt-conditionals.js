@@ -11,3 +11,7 @@ export function unlicensedConfirmationShouldBePresented(answers) {
 export function licenseChoicesShouldBePresented(answers) {
   return 'Public' === answers[questionNames.VISIBILITY] || !answers[questionNames.UNLICENSED];
 }
+
+export function copyrightInformationShouldBeRequested(answers) {
+  return !!answers[questionNames.LICENSE];
+}
