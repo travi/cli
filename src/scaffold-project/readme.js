@@ -6,6 +6,8 @@ import mustache from 'mustache';
 export default async function ({projectName, projectRoot, description}) {
   console.log(chalk.blue('Generating README'));     // eslint-disable-line no-console
 
+  mustache.tags = ['{{', '}}'];
+
   await writeFile(
     `${projectRoot}/README.md`,
     mustache.render(

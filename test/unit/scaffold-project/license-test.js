@@ -25,13 +25,20 @@ suite('license', () => {
 
   test('that the contents for the chosen license are written to LICENSE', () => {
     const projectRoot = any.string();
+    const year = any.word();
+    const copyrightHolders = any.sentence();
+    const copyright = {year, holders: copyrightHolders};
     const license = any.fromList(Array.from(spdxLicenseList));
     fs.writeFile.resolves();
 
-    return scaffoldLicense({projectRoot, license}).then(() => assert.calledWith(
+    return scaffoldLicense({projectRoot, license, copyright}).then(() => assert.calledWith(
       fs.writeFile,
       `${projectRoot}/LICENSE`,
-      `${spdxLicenseListWithContent[license].licenseText}\n`.replace(/\n/gm, '\n\n')
+      `${spdxLicenseListWithContent[license].licenseText}\n`
+        .replace(/\n/gm, '\n\n')
+        .replace('<year>', year)
+        .replace('<copyright holders>', copyrightHolders)
+        .replace(/<(.+)>/g, '')
     ));
   });
 });
