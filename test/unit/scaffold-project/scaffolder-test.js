@@ -9,6 +9,7 @@ import * as gitScaffolder from '../../../src/scaffold-project/git';
 import * as licenseScaffolder from '../../../src/scaffold-project/license';
 import scaffolder, {questionNames} from '../../../src/scaffold-project/scaffolder';
 import {
+  copyrightInformationShouldBeRequested,
   licenseChoicesShouldBePresented,
   unlicensedConfirmationShouldBePresented,
   vcsHostPromptShouldBePresented
@@ -69,6 +70,18 @@ suite('project scaffolder', () => {
           default: 'MIT'
         },
         {
+          name: questionNames.COPYRIGHT_HOLDER,
+          message: 'Who is the copyright holder of this project?',
+          when: copyrightInformationShouldBeRequested,
+          default: 'Matt Travi'
+        },
+        {
+          name: questionNames.COPYRIGHT_YEAR,
+          message: 'What is the copyright year?',
+          when: copyrightInformationShouldBeRequested,
+          default: new Date().getFullYear()
+        },
+        {
           name: questionNames.GIT_REPO,
           type: 'confirm',
           default: true,
@@ -89,11 +102,16 @@ suite('project scaffolder', () => {
     const projectName = any.string();
     const license = any.string();
     const description = any.string();
+    const year = any.word();
+    const holder = any.sentence();
+    const copyright = {year, holder};
     inquirer.prompt.resolves({
       [questionNames.PROJECT_NAME]: projectName,
       [questionNames.GIT_REPO]: true,
       [questionNames.LICENSE]: license,
-      [questionNames.DESCRIPTION]: description
+      [questionNames.DESCRIPTION]: description,
+      [questionNames.COPYRIGHT_HOLDER]: holder,
+      [questionNames.COPYRIGHT_YEAR]: year
     });
     readmeScaffolder.default.resolves();
     gitScaffolder.default.resolves();
@@ -102,7 +120,7 @@ suite('project scaffolder', () => {
     return scaffolder().then(() => {
       assert.calledWith(gitScaffolder.default, {projectRoot: projectPath});
       assert.calledWith(readmeScaffolder.default, {projectName, projectRoot: projectPath, description});
-      assert.calledWith(licenseScaffolder.default, {projectRoot: projectPath, license});
+      assert.calledWith(licenseScaffolder.default, {projectRoot: projectPath, license, copyright});
     });
   });
 

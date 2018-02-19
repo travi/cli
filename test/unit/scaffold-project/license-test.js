@@ -27,7 +27,7 @@ suite('license', () => {
     const projectRoot = any.string();
     const year = any.word();
     const copyrightHolders = any.sentence();
-    const copyright = {year, holders: copyrightHolders};
+    const copyright = {year, holder: copyrightHolders};
     const license = any.fromList(Array.from(spdxLicenseList));
     fs.writeFile.resolves();
 

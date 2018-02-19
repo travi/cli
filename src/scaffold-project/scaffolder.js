@@ -5,6 +5,7 @@ import scaffoldReadme from './readme';
 import scaffoldGit from './git';
 import scaffoldLicense from './license';
 import {
+  copyrightInformationShouldBeRequested,
   licenseChoicesShouldBePresented,
   unlicensedConfirmationShouldBePresented,
   vcsHostPromptShouldBePresented
@@ -17,7 +18,9 @@ export const questionNames = {
   GIT_REPO: 'gitRepo',
   REPO_HOST: 'repoHost',
   UNLICENSED: 'unlicensed',
-  LICENSE: 'license'
+  LICENSE: 'license',
+  COPYRIGHT_HOLDER: 'copyrightHolder',
+  COPYRIGHT_YEAR: 'copyrightYear'
 };
 
 const licenseQuestions = [
@@ -35,6 +38,18 @@ const licenseQuestions = [
     when: licenseChoicesShouldBePresented,
     choices: Array.from(spdxLicenseList),
     default: 'MIT'
+  },
+  {
+    name: questionNames.COPYRIGHT_HOLDER,
+    message: 'Who is the copyright holder of this project?',
+    when: copyrightInformationShouldBeRequested,
+    default: 'Matt Travi'
+  },
+  {
+    name: questionNames.COPYRIGHT_YEAR,
+    message: 'What is the copyright year?',
+    when: copyrightInformationShouldBeRequested,
+    default: new Date().getFullYear()
   }
 ];
 
@@ -72,6 +87,10 @@ export default async function () {
       description: answers[questionNames.DESCRIPTION]
     }),
     answers[questionNames.GIT_REPO] ? scaffoldGit({projectRoot}) : undefined,
-    scaffoldLicense({projectRoot, license: answers[questionNames.LICENSE]})
+    scaffoldLicense({
+      projectRoot,
+      license: answers[questionNames.LICENSE],
+      copyright: {year: answers[questionNames.COPYRIGHT_YEAR], holder: answers[questionNames.COPYRIGHT_HOLDER]}
+    })
   ]);
 }

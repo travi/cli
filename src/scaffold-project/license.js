@@ -13,7 +13,7 @@ export default async function ({projectRoot, license, copyright}) {
       `${projectRoot}/LICENSE`,
       mustache.render(`${spdxLicenseList[license].licenseText}\n`.replace(/\n/gm, '\n\n'), {
         year: copyright.year,
-        'copyright holders': copyright.holders
+        'copyright holders': copyright.holder
       })
     );
   }
