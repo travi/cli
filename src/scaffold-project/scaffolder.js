@@ -84,7 +84,9 @@ export default async function () {
     scaffoldReadme({
       projectName: answers[questionNames.PROJECT_NAME],
       projectRoot,
-      description: answers[questionNames.DESCRIPTION]
+      description: answers[questionNames.DESCRIPTION],
+      license: answers[questionNames.LICENSE],
+      vcs: {host: answers[questionNames.REPO_HOST]}
     }),
     answers[questionNames.GIT_REPO] ? scaffoldGit({projectRoot}) : undefined,
     scaffoldLicense({

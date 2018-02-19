@@ -3,7 +3,13 @@
 {{description}}
 
 <!-- consumer badges -->
+{{#licenseAlt}}[![{{licenseAlt}}][license-badge]][license]{{/licenseAlt}}
 
 <!-- status badges -->
 
 <!-- contribution badges -->
+
+{{#license}}
+{{#licenseBadge}}[license-badge]: {{{licenseBadge}}}{{/licenseBadge}}
+[license]: LICENSE
+{{/license}}

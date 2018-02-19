@@ -105,9 +105,11 @@ suite('project scaffolder', () => {
     const year = any.word();
     const holder = any.sentence();
     const copyright = {year, holder};
+    const repoHost = any.word();
     inquirer.prompt.resolves({
       [questionNames.PROJECT_NAME]: projectName,
       [questionNames.GIT_REPO]: true,
+      [questionNames.REPO_HOST]: repoHost,
       [questionNames.LICENSE]: license,
       [questionNames.DESCRIPTION]: description,
       [questionNames.COPYRIGHT_HOLDER]: holder,
@@ -119,7 +121,10 @@ suite('project scaffolder', () => {
 
     return scaffolder().then(() => {
       assert.calledWith(gitScaffolder.default, {projectRoot: projectPath});
-      assert.calledWith(readmeScaffolder.default, {projectName, projectRoot: projectPath, description});
+      assert.calledWith(
+        readmeScaffolder.default,
+        {projectName, projectRoot: projectPath, description, license, vcs: {host: repoHost}}
+      );
       assert.calledWith(licenseScaffolder.default, {projectRoot: projectPath, license, copyright});
     });
   });
