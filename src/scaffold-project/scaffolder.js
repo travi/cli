@@ -1,5 +1,6 @@
-import {basename} from 'path';
+import {basename, resolve} from 'path';
 import {prompt} from 'inquirer';
+import {copyFile} from 'mz/fs';
 import spdxLicenseList from 'spdx-license-list/simple';
 import scaffoldReadme from './readme';
 import scaffoldGit from './git';
@@ -93,6 +94,7 @@ export default async function () {
       projectRoot,
       license: answers[questionNames.LICENSE],
       copyright: {year: answers[questionNames.COPYRIGHT_YEAR], holder: answers[questionNames.COPYRIGHT_HOLDER]}
-    })
+    }),
+    copyFile(resolve(__dirname, 'templates', 'editorconfig.txt'), `${projectRoot}/.editorconfig`)
   ]);
 }

@@ -1,5 +1,6 @@
 import inquirer from 'inquirer';
 import path from 'path';
+import fs from 'mz/fs';
 import spdxLicenseList from 'spdx-license-list/simple';
 import sinon from 'sinon';
 import {assert} from 'chai';
@@ -28,8 +29,10 @@ suite('project scaffolder', () => {
     sandbox.stub(readmeScaffolder, 'default');
     sandbox.stub(gitScaffolder, 'default');
     sandbox.stub(licenseScaffolder, 'default');
+    sandbox.stub(fs, 'copyFile');
 
     process.cwd.returns(projectPath);
+    fs.copyFile.resolves();
   });
 
   teardown(() => sandbox.restore());
@@ -126,6 +129,11 @@ suite('project scaffolder', () => {
         {projectName, projectRoot: projectPath, description, license, vcs: {host: repoHost}}
       );
       assert.calledWith(licenseScaffolder.default, {projectRoot: projectPath, license, copyright});
+      assert.calledWith(
+        fs.copyFile,
+        path.resolve(__dirname, '../../../', 'src/scaffold-project/templates', 'editorconfig.txt'),
+        `${projectPath}/.editorconfig`
+      );
     });
   });
 
