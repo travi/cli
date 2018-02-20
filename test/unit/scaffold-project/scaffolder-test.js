@@ -7,6 +7,7 @@ import {assert} from 'chai';
 import any from '@travi/any';
 import * as readmeScaffolder from '../../../src/scaffold-project/readme';
 import * as gitScaffolder from '../../../src/scaffold-project/git';
+import * as vcsHostScaffolder from '../../../src/scaffold-project/vcs-host';
 import * as licenseScaffolder from '../../../src/scaffold-project/license';
 import scaffolder, {questionNames} from '../../../src/scaffold-project/scaffolder';
 import {
@@ -28,6 +29,7 @@ suite('project scaffolder', () => {
     sandbox.stub(path, 'basename');
     sandbox.stub(readmeScaffolder, 'default');
     sandbox.stub(gitScaffolder, 'default');
+    sandbox.stub(vcsHostScaffolder, 'default');
     sandbox.stub(licenseScaffolder, 'default');
     sandbox.stub(fs, 'copyFile');
 
@@ -109,7 +111,7 @@ suite('project scaffolder', () => {
     const holder = any.sentence();
     const copyright = {year, holder};
     const repoHost = any.word();
-    const vcs = {host: repoHost, owner: 'travi', name: projectName};
+    const vcs = any.simpleObject();
     inquirer.prompt.resolves({
       [questionNames.PROJECT_NAME]: projectName,
       [questionNames.GIT_REPO]: true,
@@ -122,6 +124,7 @@ suite('project scaffolder', () => {
     readmeScaffolder.default.resolves();
     gitScaffolder.default.resolves();
     licenseScaffolder.default.resolves();
+    vcsHostScaffolder.default.withArgs({host: repoHost, projectName}).resolves(vcs);
 
     return scaffolder().then(() => {
       assert.calledWith(gitScaffolder.default, {projectRoot: projectPath});

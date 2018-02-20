@@ -5,6 +5,7 @@ import spdxLicenseList from 'spdx-license-list/simple';
 import scaffoldReadme from './readme';
 import scaffoldGit from './git';
 import scaffoldLicense from './license';
+import scaffoldVcsHost from './vcs-host';
 import {
   copyrightInformationShouldBeRequested,
   licenseChoicesShouldBePresented,
@@ -82,7 +83,7 @@ export default async function () {
   ]);
 
   const projectName = answers[questionNames.PROJECT_NAME];
-  const vcs = {host: answers[questionNames.REPO_HOST], owner: 'travi', name: projectName};
+  const vcs = await scaffoldVcsHost({host: answers[questionNames.REPO_HOST], projectName});
 
   return Promise.all([
     scaffoldReadme({
