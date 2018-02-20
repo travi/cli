@@ -33,6 +33,8 @@ ${description}`)
   suite('badges', () => {
     suite('license', () => {
       const license = any.word();
+      const repoOwner = 'travi';
+      const repoName = 'cli';
 
       suite('references', () => {
         test('the license file reference is defined for a licensed project', async () => {
@@ -56,25 +58,25 @@ ${description}`)
         });
 
         test('the license badge reference is defined for a licensed, GitHub-hosted project', async () => {
-          const vcs = {host: 'GitHub'};
+          const vcs = {host: 'GitHub', owner: repoOwner, name: repoName};
 
           await scaffoldReadme({projectName, projectRoot, description, license, vcs}).then(() => assert.calledWith(
             fs.writeFile,
             `${projectRoot}/README.md`,
             sinon.match(`
-[license-badge]: https://img.shields.io/github/license/travi/cli.svg
+[license-badge]: https://img.shields.io/github/license/${repoOwner}/${repoName}.svg
 `)
           ));
         });
 
         test('the license badge reference is not defined for an unlicensed project', async () => {
-          const vcs = {host: 'github'};
+          const vcs = {host: 'GitHub', owner: repoOwner, name: repoName};
 
           await scaffoldReadme({projectName, projectRoot, description, vcs}).then(() => assert.neverCalledWith(
             fs.writeFile,
             `${projectRoot}/README.md`,
             sinon.match(`
-[license-badge]: https://img.shields.io/github/license/travi/cli.svg
+[license-badge]: https://img.shields.io/github/license/${repoOwner}/${repoName}.svg
 `)
           ));
         });
@@ -86,8 +88,7 @@ ${description}`)
               fs.writeFile,
               `${projectRoot}/README.md`,
               sinon.match(`
-[license-badge]: https://img.shields.io/github/license/travi/cli.svg
-`)
+[license-badge]: `)
             ));
           }
         );
