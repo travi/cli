@@ -81,11 +81,12 @@ export default async function () {
     ...vcsQuestions
   ]);
 
-  const vcs = {host: answers[questionNames.REPO_HOST], owner: 'travi', name: 'cli'};
+  const projectName = answers[questionNames.PROJECT_NAME];
+  const vcs = {host: answers[questionNames.REPO_HOST], owner: 'travi', name: projectName};
 
   return Promise.all([
     scaffoldReadme({
-      projectName: answers[questionNames.PROJECT_NAME],
+      projectName,
       projectRoot,
       description: answers[questionNames.DESCRIPTION],
       license: answers[questionNames.LICENSE],

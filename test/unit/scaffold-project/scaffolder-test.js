@@ -109,7 +109,7 @@ suite('project scaffolder', () => {
     const holder = any.sentence();
     const copyright = {year, holder};
     const repoHost = any.word();
-    const vcs = {host: repoHost, owner: 'travi', name: 'cli'};
+    const vcs = {host: repoHost, owner: 'travi', name: projectName};
     inquirer.prompt.resolves({
       [questionNames.PROJECT_NAME]: projectName,
       [questionNames.GIT_REPO]: true,
