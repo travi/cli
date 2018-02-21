@@ -22,7 +22,8 @@ export const questionNames = {
   UNLICENSED: 'unlicensed',
   LICENSE: 'license',
   COPYRIGHT_HOLDER: 'copyrightHolder',
-  COPYRIGHT_YEAR: 'copyrightYear'
+  COPYRIGHT_YEAR: 'copyrightYear',
+  PROJECT_TYPE: 'projectType'
 };
 
 const licenseQuestions = [
@@ -79,7 +80,13 @@ export default async function () {
       default: 'Private'
     },
     ...licenseQuestions,
-    ...vcsQuestions
+    ...vcsQuestions,
+    {
+      name: questionNames.PROJECT_TYPE,
+      type: 'list',
+      message: 'What type of project is this?',
+      choices: ['JavaScript', 'Other']
+    }
   ]);
 
   const projectName = answers[questionNames.PROJECT_NAME];

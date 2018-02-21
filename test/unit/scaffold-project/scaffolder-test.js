@@ -98,6 +98,12 @@ suite('project scaffolder', () => {
           when: vcsHostPromptShouldBePresented,
           message: 'Where will the repository be hosted?',
           choices: ['GitHub', 'BitBucket', 'GitLab', 'KeyBase']
+        },
+        {
+          name: questionNames.PROJECT_TYPE,
+          type: 'list',
+          message: 'What type of project is this?',
+          choices: ['JavaScript', 'Other']
         }
       ]
     ));

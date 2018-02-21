@@ -10,7 +10,8 @@ Given('the project should be versioned in git', async function () {
     bddStdIn.keys.down, '\n', '\n',
     'y', '\n',
     'y', '\n',
-    '\n', '\n'
+    '\n', '\n',
+    bddStdIn.keys.down, '\n', '\n'
   );
 });
 
