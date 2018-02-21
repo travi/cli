@@ -29,7 +29,8 @@ export default {
     babel({
       babelrc: false,
       exclude: ['./node_modules/**'],
-      presets: [['env', {targets: {node: 'current'}, modules: false}]]
+      presets: [['env', {targets: {node: 'current'}, modules: false}]],
+      plugins: [['transform-object-rest-spread', {useBuiltIns: true}]]
     }),
     executable()
   ],

@@ -11,6 +11,8 @@ import {
 
 suite('javascript project scaffolder', () => {
   let sandbox;
+  const projectRoot = any.string();
+  const projectName = any.string();
 
   setup(() => {
     sandbox = sinon.sandbox.create();
@@ -61,8 +63,6 @@ suite('javascript project scaffolder', () => {
   });
 
   test('that javascript project files are generated', () => {
-    const projectRoot = any.string();
-    const projectName = any.string();
     inquirer.prompt.resolves({});
 
     return scaffoldJavaScript({projectRoot, projectName}).then(() => {
@@ -73,14 +73,23 @@ suite('javascript project scaffolder', () => {
   });
 
   test('that the scope is included in the project name when provided', () => {
-    const projectRoot = any.string();
-    const projectName = any.string();
     const scope = any.word();
     inquirer.prompt.resolves({[questionNames.SCOPE]: scope});
 
     return scaffoldJavaScript({projectRoot, projectName}).then(() => {
       assert.calledWith(fs.writeFile, `${projectRoot}/package.json`, JSON.stringify({
         name: `@${scope}/${projectName}`
+      }));
+    });
+  });
+
+  test('that the package is marked as private for an application', () => {
+    inquirer.prompt.resolves({[questionNames.PACKAGE_TYPE]: 'Application'});
+
+    return scaffoldJavaScript({projectRoot, projectName}).then(() => {
+      assert.calledWith(fs.writeFile, `${projectRoot}/package.json`, JSON.stringify({
+        name: projectName,
+        private: true
       }));
     });
   });

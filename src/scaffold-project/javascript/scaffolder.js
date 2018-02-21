@@ -48,6 +48,7 @@ export default async function ({projectRoot, projectName}) {
   // exec('nvm ls-remote');
 
   await writeFile(`${projectRoot}/package.json`, JSON.stringify({
-    name: `${answers[questionNames.SCOPE] ? `@${answers[questionNames.SCOPE]}/` : ''}${projectName}`
+    name: `${answers[questionNames.SCOPE] ? `@${answers[questionNames.SCOPE]}/` : ''}${projectName}`,
+    ...('Application' === answers[questionNames.PACKAGE_TYPE]) && {private: true}
   }));
 }
