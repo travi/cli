@@ -17,7 +17,8 @@ export default {
     'nodegit',
     'spdx-license-list/simple',
     'spdx-license-list/full',
-    'mustache'
+    'mustache',
+    'shelljs'
   ],
   plugins: [
     nodeResolve({
