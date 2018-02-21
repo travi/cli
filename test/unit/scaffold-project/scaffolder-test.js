@@ -9,6 +9,7 @@ import * as readmeScaffolder from '../../../src/scaffold-project/readme';
 import * as gitScaffolder from '../../../src/scaffold-project/git';
 import * as vcsHostScaffolder from '../../../src/scaffold-project/vcs-host';
 import * as licenseScaffolder from '../../../src/scaffold-project/license';
+import * as javascriptScaffolder from '../../../src/scaffold-project/javascript';
 import scaffolder, {questionNames} from '../../../src/scaffold-project/scaffolder';
 import {
   copyrightInformationShouldBeRequested,
@@ -20,6 +21,7 @@ import {
 suite('project scaffolder', () => {
   let sandbox;
   const projectPath = any.string();
+  const projectName = any.string();
 
   setup(() => {
     sandbox = sinon.sandbox.create();
@@ -31,6 +33,7 @@ suite('project scaffolder', () => {
     sandbox.stub(gitScaffolder, 'default');
     sandbox.stub(vcsHostScaffolder, 'default');
     sandbox.stub(licenseScaffolder, 'default');
+    sandbox.stub(javascriptScaffolder, 'default');
     sandbox.stub(fs, 'copyFile');
 
     process.cwd.returns(projectPath);
@@ -110,7 +113,6 @@ suite('project scaffolder', () => {
   });
 
   test('that project files are generated', () => {
-    const projectName = any.string();
     const license = any.string();
     const description = any.string();
     const year = any.word();
@@ -144,6 +146,7 @@ suite('project scaffolder', () => {
         path.resolve(__dirname, '../../../', 'src/scaffold-project/templates', 'editorconfig.txt'),
         `${projectPath}/.editorconfig`
       );
+      assert.notCalled(javascriptScaffolder.default);
     });
   });
 
@@ -154,5 +157,17 @@ suite('project scaffolder', () => {
     readmeScaffolder.default.resolves();
 
     return scaffolder().then(() => assert.notCalled(gitScaffolder.default));
+  });
+
+  test('that the javascript project scaffolder is run for a js project', () => {
+    inquirer.prompt.resolves({
+      [questionNames.PROJECT_NAME]: projectName,
+      [questionNames.PROJECT_TYPE]: 'JavaScript'
+    });
+
+    return scaffolder().then(() => assert.calledWith(javascriptScaffolder.default, {
+      projectName,
+      projectRoot: projectPath
+    }));
   });
 });

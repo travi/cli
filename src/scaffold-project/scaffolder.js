@@ -6,6 +6,7 @@ import scaffoldReadme from './readme';
 import scaffoldGit from './git';
 import scaffoldLicense from './license';
 import scaffoldVcsHost from './vcs-host';
+import scaffoldJavaScriptProject from './javascript';
 import {
   copyrightInformationShouldBeRequested,
   licenseChoicesShouldBePresented,
@@ -92,6 +93,10 @@ export default async function () {
   const projectName = answers[questionNames.PROJECT_NAME];
   const vcs = await scaffoldVcsHost({host: answers[questionNames.REPO_HOST], projectName});
 
+  function isJavaScriptProject() {
+    return 'JavaScript' === answers[questionNames.PROJECT_TYPE];
+  }
+
   return Promise.all([
     scaffoldReadme({
       projectName,
@@ -106,6 +111,7 @@ export default async function () {
       license: answers[questionNames.LICENSE],
       copyright: {year: answers[questionNames.COPYRIGHT_YEAR], holder: answers[questionNames.COPYRIGHT_HOLDER]}
     }),
-    copyFile(resolve(__dirname, 'templates', 'editorconfig.txt'), `${projectRoot}/.editorconfig`)
+    copyFile(resolve(__dirname, 'templates', 'editorconfig.txt'), `${projectRoot}/.editorconfig`),
+    isJavaScriptProject() ? scaffoldJavaScriptProject({projectRoot, projectName}) : undefined
   ]);
 }
