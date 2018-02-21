@@ -4,6 +4,10 @@ import {assert} from 'chai';
 import any from '@travi/any';
 import sinon from 'sinon';
 import scaffoldJavaScript, {questionNames} from '../../../../src/scaffold-project/javascript/scaffolder';
+import {
+  scopePromptShouldBePresented,
+  shouldBeScopedPromptShouldBePresented
+} from '../../../../src/scaffold-project/javascript/prompt-condiftionals';
 
 suite('javascript project scaffolder', () => {
   let sandbox;
@@ -38,6 +42,19 @@ suite('javascript project scaffolder', () => {
           type: 'list',
           choices: ['Application', 'Package'],
           default: 'Package'
+        },
+        {
+          name: questionNames.SHOULD_BE_SCOPED,
+          message: 'Should this package be scoped?',
+          type: 'confirm',
+          when: shouldBeScopedPromptShouldBePresented,
+          default: true
+        },
+        {
+          name: questionNames.SCOPE,
+          message: 'What is the scope?',
+          when: scopePromptShouldBePresented,
+          default: 'travi'
         }
       ]
     ));
@@ -46,6 +63,7 @@ suite('javascript project scaffolder', () => {
   test('that javascript project files are generated', () => {
     const projectRoot = any.string();
     const projectName = any.string();
+    inquirer.prompt.resolves({});
 
     return scaffoldJavaScript({projectRoot, projectName}).then(() => {
       assert.calledWith(fs.writeFile, `${projectRoot}/package.json`, JSON.stringify({
@@ -58,8 +76,9 @@ suite('javascript project scaffolder', () => {
     const projectRoot = any.string();
     const projectName = any.string();
     const scope = any.word();
+    inquirer.prompt.resolves({[questionNames.SCOPE]: scope});
 
-    return scaffoldJavaScript({projectRoot, projectName, scope}).then(() => {
+    return scaffoldJavaScript({projectRoot, projectName}).then(() => {
       assert.calledWith(fs.writeFile, `${projectRoot}/package.json`, JSON.stringify({
         name: `@${scope}/${projectName}`
       }));
