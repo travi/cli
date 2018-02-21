@@ -9,7 +9,7 @@ import * as readmeScaffolder from '../../../src/scaffold-project/readme';
 import * as gitScaffolder from '../../../src/scaffold-project/git';
 import * as vcsHostScaffolder from '../../../src/scaffold-project/vcs-host';
 import * as licenseScaffolder from '../../../src/scaffold-project/license';
-import * as javascriptScaffolder from '../../../src/scaffold-project/javascript';
+import * as javascriptScaffolder from '../../../src/scaffold-project/javascript/scaffolder';
 import scaffolder, {questionNames} from '../../../src/scaffold-project/scaffolder';
 import {
   copyrightInformationShouldBeRequested,

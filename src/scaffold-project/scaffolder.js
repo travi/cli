@@ -6,7 +6,7 @@ import scaffoldReadme from './readme';
 import scaffoldGit from './git';
 import scaffoldLicense from './license';
 import scaffoldVcsHost from './vcs-host';
-import scaffoldJavaScriptProject from './javascript';
+import scaffoldJavaScriptProject from './javascript/scaffolder';
 import {
   copyrightInformationShouldBeRequested,
   licenseChoicesShouldBePresented,

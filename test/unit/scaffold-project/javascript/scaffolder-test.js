@@ -3,7 +3,7 @@ import fs from 'mz/fs';
 import {assert} from 'chai';
 import any from '@travi/any';
 import sinon from 'sinon';
-import scaffoldJavaScript, {questionNames} from '../../../src/scaffold-project/javascript';
+import scaffoldJavaScript, {questionNames} from '../../../../src/scaffold-project/javascript/scaffolder';
 
 suite('javascript project scaffolder', () => {
   let sandbox;
