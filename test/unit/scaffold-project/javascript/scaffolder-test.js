@@ -68,7 +68,8 @@ suite('javascript project scaffolder', () => {
 
     return scaffoldJavaScript({projectRoot, projectName, visibility}).then(() => {
       assert.calledWith(fs.writeFile, `${projectRoot}/package.json`, JSON.stringify({
-        name: projectName
+        name: projectName,
+        license: 'UNLICENSED'
       }));
     });
   });
@@ -79,7 +80,8 @@ suite('javascript project scaffolder', () => {
 
     return scaffoldJavaScript({projectRoot, projectName, visibility}).then(() => {
       assert.calledWith(fs.writeFile, `${projectRoot}/package.json`, JSON.stringify({
-        name: `@${scope}/${projectName}`
+        name: `@${scope}/${projectName}`,
+        license: 'UNLICENSED'
       }));
     });
   });
@@ -90,8 +92,34 @@ suite('javascript project scaffolder', () => {
     return scaffoldJavaScript({projectRoot, projectName, visibility}).then(() => {
       assert.calledWith(fs.writeFile, `${projectRoot}/package.json`, JSON.stringify({
         name: projectName,
+        license: 'UNLICENSED',
         private: true
       }));
+    });
+  });
+
+  suite('license', () => {
+    test('that the license is defined as provided', () => {
+      const license = any.word();
+      inquirer.prompt.resolves({});
+
+      return scaffoldJavaScript({projectRoot, projectName, license}).then(() => {
+        assert.calledWith(fs.writeFile, `${projectRoot}/package.json`, JSON.stringify({
+          name: projectName,
+          license
+        }));
+      });
+    });
+
+    test('that the license is defined as `UNLICENSED` when not provided', () => {
+      inquirer.prompt.resolves({});
+
+      return scaffoldJavaScript({projectRoot, projectName}).then(() => {
+        assert.calledWith(fs.writeFile, `${projectRoot}/package.json`, JSON.stringify({
+          name: projectName,
+          license: 'UNLICENSED'
+        }));
+      });
     });
   });
 
@@ -103,6 +131,7 @@ suite('javascript project scaffolder', () => {
         assert.calledWith(fs.writeFile, `${projectRoot}/package.json`, JSON.stringify({
           name: projectName,
           version: '0.0.0-semantically-released',
+          license: 'UNLICENSED',
           publishConfig: {access: 'restricted'}
         }));
       });
@@ -115,6 +144,7 @@ suite('javascript project scaffolder', () => {
         assert.calledWith(fs.writeFile, `${projectRoot}/package.json`, JSON.stringify({
           name: projectName,
           version: '0.0.0-semantically-released',
+          license: 'UNLICENSED',
           publishConfig: {access: 'public'}
         }));
       });

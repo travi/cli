@@ -11,7 +11,7 @@ export const questionNames = {
   SCOPE: 'scope'
 };
 
-export default async function ({projectRoot, projectName, visibility}) {
+export default async function ({projectRoot, projectName, visibility, license}) {
   console.log(chalk.blue('Initializing JavaScript project'));     // eslint-disable-line no-console
 
   const answers = await prompt([
@@ -50,6 +50,7 @@ export default async function ({projectRoot, projectName, visibility}) {
   await writeFile(`${projectRoot}/package.json`, JSON.stringify({
     name: `${answers[questionNames.SCOPE] ? `@${answers[questionNames.SCOPE]}/` : ''}${projectName}`,
     ...('Package' === answers[questionNames.PACKAGE_TYPE]) && {version: '0.0.0-semantically-released'},
+    license: license || 'UNLICENSED',
     ...('Application' === answers[questionNames.PACKAGE_TYPE]) && {private: true},
     ...('Package' === answers[questionNames.PACKAGE_TYPE]) && {
       publishConfig: {access: 'Private' === visibility ? 'restricted' : 'public'}
