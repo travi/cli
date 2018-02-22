@@ -49,6 +49,7 @@ export default async function ({projectRoot, projectName, visibility}) {
 
   await writeFile(`${projectRoot}/package.json`, JSON.stringify({
     name: `${answers[questionNames.SCOPE] ? `@${answers[questionNames.SCOPE]}/` : ''}${projectName}`,
+    ...('Package' === answers[questionNames.PACKAGE_TYPE]) && {version: '0.0.0-semantically-released'},
     ...('Application' === answers[questionNames.PACKAGE_TYPE]) && {private: true},
     ...('Package' === answers[questionNames.PACKAGE_TYPE]) && {
       publishConfig: {access: 'Private' === visibility ? 'restricted' : 'public'}

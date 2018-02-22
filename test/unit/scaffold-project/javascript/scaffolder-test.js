@@ -102,6 +102,7 @@ suite('javascript project scaffolder', () => {
       return scaffoldJavaScript({projectRoot, projectName, visibility: 'Private'}).then(() => {
         assert.calledWith(fs.writeFile, `${projectRoot}/package.json`, JSON.stringify({
           name: projectName,
+          version: '0.0.0-semantically-released',
           publishConfig: {access: 'restricted'}
         }));
       });
@@ -113,6 +114,7 @@ suite('javascript project scaffolder', () => {
       return scaffoldJavaScript({projectRoot, projectName, visibility: 'Public'}).then(() => {
         assert.calledWith(fs.writeFile, `${projectRoot}/package.json`, JSON.stringify({
           name: projectName,
+          version: '0.0.0-semantically-released',
           publishConfig: {access: 'public'}
         }));
       });
