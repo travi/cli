@@ -13,6 +13,7 @@ suite('javascript project scaffolder', () => {
   let sandbox;
   const projectRoot = any.string();
   const projectName = any.string();
+  const visibility = any.fromList(['Private', 'Public']);
 
   setup(() => {
     sandbox = sinon.sandbox.create();
@@ -28,7 +29,7 @@ suite('javascript project scaffolder', () => {
   test('that the user is prompted for the necessary details', () => {
     inquirer.prompt.resolves({});
 
-    return scaffoldJavaScript({}).then(() => assert.calledWith(
+    return scaffoldJavaScript({visibility}).then(() => assert.calledWith(
       inquirer.prompt,
       [
         {
@@ -65,7 +66,7 @@ suite('javascript project scaffolder', () => {
   test('that javascript project files are generated', () => {
     inquirer.prompt.resolves({});
 
-    return scaffoldJavaScript({projectRoot, projectName}).then(() => {
+    return scaffoldJavaScript({projectRoot, projectName, visibility}).then(() => {
       assert.calledWith(fs.writeFile, `${projectRoot}/package.json`, JSON.stringify({
         name: projectName
       }));
@@ -76,7 +77,7 @@ suite('javascript project scaffolder', () => {
     const scope = any.word();
     inquirer.prompt.resolves({[questionNames.SCOPE]: scope});
 
-    return scaffoldJavaScript({projectRoot, projectName}).then(() => {
+    return scaffoldJavaScript({projectRoot, projectName, visibility}).then(() => {
       assert.calledWith(fs.writeFile, `${projectRoot}/package.json`, JSON.stringify({
         name: `@${scope}/${projectName}`
       }));
@@ -86,11 +87,35 @@ suite('javascript project scaffolder', () => {
   test('that the package is marked as private for an application', () => {
     inquirer.prompt.resolves({[questionNames.PACKAGE_TYPE]: 'Application'});
 
-    return scaffoldJavaScript({projectRoot, projectName}).then(() => {
+    return scaffoldJavaScript({projectRoot, projectName, visibility}).then(() => {
       assert.calledWith(fs.writeFile, `${projectRoot}/package.json`, JSON.stringify({
         name: projectName,
         private: true
       }));
+    });
+  });
+
+  suite('publish config', () => {
+    test('that access is marked as restricted for private projects', () => {
+      inquirer.prompt.resolves({[questionNames.PACKAGE_TYPE]: 'Package'});
+
+      return scaffoldJavaScript({projectRoot, projectName, visibility: 'Private'}).then(() => {
+        assert.calledWith(fs.writeFile, `${projectRoot}/package.json`, JSON.stringify({
+          name: projectName,
+          publishConfig: {access: 'restricted'}
+        }));
+      });
+    });
+
+    test('that access is marked as public for public projects', () => {
+      inquirer.prompt.resolves({[questionNames.PACKAGE_TYPE]: 'Package'});
+
+      return scaffoldJavaScript({projectRoot, projectName, visibility: 'Public'}).then(() => {
+        assert.calledWith(fs.writeFile, `${projectRoot}/package.json`, JSON.stringify({
+          name: projectName,
+          publishConfig: {access: 'public'}
+        }));
+      });
     });
   });
 });

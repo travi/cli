@@ -160,14 +160,17 @@ suite('project scaffolder', () => {
   });
 
   test('that the javascript project scaffolder is run for a js project', () => {
+    const visibility = any.boolean();
     inquirer.prompt.resolves({
       [questionNames.PROJECT_NAME]: projectName,
-      [questionNames.PROJECT_TYPE]: 'JavaScript'
+      [questionNames.PROJECT_TYPE]: 'JavaScript',
+      [questionNames.VISIBILITY]: visibility
     });
 
     return scaffolder().then(() => assert.calledWith(javascriptScaffolder.default, {
       projectName,
-      projectRoot: projectPath
+      projectRoot: projectPath,
+      visibility
     }));
   });
 });

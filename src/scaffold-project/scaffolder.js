@@ -112,6 +112,10 @@ export default async function () {
       copyright: {year: answers[questionNames.COPYRIGHT_YEAR], holder: answers[questionNames.COPYRIGHT_HOLDER]}
     }),
     copyFile(resolve(__dirname, 'templates', 'editorconfig.txt'), `${projectRoot}/.editorconfig`),
-    isJavaScriptProject() ? scaffoldJavaScriptProject({projectRoot, projectName}) : undefined
+    isJavaScriptProject() ? scaffoldJavaScriptProject({
+      projectRoot,
+      projectName,
+      visibility: answers[questionNames.VISIBILITY]
+    }) : undefined
   ]);
 }
