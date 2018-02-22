@@ -54,7 +54,7 @@ export default async function ({projectRoot, projectName, visibility, license}) 
       license: license || 'UNLICENSED',
       ...('Application' === answers[questionNames.PACKAGE_TYPE]) && {private: true},
       ...('Package' === answers[questionNames.PACKAGE_TYPE]) && {
-        publishConfig: {access: 'Private' === visibility ? 'restricted' : 'public'}
+        publishConfig: {access: 'Public' === visibility ? 'public' : 'restricted'}
       }
     })),
     ('Application' === answers[questionNames.PACKAGE_TYPE]) && writeFile(`${projectRoot}/.npmrc`, 'save-exact=true')

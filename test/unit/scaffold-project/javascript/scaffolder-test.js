@@ -150,21 +150,34 @@ suite('javascript project scaffolder', () => {
       });
     });
 
-    suite('save-exact', () => {
-      test('that the project is configured to use exact dependency versions if it is an application', () => {
-        inquirer.prompt.resolves({[questionNames.PACKAGE_TYPE]: 'Application'});
+    test('that access is marked as restricted when visibility is omitted for some reason', () => {
+      inquirer.prompt.resolves({[questionNames.PACKAGE_TYPE]: 'Package'});
 
-        return scaffoldJavaScript({projectRoot, projectName, visibility: 'Public'}).then(() => {
-          assert.calledWith(fs.writeFile, `${projectRoot}/.npmrc`, 'save-exact=true');
-        });
+      return scaffoldJavaScript({projectRoot, projectName}).then(() => {
+        assert.calledWith(fs.writeFile, `${projectRoot}/package.json`, JSON.stringify({
+          name: projectName,
+          version: '0.0.0-semantically-released',
+          license: 'UNLICENSED',
+          publishConfig: {access: 'restricted'}
+        }));
       });
+    });
+  });
 
-      test('that the project is allowed to use semver ranges if it is a package', () => {
-        inquirer.prompt.resolves({[questionNames.PACKAGE_TYPE]: 'Package'});
+  suite('save-exact', () => {
+    test('that the project is configured to use exact dependency versions if it is an application', () => {
+      inquirer.prompt.resolves({[questionNames.PACKAGE_TYPE]: 'Application'});
 
-        return scaffoldJavaScript({projectRoot, projectName, visibility: 'Public'}).then(() => {
-          assert.neverCalledWith(fs.writeFile, `${projectRoot}/.npmrc`);
-        });
+      return scaffoldJavaScript({projectRoot, projectName, visibility: 'Public'}).then(() => {
+        assert.calledWith(fs.writeFile, `${projectRoot}/.npmrc`, 'save-exact=true');
+      });
+    });
+
+    test('that the project is allowed to use semver ranges if it is a package', () => {
+      inquirer.prompt.resolves({[questionNames.PACKAGE_TYPE]: 'Package'});
+
+      return scaffoldJavaScript({projectRoot, projectName, visibility: 'Public'}).then(() => {
+        assert.neverCalledWith(fs.writeFile, `${projectRoot}/.npmrc`);
       });
     });
   });
