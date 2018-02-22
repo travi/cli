@@ -47,13 +47,16 @@ export default async function ({projectRoot, projectName, visibility, license}) 
 
   // exec('nvm ls-remote');
 
-  await writeFile(`${projectRoot}/package.json`, JSON.stringify({
-    name: `${answers[questionNames.SCOPE] ? `@${answers[questionNames.SCOPE]}/` : ''}${projectName}`,
-    ...('Package' === answers[questionNames.PACKAGE_TYPE]) && {version: '0.0.0-semantically-released'},
-    license: license || 'UNLICENSED',
-    ...('Application' === answers[questionNames.PACKAGE_TYPE]) && {private: true},
-    ...('Package' === answers[questionNames.PACKAGE_TYPE]) && {
-      publishConfig: {access: 'Private' === visibility ? 'restricted' : 'public'}
-    }
-  }));
+  await Promise.all([
+    writeFile(`${projectRoot}/package.json`, JSON.stringify({
+      name: `${answers[questionNames.SCOPE] ? `@${answers[questionNames.SCOPE]}/` : ''}${projectName}`,
+      ...('Package' === answers[questionNames.PACKAGE_TYPE]) && {version: '0.0.0-semantically-released'},
+      license: license || 'UNLICENSED',
+      ...('Application' === answers[questionNames.PACKAGE_TYPE]) && {private: true},
+      ...('Package' === answers[questionNames.PACKAGE_TYPE]) && {
+        publishConfig: {access: 'Private' === visibility ? 'restricted' : 'public'}
+      }
+    })),
+    ('Application' === answers[questionNames.PACKAGE_TYPE]) && writeFile(`${projectRoot}/.npmrc`, 'save-exact=true')
+  ]);
 }
