@@ -3,11 +3,12 @@ import fs from 'mz/fs';
 import {assert} from 'chai';
 import any from '@travi/any';
 import sinon from 'sinon';
-import scaffoldJavaScript, {questionNames} from '../../../../src/scaffold-project/javascript/scaffolder';
 import {
   scopePromptShouldBePresented,
   shouldBeScopedPromptShouldBePresented
 } from '../../../../src/scaffold-project/javascript/prompt-condiftionals';
+import * as packageBuilder from '../../../../src/scaffold-project/javascript/package';
+import scaffoldJavaScript, {questionNames} from '../../../../src/scaffold-project/javascript/scaffolder';
 
 suite('javascript project scaffolder', () => {
   let sandbox;
@@ -20,6 +21,7 @@ suite('javascript project scaffolder', () => {
 
     sandbox.stub(fs, 'writeFile');
     sandbox.stub(inquirer, 'prompt');
+    sandbox.stub(packageBuilder, 'default');
 
     fs.writeFile.resolves();
   });
@@ -63,104 +65,23 @@ suite('javascript project scaffolder', () => {
     ));
   });
 
-  test('that javascript project files are generated', () => {
-    inquirer.prompt.resolves({});
-
-    return scaffoldJavaScript({projectRoot, projectName, visibility}).then(() => {
-      assert.calledWith(fs.writeFile, `${projectRoot}/package.json`, JSON.stringify({
-        name: projectName,
-        license: 'UNLICENSED'
-      }));
-    });
-  });
-
-  test('that the scope is included in the project name when provided', () => {
-    const scope = any.word();
-    inquirer.prompt.resolves({[questionNames.SCOPE]: scope});
-
-    return scaffoldJavaScript({projectRoot, projectName, visibility}).then(() => {
-      assert.calledWith(fs.writeFile, `${projectRoot}/package.json`, JSON.stringify({
-        name: `@${scope}/${projectName}`,
-        license: 'UNLICENSED'
-      }));
-    });
-  });
-
-  test('that the package is marked as private for an application', () => {
-    inquirer.prompt.resolves({[questionNames.PACKAGE_TYPE]: 'Application'});
-
-    return scaffoldJavaScript({projectRoot, projectName, visibility}).then(() => {
-      assert.calledWith(fs.writeFile, `${projectRoot}/package.json`, JSON.stringify({
-        name: projectName,
-        license: 'UNLICENSED',
-        private: true
-      }));
-    });
-  });
-
-  suite('license', () => {
-    test('that the license is defined as provided', () => {
-      const license = any.word();
-      inquirer.prompt.resolves({});
-
-      return scaffoldJavaScript({projectRoot, projectName, license}).then(() => {
-        assert.calledWith(fs.writeFile, `${projectRoot}/package.json`, JSON.stringify({
-          name: projectName,
-          license
-        }));
+  suite('package', () => {
+    test('that the package file is defined', () => {
+      const packageDetails = any.simpleObject();
+      const scope = any.word();
+      const packageType = any.word();
+      const license = any.string();
+      inquirer.prompt.resolves({
+        [questionNames.SCOPE]: scope,
+        [questionNames.PACKAGE_TYPE]: packageType
       });
-    });
+      packageBuilder.default.withArgs({projectName, visibility, scope, packageType, license}).returns(packageDetails);
 
-    test('that the license is defined as `UNLICENSED` when not provided', () => {
-      inquirer.prompt.resolves({});
-
-      return scaffoldJavaScript({projectRoot, projectName}).then(() => {
-        assert.calledWith(fs.writeFile, `${projectRoot}/package.json`, JSON.stringify({
-          name: projectName,
-          license: 'UNLICENSED'
-        }));
-      });
-    });
-  });
-
-  suite('publish config', () => {
-    test('that access is marked as restricted for private projects', () => {
-      inquirer.prompt.resolves({[questionNames.PACKAGE_TYPE]: 'Package'});
-
-      return scaffoldJavaScript({projectRoot, projectName, visibility: 'Private'}).then(() => {
-        assert.calledWith(fs.writeFile, `${projectRoot}/package.json`, JSON.stringify({
-          name: projectName,
-          version: '0.0.0-semantically-released',
-          license: 'UNLICENSED',
-          publishConfig: {access: 'restricted'}
-        }));
-      });
-    });
-
-    test('that access is marked as public for public projects', () => {
-      inquirer.prompt.resolves({[questionNames.PACKAGE_TYPE]: 'Package'});
-
-      return scaffoldJavaScript({projectRoot, projectName, visibility: 'Public'}).then(() => {
-        assert.calledWith(fs.writeFile, `${projectRoot}/package.json`, JSON.stringify({
-          name: projectName,
-          version: '0.0.0-semantically-released',
-          license: 'UNLICENSED',
-          publishConfig: {access: 'public'}
-        }));
-      });
-    });
-
-    test('that access is marked as restricted when visibility is omitted for some reason', () => {
-      inquirer.prompt.resolves({[questionNames.PACKAGE_TYPE]: 'Package'});
-
-      return scaffoldJavaScript({projectRoot, projectName}).then(() => {
-        assert.calledWith(fs.writeFile, `${projectRoot}/package.json`, JSON.stringify({
-          name: projectName,
-          version: '0.0.0-semantically-released',
-          license: 'UNLICENSED',
-          publishConfig: {access: 'restricted'}
-        }));
-      });
+      return scaffoldJavaScript({projectRoot, projectName, visibility, license}).then(() => assert.calledWith(
+        fs.writeFile,
+        `${projectRoot}/package.json`,
+        JSON.stringify(packageDetails)
+      ));
     });
   });
 

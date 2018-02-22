@@ -2,6 +2,7 @@ import {writeFile} from 'mz/fs';
 import chalk from 'chalk';
 import {prompt} from 'inquirer';
 import {scopePromptShouldBePresented, shouldBeScopedPromptShouldBePresented} from './prompt-condiftionals';
+import buildPackage from './package';
 // import {exec} from 'shelljs';
 
 export const questionNames = {
@@ -48,15 +49,16 @@ export default async function ({projectRoot, projectName, visibility, license}) 
   // exec('nvm ls-remote');
 
   await Promise.all([
-    writeFile(`${projectRoot}/package.json`, JSON.stringify({
-      name: `${answers[questionNames.SCOPE] ? `@${answers[questionNames.SCOPE]}/` : ''}${projectName}`,
-      ...('Package' === answers[questionNames.PACKAGE_TYPE]) && {version: '0.0.0-semantically-released'},
-      license: license || 'UNLICENSED',
-      ...('Application' === answers[questionNames.PACKAGE_TYPE]) && {private: true},
-      ...('Package' === answers[questionNames.PACKAGE_TYPE]) && {
-        publishConfig: {access: 'Public' === visibility ? 'public' : 'restricted'}
-      }
-    })),
+    writeFile(
+      `${projectRoot}/package.json`,
+      JSON.stringify(buildPackage({
+        projectName,
+        visibility,
+        scope: answers[questionNames.SCOPE],
+        packageType: answers[questionNames.PACKAGE_TYPE],
+        license
+      }))
+    ),
     ('Application' === answers[questionNames.PACKAGE_TYPE]) && writeFile(`${projectRoot}/.npmrc`, 'save-exact=true')
   ]);
 }
