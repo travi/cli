@@ -85,4 +85,20 @@ suite('package details builder', () => {
       assert.equal(packageDetails.version, '0.0.0-semantically-released');
     });
   });
+
+  suite('scripts', () => {
+    suite('start', () => {
+      test('that the `start` script is not defined for a package', () => {
+        const packageDetails = buildPackageDetails({packageType: 'Package'});
+
+        assert.isUndefined(packageDetails.scripts.start);
+      });
+
+      test('that the `start` script runs the built version of the app with the `node` executable', () => {
+        const packageDetails = buildPackageDetails({packageType: 'Application'});
+
+        assert.equal(packageDetails.scripts.start, './lib/index.js');
+      });
+    });
+  });
 });
