@@ -9,8 +9,25 @@ export const questionNames = {
   NODE_VERSION_CATEGORY: 'nodeVersionCategory',
   PACKAGE_TYPE: 'packageType',
   SHOULD_BE_SCOPED: 'shouldBeScoped',
-  SCOPE: 'scope'
+  SCOPE: 'scope',
+  UNIT_TESTS: 'unitTests',
+  INTEGRATION_TESTS: 'integrationTests'
 };
+
+const testingQuestions = [
+  {
+    name: questionNames.UNIT_TESTS,
+    message: 'Will this project be unit tested?',
+    type: 'confirm',
+    default: true
+  },
+  {
+    name: questionNames.INTEGRATION_TESTS,
+    message: 'Will this project be integration tested?',
+    type: 'confirm',
+    default: true
+  }
+];
 
 export default async function ({projectRoot, projectName, visibility, license}) {
   console.log(chalk.blue('Initializing JavaScript project'));     // eslint-disable-line no-console
@@ -42,8 +59,8 @@ export default async function ({projectRoot, projectName, visibility, license}) 
       message: 'What is the scope?',
       when: scopePromptShouldBePresented,
       default: 'travi'
-    }
-
+    },
+    ...testingQuestions
   ]);
 
   // exec('nvm ls-remote');

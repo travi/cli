@@ -60,6 +60,18 @@ suite('javascript project scaffolder', () => {
           message: 'What is the scope?',
           when: scopePromptShouldBePresented,
           default: 'travi'
+        },
+        {
+          name: questionNames.UNIT_TESTS,
+          message: 'Will this project be unit tested?',
+          type: 'confirm',
+          default: true
+        },
+        {
+          name: questionNames.INTEGRATION_TESTS,
+          message: 'Will this project be integration tested?',
+          type: 'confirm',
+          default: true
         }
       ]
     ));
