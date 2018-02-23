@@ -83,11 +83,16 @@ suite('javascript project scaffolder', () => {
       const scope = any.word();
       const packageType = any.word();
       const license = any.string();
+      const tests = {unit: any.boolean(), integration: any.boolean()};
       inquirer.prompt.resolves({
         [questionNames.SCOPE]: scope,
-        [questionNames.PACKAGE_TYPE]: packageType
+        [questionNames.PACKAGE_TYPE]: packageType,
+        [questionNames.UNIT_TESTS]: tests.unit,
+        [questionNames.INTEGRATION_TESTS]: tests.integration
       });
-      packageBuilder.default.withArgs({projectName, visibility, scope, packageType, license}).returns(packageDetails);
+      packageBuilder.default
+        .withArgs({projectName, visibility, scope, packageType, license, tests})
+        .returns(packageDetails);
 
       return scaffoldJavaScript({projectRoot, projectName, visibility, license}).then(() => assert.calledWith(
         fs.writeFile,

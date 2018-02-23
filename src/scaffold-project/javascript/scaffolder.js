@@ -73,7 +73,11 @@ export default async function ({projectRoot, projectName, visibility, license}) 
         visibility,
         scope: answers[questionNames.SCOPE],
         packageType: answers[questionNames.PACKAGE_TYPE],
-        license
+        license,
+        tests: {
+          unit: answers[questionNames.UNIT_TESTS],
+          integration: answers[questionNames.INTEGRATION_TESTS]
+        }
       }))
     ),
     ('Application' === answers[questionNames.PACKAGE_TYPE]) && writeFile(`${projectRoot}/.npmrc`, 'save-exact=true')
