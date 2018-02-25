@@ -1,11 +1,7 @@
-import {exec} from 'shelljs';
+import exec from '../shell/exec-as-promised';
 
 export default async function (dependencies) {
   if (dependencies.length) {
-    await new Promise((resolve, reject) => exec(
-      `npm install ${dependencies.join(' ')} --save-dev`,
-      {silent: true},
-      code => ((0 === code) ? resolve() : reject())
-    ));
+    await exec(`. ~/.nvm/nvm.sh && nvm use && npm install ${dependencies.join(' ')} --save-dev`);
   }
 }

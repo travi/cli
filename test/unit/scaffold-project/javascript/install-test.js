@@ -1,7 +1,7 @@
-import shell from 'shelljs';
 import {assert} from 'chai';
 import sinon from 'sinon';
 import any from '@travi/any';
+import * as exec from '../../../../src/scaffold-project/shell/exec-as-promised';
 import npmInstall from '../../../../src/scaffold-project/javascript/install';
 
 suite('npm install', () => {
@@ -10,23 +10,15 @@ suite('npm install', () => {
   setup(() => {
     sandbox = sinon.sandbox.create();
 
-    sandbox.stub(shell, 'exec');
-
-    shell.exec.yields(0);
+    sandbox.stub(exec, 'default');
   });
 
   teardown(() => sandbox.restore());
 
-  test('that a non-zero exit code results in a rejection', () => {
-    shell.exec.yields(1);
-
-    return assert.isRejected(npmInstall(any.listOf(any.word)));
-  });
-
   test('that `npm install` is not run when no dependencies need to be installed', async () => {
     await npmInstall([]);
 
-    assert.neverCalledWith(shell.exec, 'npm install  --save-dev', {silent: true});
+    assert.notCalled(exec.default);
   });
 
   suite('devDependencies', () => {
@@ -35,7 +27,10 @@ suite('npm install', () => {
 
       await npmInstall(devDependencies);
 
-      assert.calledWith(shell.exec, `npm install ${devDependencies.join(' ')} --save-dev`, {silent: true});
+      assert.calledWith(
+        exec.default,
+        `. ~/.nvm/nvm.sh && nvm use && npm install ${devDependencies.join(' ')} --save-dev`
+      );
     });
   });
 });
