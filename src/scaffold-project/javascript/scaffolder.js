@@ -1,9 +1,10 @@
 import {writeFile} from 'mz/fs';
 import chalk from 'chalk';
 import {prompt} from 'inquirer';
-import {scopePromptShouldBePresented, shouldBeScopedPromptShouldBePresented} from './prompt-condiftionals';
-import buildPackage from './package';
 // import {exec} from 'shelljs';
+import buildPackage from './package';
+import install from './install';
+import {scopePromptShouldBePresented, shouldBeScopedPromptShouldBePresented} from './prompt-condiftionals';
 
 export const questionNames = {
   NODE_VERSION_CATEGORY: 'nodeVersionCategory',
@@ -63,7 +64,9 @@ export default async function ({projectRoot, projectName, visibility, license}) 
     ...testingQuestions
   ]);
 
-  // exec('nvm ls-remote');
+  // exec('. ~/.nvm/nvm.sh && nvm --version && nvm ls-remote');
+
+  const devDependencies = [...answers[questionNames.UNIT_TESTS] ? ['mocha', 'chai'] : []];
 
   await Promise.all([
     writeFile(
@@ -82,4 +85,6 @@ export default async function ({projectRoot, projectName, visibility, license}) 
     ),
     ('Application' === answers[questionNames.PACKAGE_TYPE]) && writeFile(`${projectRoot}/.npmrc`, 'save-exact=true')
   ]);
+
+  await install(devDependencies);
 }

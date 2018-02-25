@@ -1,5 +1,6 @@
 import inquirer from 'inquirer';
 import fs from 'mz/fs';
+import shell from 'shelljs';
 import {assert} from 'chai';
 import any from '@travi/any';
 import sinon from 'sinon';
@@ -8,6 +9,7 @@ import {
   shouldBeScopedPromptShouldBePresented
 } from '../../../../src/scaffold-project/javascript/prompt-condiftionals';
 import * as packageBuilder from '../../../../src/scaffold-project/javascript/package';
+import * as installer from '../../../../src/scaffold-project/javascript/install';
 import scaffoldJavaScript, {questionNames} from '../../../../src/scaffold-project/javascript/scaffolder';
 
 suite('javascript project scaffolder', () => {
@@ -22,8 +24,11 @@ suite('javascript project scaffolder', () => {
     sandbox.stub(fs, 'writeFile');
     sandbox.stub(inquirer, 'prompt');
     sandbox.stub(packageBuilder, 'default');
+    sandbox.stub(installer, 'default');
+    sandbox.stub(shell, 'exec');
 
     fs.writeFile.resolves();
+    shell.exec.yields(0);
   });
 
   teardown(() => sandbox.restore());
@@ -99,6 +104,30 @@ suite('javascript project scaffolder', () => {
         `${projectRoot}/package.json`,
         JSON.stringify(packageDetails)
       ));
+    });
+
+    suite('dependencies', () => {
+      suite('testing', () => {
+        test('that mocha and chai are installed when the project will be unit tested', async () => {
+          inquirer.prompt.resolves({
+            [questionNames.UNIT_TESTS]: true
+          });
+
+          await scaffoldJavaScript({});
+
+          assert.calledWith(installer.default, ['mocha', 'chai']);
+        });
+
+        test('that mocha and chai are not installed when the project will not be unit tested', async () => {
+          inquirer.prompt.resolves({
+            [questionNames.UNIT_TESTS]: false
+          });
+
+          await scaffoldJavaScript({});
+
+          assert.calledWith(installer.default, []);
+        });
+      });
     });
   });
 
