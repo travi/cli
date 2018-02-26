@@ -1,7 +1,7 @@
 import {writeFile} from 'mz/fs';
 import chalk from 'chalk';
 import {prompt} from 'inquirer';
-// import {exec} from 'shelljs';
+import exec from '../shell/exec-as-promised';
 import buildPackage from './package';
 import install from './install';
 import {scopePromptShouldBePresented, shouldBeScopedPromptShouldBePresented} from './prompt-condiftionals';
@@ -29,6 +29,16 @@ const testingQuestions = [
     default: true
   }
 ];
+
+async function determineNodeVersionForProject(nodeVersionCategory) {
+  console.log(chalk.grey(`Determining ${                          // eslint-disable-line no-console
+    nodeVersionCategory.toLowerCase()
+  } version of node`));
+  const nvmLsOutput = await exec(`. ~/.nvm/nvm.sh && nvm ls-remote${('LTS' === nodeVersionCategory) ? ' --lts' : ''}`);
+  const lsLines = nvmLsOutput.split('\n');
+  const lsLine = lsLines[lsLines.length - 2];
+  return lsLine.match(/(v[0-9]+\.[0-9]+\.[0-9]+)/)[1];
+}
 
 export default async function ({projectRoot, projectName, visibility, license}) {
   console.log(chalk.blue('Initializing JavaScript project'));     // eslint-disable-line no-console
@@ -64,11 +74,13 @@ export default async function ({projectRoot, projectName, visibility, license}) 
     ...testingQuestions
   ]);
 
-  // exec('. ~/.nvm/nvm.sh && nvm --version && nvm ls-remote');
-
   const devDependencies = [...answers[questionNames.UNIT_TESTS] ? ['mocha', 'chai'] : []];
 
+  const nodeVersion = await determineNodeVersionForProject(answers[questionNames.NODE_VERSION_CATEGORY]);
+
+  console.log(chalk.grey('Writing project files'));      // eslint-disable-line no-console
   await Promise.all([
+    writeFile(`${projectRoot}/.nvmrc`, nodeVersion),
     writeFile(
       `${projectRoot}/package.json`,
       JSON.stringify(buildPackage({
@@ -86,5 +98,12 @@ export default async function ({projectRoot, projectName, visibility, license}) 
     ('Application' === answers[questionNames.PACKAGE_TYPE]) && writeFile(`${projectRoot}/.npmrc`, 'save-exact=true')
   ]);
 
+  console.log(chalk.grey(`Installing ${                           // eslint-disable-line no-console
+    answers[questionNames.NODE_VERSION_CATEGORY].toLowerCase()
+  } version of node using nvm`));
+  await exec('. ~/.nvm/nvm.sh && nvm install', {silent: false});
+
+
+  console.log(chalk.grey('Installing devDependencies'));          // eslint-disable-line no-console
   await install(devDependencies);
 }

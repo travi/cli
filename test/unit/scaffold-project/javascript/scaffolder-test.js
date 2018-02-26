@@ -1,6 +1,5 @@
 import inquirer from 'inquirer';
 import fs from 'mz/fs';
-import shell from 'shelljs';
 import {assert} from 'chai';
 import any from '@travi/any';
 import sinon from 'sinon';
@@ -10,6 +9,7 @@ import {
 } from '../../../../src/scaffold-project/javascript/prompt-condiftionals';
 import * as packageBuilder from '../../../../src/scaffold-project/javascript/package';
 import * as installer from '../../../../src/scaffold-project/javascript/install';
+import * as exec from '../../../../src/scaffold-project/shell/exec-as-promised';
 import scaffoldJavaScript, {questionNames} from '../../../../src/scaffold-project/javascript/scaffolder';
 
 suite('javascript project scaffolder', () => {
@@ -17,6 +17,9 @@ suite('javascript project scaffolder', () => {
   const projectRoot = any.string();
   const projectName = any.string();
   const visibility = any.fromList(['Private', 'Public']);
+  const nodeVersionCategoryChoices = ['LTS', 'Latest'];
+  const ltsVersion = `v${any.integer()}.${any.integer()}.${any.integer()}`;
+  const latestVersion = `v${any.integer()}.${any.integer()}.${any.integer()}`;
 
   setup(() => {
     sandbox = sinon.sandbox.create();
@@ -25,16 +28,23 @@ suite('javascript project scaffolder', () => {
     sandbox.stub(inquirer, 'prompt');
     sandbox.stub(packageBuilder, 'default');
     sandbox.stub(installer, 'default');
-    sandbox.stub(shell, 'exec');
+    sandbox.stub(exec, 'default');
 
     fs.writeFile.resolves();
-    shell.exec.yields(0);
+    exec.default
+      .withArgs('. ~/.nvm/nvm.sh && nvm ls-remote')
+      .resolves([...any.listOf(any.word), latestVersion, ''].join('\n'));
+    exec.default
+      .withArgs('. ~/.nvm/nvm.sh && nvm ls-remote --lts')
+      .resolves([...any.listOf(any.word), ltsVersion, ''].join('\n'));
   });
 
   teardown(() => sandbox.restore());
 
   test('that the user is prompted for the necessary details', () => {
-    inquirer.prompt.resolves({});
+    inquirer.prompt.resolves({
+      [questionNames.NODE_VERSION_CATEGORY]: any.fromList(nodeVersionCategoryChoices)
+    });
 
     return scaffoldJavaScript({visibility}).then(() => assert.calledWith(
       inquirer.prompt,
@@ -43,7 +53,7 @@ suite('javascript project scaffolder', () => {
           name: questionNames.NODE_VERSION_CATEGORY,
           message: 'What node.js version should be used?',
           type: 'list',
-          choices: ['LTS', 'Latest'],
+          choices: nodeVersionCategoryChoices,
           default: 'Latest'
         },
         {
@@ -93,7 +103,8 @@ suite('javascript project scaffolder', () => {
         [questionNames.SCOPE]: scope,
         [questionNames.PACKAGE_TYPE]: packageType,
         [questionNames.UNIT_TESTS]: tests.unit,
-        [questionNames.INTEGRATION_TESTS]: tests.integration
+        [questionNames.INTEGRATION_TESTS]: tests.integration,
+        [questionNames.NODE_VERSION_CATEGORY]: any.fromList(nodeVersionCategoryChoices)
       });
       packageBuilder.default
         .withArgs({projectName, visibility, scope, packageType, license, tests})
@@ -110,6 +121,7 @@ suite('javascript project scaffolder', () => {
       suite('testing', () => {
         test('that mocha and chai are installed when the project will be unit tested', async () => {
           inquirer.prompt.resolves({
+            [questionNames.NODE_VERSION_CATEGORY]: any.fromList(nodeVersionCategoryChoices),
             [questionNames.UNIT_TESTS]: true
           });
 
@@ -120,6 +132,7 @@ suite('javascript project scaffolder', () => {
 
         test('that mocha and chai are not installed when the project will not be unit tested', async () => {
           inquirer.prompt.resolves({
+            [questionNames.NODE_VERSION_CATEGORY]: any.fromList(nodeVersionCategoryChoices),
             [questionNames.UNIT_TESTS]: false
           });
 
@@ -133,7 +146,10 @@ suite('javascript project scaffolder', () => {
 
   suite('save-exact', () => {
     test('that the project is configured to use exact dependency versions if it is an application', () => {
-      inquirer.prompt.resolves({[questionNames.PACKAGE_TYPE]: 'Application'});
+      inquirer.prompt.resolves({
+        [questionNames.NODE_VERSION_CATEGORY]: any.fromList(nodeVersionCategoryChoices),
+        [questionNames.PACKAGE_TYPE]: 'Application'
+      });
 
       return scaffoldJavaScript({projectRoot, projectName, visibility: 'Public'}).then(() => {
         assert.calledWith(fs.writeFile, `${projectRoot}/.npmrc`, 'save-exact=true');
@@ -141,10 +157,37 @@ suite('javascript project scaffolder', () => {
     });
 
     test('that the project is allowed to use semver ranges if it is a package', () => {
-      inquirer.prompt.resolves({[questionNames.PACKAGE_TYPE]: 'Package'});
+      inquirer.prompt.resolves({
+        [questionNames.NODE_VERSION_CATEGORY]: any.fromList(nodeVersionCategoryChoices),
+        [questionNames.PACKAGE_TYPE]: 'Package'
+      });
 
       return scaffoldJavaScript({projectRoot, projectName, visibility: 'Public'}).then(() => {
         assert.neverCalledWith(fs.writeFile, `${projectRoot}/.npmrc`);
+      });
+    });
+  });
+
+  suite('nvm', () => {
+    test('that the latest available version is used for the project when `Latest` is chosen', () => {
+      inquirer.prompt.resolves({
+        [questionNames.NODE_VERSION_CATEGORY]: 'Latest'
+      });
+
+      return scaffoldJavaScript({projectRoot, projectName, visibility: 'Public'}).then(() => {
+        assert.calledWith(fs.writeFile, `${projectRoot}/.nvmrc`, latestVersion);
+        assert.calledWith(exec.default, '. ~/.nvm/nvm.sh && nvm install', {silent: false});
+      });
+    });
+
+    test('that the latest available version is used for the project when `LTS` is chosen', () => {
+      inquirer.prompt.resolves({
+        [questionNames.NODE_VERSION_CATEGORY]: 'LTS'
+      });
+
+      return scaffoldJavaScript({projectRoot, projectName, visibility: 'Public'}).then(() => {
+        assert.calledWith(fs.writeFile, `${projectRoot}/.nvmrc`, ltsVersion);
+        assert.calledWith(exec.default, '. ~/.nvm/nvm.sh && nvm install', {silent: false});
       });
     });
   });
