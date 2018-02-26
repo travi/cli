@@ -115,13 +115,13 @@ suite('package details builder', () => {
           });
         });
 
-        suite('integratin', () => {
+        suite('integration', () => {
           test('that the script is included if the project will be integration tested', () => {
             const packageDetails = buildPackageDetails({tests: {integration: true}});
 
             assert.equal(
               packageDetails.scripts['test:integration'],
-              'cucumber-js test/integration --require-module babel-register --format-options \'{\\"snippetInterface\\": \\"async-await\\"}\''     // eslint-disable-line max-len
+              'cucumber-js test/integration --require-module babel-register --format-options \'{"snippetInterface": "async-await"}\''     // eslint-disable-line max-len
             );
           });
 
