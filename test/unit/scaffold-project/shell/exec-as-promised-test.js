@@ -35,4 +35,10 @@ suite('promisified shell.exec()', () => {
       promise.catch(err => assert.deepEqual(err.data, {code, stdout, stderr}))
     ]);
   });
+
+  test('that default options can be overridden', async () => {
+    shell.exec.withArgs(command, {silent: false}).yields(0, stdout);
+
+    assert.equal(await exec(command, {silent: false}), stdout);
+  });
 });
