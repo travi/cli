@@ -75,6 +75,7 @@
     "cp-file": "5.0.0",
     "inquander": "1.1.1",
     "inquirer": "5.1.0",
+    "lodash.uniq": "4.5.0",
     "mustache": "2.3.0",
     "mz": "2.7.0",
     "nodegit": "0.20.3",

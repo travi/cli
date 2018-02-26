@@ -119,7 +119,7 @@ suite('javascript project scaffolder', () => {
 
     suite('dependencies', () => {
       suite('testing', () => {
-        test('that mocha and chai are installed when the project will be unit tested', async () => {
+        test('that mocha, chai, and sinon are installed when the project will be unit tested', async () => {
           inquirer.prompt.resolves({
             [questionNames.NODE_VERSION_CATEGORY]: any.fromList(nodeVersionCategoryChoices),
             [questionNames.UNIT_TESTS]: true
@@ -127,10 +127,10 @@ suite('javascript project scaffolder', () => {
 
           await scaffoldJavaScript({});
 
-          assert.calledWith(installer.default, ['mocha', 'chai']);
+          assert.calledWith(installer.default, ['mocha', 'chai', 'sinon']);
         });
 
-        test('that mocha and chai are not installed when the project will not be unit tested', async () => {
+        test('that mocha, chai, and sinon are not installed when the project will not be unit tested', async () => {
           inquirer.prompt.resolves({
             [questionNames.NODE_VERSION_CATEGORY]: any.fromList(nodeVersionCategoryChoices),
             [questionNames.UNIT_TESTS]: false
@@ -139,6 +139,40 @@ suite('javascript project scaffolder', () => {
           await scaffoldJavaScript({});
 
           assert.calledWith(installer.default, []);
+        });
+
+        test('that cucumber and chai are installed when the project will be integration tested', async () => {
+          inquirer.prompt.resolves({
+            [questionNames.NODE_VERSION_CATEGORY]: any.fromList(nodeVersionCategoryChoices),
+            [questionNames.INTEGRATION_TESTS]: true
+          });
+
+          await scaffoldJavaScript({});
+
+          assert.calledWith(installer.default, ['cucumber', 'chai']);
+        });
+
+        test('that cucumber and chai are not installed when the project will not be integration tested', async () => {
+          inquirer.prompt.resolves({
+            [questionNames.NODE_VERSION_CATEGORY]: any.fromList(nodeVersionCategoryChoices),
+            [questionNames.INTEGRATION_TESTS]: false
+          });
+
+          await scaffoldJavaScript({});
+
+          assert.calledWith(installer.default, []);
+        });
+
+        test('that unique dependencies are requested when various reasons overlap', async () => {
+          inquirer.prompt.resolves({
+            [questionNames.NODE_VERSION_CATEGORY]: any.fromList(nodeVersionCategoryChoices),
+            [questionNames.UNIT_TESTS]: true,
+            [questionNames.INTEGRATION_TESTS]: true
+          });
+
+          await scaffoldJavaScript({});
+
+          assert.calledWith(installer.default, ['mocha', 'chai', 'sinon', 'cucumber']);
         });
       });
     });

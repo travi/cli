@@ -18,7 +18,8 @@ export default {
     'spdx-license-list/simple',
     'spdx-license-list/full',
     'mustache',
-    'shelljs'
+    'shelljs',
+    'lodash.uniq'
   ],
   plugins: [
     nodeResolve({

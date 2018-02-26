@@ -1,6 +1,7 @@
 import {writeFile} from 'mz/fs';
 import chalk from 'chalk';
 import {prompt} from 'inquirer';
+import uniq from 'lodash.uniq';
 import exec from '../shell/exec-as-promised';
 import buildPackage from './package';
 import install from './install';
@@ -74,7 +75,10 @@ export default async function ({projectRoot, projectName, visibility, license}) 
     ...testingQuestions
   ]);
 
-  const devDependencies = [...answers[questionNames.UNIT_TESTS] ? ['mocha', 'chai'] : []];
+  const devDependencies = uniq([
+    ...answers[questionNames.UNIT_TESTS] ? ['mocha', 'chai', 'sinon'] : [],
+    ...answers[questionNames.INTEGRATION_TESTS] ? ['cucumber', 'chai'] : []
+  ]);
 
   const nodeVersion = await determineNodeVersionForProject(answers[questionNames.NODE_VERSION_CATEGORY]);
 
