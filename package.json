@@ -9,7 +9,7 @@
   "homepage": "https://github.com/travi/cli#readme",
   "scripts": {
     "clean": "rimraf bin/",
-    "copy:templates": "cpy '**/*.*' '../../bin/' --parents --cwd=src/scaffold-project",
+    "copy:templates": "cpy 'templates/**/*.*' '../../bin/' --parents --cwd=src/scaffold-project",
     "lint:md": "globstar --node -- markdownlint **/*.md",
     "lint:js": "eslint . --cache",
     "tests:unit": "mocha --recursive test/unit",
