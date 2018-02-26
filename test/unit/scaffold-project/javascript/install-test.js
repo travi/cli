@@ -29,7 +29,8 @@ suite('npm install', () => {
 
       assert.calledWith(
         exec.default,
-        `. ~/.nvm/nvm.sh && nvm use && npm install ${devDependencies.join(' ')} --save-dev`
+        `. ~/.nvm/nvm.sh && nvm use && npm install ${devDependencies.join(' ')} --save-dev`,
+        {silent: false}
       );
     });
   });

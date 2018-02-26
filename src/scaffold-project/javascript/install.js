@@ -2,6 +2,6 @@ import exec from '../shell/exec-as-promised';
 
 export default async function (dependencies) {
   if (dependencies.length) {
-    await exec(`. ~/.nvm/nvm.sh && nvm use && npm install ${dependencies.join(' ')} --save-dev`);
+    await exec(`. ~/.nvm/nvm.sh && nvm use && npm install ${dependencies.join(' ')} --save-dev`, {silent: false});
   }
 }
