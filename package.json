@@ -61,7 +61,7 @@
     "npm-run-all": "4.1.2",
     "nyc": "11.4.1",
     "rimraf": "2.6.2",
-    "rollup": "0.56.3",
+    "rollup": "0.56.4",
     "rollup-plugin-babel": "3.0.3",
     "rollup-plugin-executable": "1.2.0",
     "rollup-plugin-json": "2.3.0",
