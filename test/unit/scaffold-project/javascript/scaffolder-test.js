@@ -99,6 +99,7 @@ suite('javascript project scaffolder', () => {
       const packageType = any.word();
       const license = any.string();
       const tests = {unit: any.boolean(), integration: any.boolean()};
+      const vcs = any.simpleObject();
       inquirer.prompt.resolves({
         [questionNames.SCOPE]: scope,
         [questionNames.PACKAGE_TYPE]: packageType,
@@ -107,10 +108,10 @@ suite('javascript project scaffolder', () => {
         [questionNames.NODE_VERSION_CATEGORY]: any.fromList(nodeVersionCategoryChoices)
       });
       packageBuilder.default
-        .withArgs({projectName, visibility, scope, packageType, license, tests})
+        .withArgs({projectName, visibility, scope, packageType, license, tests, vcs})
         .returns(packageDetails);
 
-      return scaffoldJavaScript({projectRoot, projectName, visibility, license}).then(() => assert.calledWith(
+      return scaffoldJavaScript({projectRoot, projectName, visibility, license, vcs}).then(() => assert.calledWith(
         fs.writeFile,
         `${projectRoot}/package.json`,
         JSON.stringify(packageDetails)

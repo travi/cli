@@ -41,7 +41,7 @@ async function determineNodeVersionForProject(nodeVersionCategory) {
   return lsLine.match(/(v[0-9]+\.[0-9]+\.[0-9]+)/)[1];
 }
 
-export default async function ({projectRoot, projectName, visibility, license}) {
+export default async function ({projectRoot, projectName, visibility, license, vcs}) {
   console.log(chalk.blue('Initializing JavaScript project'));     // eslint-disable-line no-console
 
   const answers = await prompt([
@@ -93,6 +93,7 @@ export default async function ({projectRoot, projectName, visibility, license}) 
         scope: answers[questionNames.SCOPE],
         packageType: answers[questionNames.PACKAGE_TYPE],
         license,
+        vcs,
         tests: {
           unit: answers[questionNames.UNIT_TESTS],
           integration: answers[questionNames.INTEGRATION_TESTS]
