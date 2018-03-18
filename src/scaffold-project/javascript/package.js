@@ -1,9 +1,10 @@
-export default function ({projectName, visibility, scope, packageType, license, tests}) {
+export default function ({projectName, visibility, scope, packageType, license, tests, vcs}) {
   return {
     name: `${scope ? `@${scope}/` : ''}${projectName}`,
     ...('Package' === packageType) && {version: '0.0.0-semantically-released'},
     license: license || 'UNLICENSED',
     ...('Application' === packageType) && {private: true},
+    ...('GitHub' === vcs.host) && {repository: `${vcs.owner}/${vcs.name}`},
     scripts: {
       ...('Application' === packageType) && {start: './lib/index.js'},
       ...tests.unit && {'test:unit': 'mocha --recursive test/unit'},
