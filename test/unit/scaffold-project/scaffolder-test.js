@@ -22,6 +22,8 @@ suite('project scaffolder', () => {
   let sandbox;
   const projectPath = any.string();
   const projectName = any.string();
+  const vcs = any.simpleObject();
+  const repoHost = any.word();
 
   setup(() => {
     sandbox = sinon.sandbox.create();
@@ -118,8 +120,6 @@ suite('project scaffolder', () => {
     const year = any.word();
     const holder = any.sentence();
     const copyright = {year, holder};
-    const repoHost = any.word();
-    const vcs = any.simpleObject();
     inquirer.prompt.resolves({
       [questionNames.PROJECT_NAME]: projectName,
       [questionNames.GIT_REPO]: true,
@@ -166,14 +166,17 @@ suite('project scaffolder', () => {
       [questionNames.PROJECT_NAME]: projectName,
       [questionNames.PROJECT_TYPE]: 'JavaScript',
       [questionNames.VISIBILITY]: visibility,
+      [questionNames.REPO_HOST]: repoHost,
       [questionNames.LICENSE]: license
     });
+    vcsHostScaffolder.default.withArgs({host: repoHost, projectName}).resolves(vcs);
 
     return scaffolder().then(() => assert.calledWith(javascriptScaffolder.default, {
       projectName,
       projectRoot: projectPath,
       visibility,
-      license
+      license,
+      vcs
     }));
   });
 });

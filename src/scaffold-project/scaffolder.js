@@ -115,6 +115,7 @@ export default async function () {
     isJavaScriptProject() ? scaffoldJavaScriptProject({
       projectRoot,
       projectName,
+      vcs,
       visibility: answers[questionNames.VISIBILITY],
       license: answers[questionNames.LICENSE]
     }) : undefined
