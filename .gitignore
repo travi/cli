@@ -1,6 +1,6 @@
-node_modules/
-lib/
-bin/
-.nyc_output/
+/node_modules/
+/lib/
+/bin/
+/.nyc_output/
 
 .eslintcache

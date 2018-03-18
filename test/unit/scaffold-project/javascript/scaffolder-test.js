@@ -226,4 +226,19 @@ suite('javascript project scaffolder', () => {
       });
     });
   });
+
+  suite('data passed downstream', () => {
+    test('that files and directories are defined to be ignored from version control', async () => {
+      inquirer.prompt.resolves({
+        [questionNames.NODE_VERSION_CATEGORY]: any.word()
+      });
+
+      const {vcsIgnore} = await scaffoldJavaScript({projectRoot, projectName, visibility: 'Public'});
+
+      assert.include(vcsIgnore.files, '.eslintcache');
+
+      assert.include(vcsIgnore.directories, '/node_modules/');
+      assert.include(vcsIgnore.directories, '/lib/');
+    });
+  });
 });

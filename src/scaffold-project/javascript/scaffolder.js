@@ -112,4 +112,11 @@ export default async function ({projectRoot, projectName, visibility, license, v
 
   console.log(chalk.grey('Installing devDependencies'));          // eslint-disable-line no-console
   await install(devDependencies);
+
+  return {
+    vcsIgnore: {
+      files: ['.eslintcache'],
+      directories: ['/node_modules/', '/lib/']
+    }
+  };
 }
