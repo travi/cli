@@ -53,13 +53,15 @@ suite('package details builder', () => {
   });
 
   suite('github', () => {
-    test('that the repository is defined', () => {
+    test('that the repository details are defined', () => {
       const repoName = any.word();
       const owner = any.word();
 
       const packageDetails = buildPackageDetails({tests: {}, vcs: {host: 'GitHub', name: repoName, owner}});
 
       assert.equal(packageDetails.repository, `${owner}/${repoName}`);
+      assert.equal(packageDetails.bugs, `https://github.com/${owner}/${repoName}/issues`);
+      assert.equal(packageDetails.homepage, `https://github.com/${owner}/${repoName}#readme`);
     });
   });
 
@@ -68,6 +70,8 @@ suite('package details builder', () => {
       const packageDetails = buildPackageDetails({projectName, visibility, tests: {}, vcs: {host: any.word()}});
 
       assert.isUndefined(packageDetails.repository);
+      assert.isUndefined(packageDetails.bugs);
+      assert.isUndefined(packageDetails.homepage);
     });
   });
 
