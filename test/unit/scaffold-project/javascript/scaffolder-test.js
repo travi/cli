@@ -128,7 +128,7 @@ suite('javascript project scaffolder', () => {
 
           await scaffoldJavaScript({});
 
-          assert.calledWith(installer.default, ['mocha', 'chai', 'sinon']);
+          assert.calledWith(installer.default, ['@travi/eslint-config-travi', 'mocha', 'chai', 'sinon']);
         });
 
         test('that mocha, chai, and sinon are not installed when the project will not be unit tested', async () => {
@@ -139,7 +139,7 @@ suite('javascript project scaffolder', () => {
 
           await scaffoldJavaScript({});
 
-          assert.calledWith(installer.default, []);
+          assert.calledWith(installer.default, ['@travi/eslint-config-travi']);
         });
 
         test('that cucumber and chai are installed when the project will be integration tested', async () => {
@@ -150,7 +150,7 @@ suite('javascript project scaffolder', () => {
 
           await scaffoldJavaScript({});
 
-          assert.calledWith(installer.default, ['cucumber', 'chai']);
+          assert.calledWith(installer.default, ['@travi/eslint-config-travi', 'cucumber', 'chai']);
         });
 
         test('that cucumber and chai are not installed when the project will not be integration tested', async () => {
@@ -161,7 +161,7 @@ suite('javascript project scaffolder', () => {
 
           await scaffoldJavaScript({});
 
-          assert.calledWith(installer.default, []);
+          assert.calledWith(installer.default, ['@travi/eslint-config-travi']);
         });
 
         test('that unique dependencies are requested when various reasons overlap', async () => {
@@ -173,7 +173,7 @@ suite('javascript project scaffolder', () => {
 
           await scaffoldJavaScript({});
 
-          assert.calledWith(installer.default, ['mocha', 'chai', 'sinon', 'cucumber']);
+          assert.calledWith(installer.default, ['@travi/eslint-config-travi', 'mocha', 'chai', 'sinon', 'cucumber']);
         });
       });
     });

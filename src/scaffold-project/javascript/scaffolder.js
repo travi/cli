@@ -76,6 +76,7 @@ export default async function ({projectRoot, projectName, visibility, license, v
   ]);
 
   const devDependencies = uniq([
+    '@travi/eslint-config-travi',
     ...answers[questionNames.UNIT_TESTS] ? ['mocha', 'chai', 'sinon'] : [],
     ...answers[questionNames.INTEGRATION_TESTS] ? ['cucumber', 'chai'] : []
   ]);

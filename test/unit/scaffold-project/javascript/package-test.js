@@ -156,5 +156,13 @@ suite('package details builder', () => {
         });
       });
     });
+
+    suite('lint', () => {
+      test('that javascript is linted', () => {
+        const packageDetails = buildPackageDetails({tests: {}, vcs: {}});
+
+        assert.equal(packageDetails.scripts['lint:js'], 'eslint . --cache');
+      });
+    });
   });
 });
