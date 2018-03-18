@@ -122,37 +122,37 @@ suite('package details builder', () => {
 
         assert.equal(packageDetails.scripts.start, './lib/index.js');
       });
+    });
 
-      suite('tests', () => {
-        suite('unit', () => {
-          test('that the script is included if the project will be unit tested', () => {
-            const packageDetails = buildPackageDetails({tests: {unit: true}, vcs: {}});
+    suite('tests', () => {
+      suite('unit', () => {
+        test('that the script is included if the project will be unit tested', () => {
+          const packageDetails = buildPackageDetails({tests: {unit: true}, vcs: {}});
 
-            assert.equal(packageDetails.scripts['test:unit'], 'mocha --recursive test/unit');
-          });
-
-          test('that the script is not included if the project will not be unit tested', () => {
-            const packageDetails = buildPackageDetails({tests: {unit: false}, vcs: {}});
-
-            assert.isUndefined(packageDetails.scripts['test:unit']);
-          });
+          assert.equal(packageDetails.scripts['test:unit'], 'mocha --recursive test/unit');
         });
 
-        suite('integration', () => {
-          test('that the script is included if the project will be integration tested', () => {
-            const packageDetails = buildPackageDetails({tests: {integration: true}, vcs: {}});
+        test('that the script is not included if the project will not be unit tested', () => {
+          const packageDetails = buildPackageDetails({tests: {unit: false}, vcs: {}});
 
-            assert.equal(
-              packageDetails.scripts['test:integration'],
-              'cucumber-js test/integration --require-module babel-register --format-options \'{"snippetInterface": "async-await"}\''     // eslint-disable-line max-len
-            );
-          });
+          assert.isUndefined(packageDetails.scripts['test:unit']);
+        });
+      });
 
-          test('that the script is not included if the project will not be integration tested', () => {
-            const packageDetails = buildPackageDetails({tests: {integration: false}, vcs: {}});
+      suite('integration', () => {
+        test('that the script is included if the project will be integration tested', () => {
+          const packageDetails = buildPackageDetails({tests: {integration: true}, vcs: {}});
 
-            assert.isUndefined(packageDetails.scripts['integration:unit']);
-          });
+          assert.equal(
+            packageDetails.scripts['test:integration'],
+            'cucumber-js test/integration --require-module babel-register --format-options \'{"snippetInterface": "async-await"}\''     // eslint-disable-line max-len
+          );
+        });
+
+        test('that the script is not included if the project will not be integration tested', () => {
+          const packageDetails = buildPackageDetails({tests: {integration: false}, vcs: {}});
+
+          assert.isUndefined(packageDetails.scripts['integration:unit']);
         });
       });
     });
