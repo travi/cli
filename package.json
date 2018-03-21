@@ -67,7 +67,7 @@
     "rollup-plugin-json": "2.3.0",
     "rollup-plugin-node-resolve": "3.3.0",
     "semantic-release": "15.1.2",
-    "sinon": "4.4.6"
+    "sinon": "4.4.7"
   },
   "dependencies": {
     "chalk": "2.3.2",
