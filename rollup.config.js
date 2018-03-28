@@ -20,7 +20,8 @@ export default {
     'mustache',
     'shelljs',
     'lodash.uniq',
-    'write-yaml'
+    'write-yaml',
+    'util'
   ],
   plugins: [
     nodeResolve({
