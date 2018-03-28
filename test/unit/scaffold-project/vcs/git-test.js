@@ -3,7 +3,7 @@ import {Repository as gitRepository} from 'nodegit';
 import any from '@travi/any';
 import sinon from 'sinon';
 import {assert} from 'chai';
-import scaffoldGit from '../../../src/scaffold-project/git';
+import scaffoldGit from '../../../../src/scaffold-project/vcs/git';
 
 suite('scaffold git', () => {
   let sandbox;

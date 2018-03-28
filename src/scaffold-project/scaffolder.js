@@ -3,9 +3,9 @@ import {prompt} from 'inquirer';
 import {copyFile} from 'mz/fs';
 import spdxLicenseList from 'spdx-license-list/simple';
 import scaffoldReadme from './readme';
-import scaffoldGit from './git';
+import scaffoldGit from './vcs/git';
 import scaffoldLicense from './license';
-import scaffoldVcsHost from './vcs-host';
+import scaffoldVcsHost from './vcs/host';
 import scaffoldJavaScriptProject from './javascript/scaffolder';
 import {
   copyrightInformationShouldBeRequested,
