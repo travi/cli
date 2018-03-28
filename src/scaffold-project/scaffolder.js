@@ -91,7 +91,7 @@ export default async function () {
   ]);
 
   const projectName = answers[questionNames.PROJECT_NAME];
-  const vcs = await scaffoldVcsHost({host: answers[questionNames.REPO_HOST], projectName});
+  const vcs = await scaffoldVcsHost({host: answers[questionNames.REPO_HOST], projectName, projectRoot});
 
   function isJavaScriptProject() {
     return 'JavaScript' === answers[questionNames.PROJECT_TYPE];

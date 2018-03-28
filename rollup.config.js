@@ -19,7 +19,8 @@ export default {
     'spdx-license-list/full',
     'mustache',
     'shelljs',
-    'lodash.uniq'
+    'lodash.uniq',
+    'write-yaml'
   ],
   plugins: [
     nodeResolve({

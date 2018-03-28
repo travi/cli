@@ -81,6 +81,7 @@
     "nodegit": "0.21.2",
     "shelljs": "0.8.1",
     "spdx-license-list": "4.0.0",
-    "update-notifier": "2.4.0"
+    "update-notifier": "2.4.0",
+    "write-yaml": "1.0.0"
   }
 }

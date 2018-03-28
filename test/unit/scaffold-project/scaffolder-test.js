@@ -132,7 +132,7 @@ suite('project scaffolder', () => {
     readmeScaffolder.default.resolves();
     gitScaffolder.default.resolves();
     licenseScaffolder.default.resolves();
-    vcsHostScaffolder.default.withArgs({host: repoHost, projectName}).resolves(vcs);
+    vcsHostScaffolder.default.withArgs({host: repoHost, projectName, projectRoot: projectPath}).resolves(vcs);
 
     return scaffolder().then(() => {
       assert.calledWith(gitScaffolder.default, {projectRoot: projectPath});
@@ -169,7 +169,7 @@ suite('project scaffolder', () => {
       [questionNames.REPO_HOST]: repoHost,
       [questionNames.LICENSE]: license
     });
-    vcsHostScaffolder.default.withArgs({host: repoHost, projectName}).resolves(vcs);
+    vcsHostScaffolder.default.withArgs({host: repoHost, projectName, projectRoot: projectPath}).resolves(vcs);
 
     return scaffolder().then(() => assert.calledWith(javascriptScaffolder.default, {
       projectName,
