@@ -6,6 +6,7 @@ import scaffoldGithub from '../../../../src/scaffold-project/vcs/github';
 
 suite('github', () => {
   let sandbox;
+  const projectRoot = any.string();
 
   setup(() => {
     sandbox = sinon.sandbox.create();
@@ -16,10 +17,9 @@ suite('github', () => {
   teardown(() => sandbox.restore());
 
   test('that the settings file is produced', () => {
-    const projectRoot = any.string();
     yamlWriter.default.resolves();
 
-    return scaffoldGithub(projectRoot).then(() => assert.calledWith(
+    return scaffoldGithub({projectRoot}).then(() => assert.calledWith(
       yamlWriter.default,
       `${projectRoot}/.github/settings.yml`,
       {
@@ -32,6 +32,16 @@ suite('github', () => {
           allow_rebase_merge: true
         }
       }
+    ));
+  });
+
+  test('that the greenkeeper label is defined for javascript projects', () => {
+    yamlWriter.default.resolves();
+
+    return scaffoldGithub({projectRoot, projectType: 'JavaScript'}).then(() => assert.calledWith(
+      yamlWriter.default,
+      `${projectRoot}/.github/settings.yml`,
+      sinon.match({labels: [{name: 'greenkeeper', color: '00c775'}]})
     ));
   });
 });

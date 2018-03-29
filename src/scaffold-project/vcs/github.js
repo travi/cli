@@ -1,6 +1,6 @@
 import writeYaml from '../../../third-party-wrappers/write-yaml';
 
-export default function scaffoldGithub(projectRoot) {
+export default function scaffoldGithub({projectRoot, projectType}) {
   return writeYaml(`${projectRoot}/.github/settings.yml`, {
     repository: {
       has_wiki: false,
@@ -9,6 +9,7 @@ export default function scaffoldGithub(projectRoot) {
       allow_squash_merge: false,
       allow_merge_commit: true,
       allow_rebase_merge: true
-    }
+    },
+    ...('JavaScript' === projectType) && {labels: [{name: 'greenkeeper', color: '00c775'}]}
   });
 }
