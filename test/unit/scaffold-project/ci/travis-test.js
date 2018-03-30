@@ -15,9 +15,10 @@ suite('travis', () => {
 
   teardown(() => sandbox.restore());
 
-  test('that the travis config is not created if the project is not javascript', () => scaffoldTravis({
-    projectType: any.string()
-  }).then(() => assert.notCalled(yamlWriter.default)));
+  test('that the travis config is not created if the project is not javascript', () => assert.becomes(
+    scaffoldTravis({projectType: any.string()}),
+    {}
+  ).then(() => assert.notCalled(yamlWriter.default)));
 
   suite('javascript', () => {
     test('that a base config is created for a javascript project', () => {

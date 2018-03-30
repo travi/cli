@@ -21,20 +21,19 @@ suite('scaffold readme', () => {
   teardown(() => sandbox.restore());
 
   test('that the README has a top-level heading of the project name and includes the description', async () => {
-    await scaffoldReadme({projectName, projectRoot, description, badges: {consumer: {}}}).then(() => assert.calledWith(
-      fs.writeFile,
-      `${projectRoot}/README.md`,
-      sinon.match(`# ${projectName}
+    await scaffoldReadme({projectName, projectRoot, description, badges: {consumer: {}, status: {}}})
+      .then(() => assert.calledWith(
+        fs.writeFile,
+        `${projectRoot}/README.md`,
+        sinon.match(`# ${projectName}
 
 ${description}`)
-    ));
+      ));
   });
 
   suite('badges', () => {
     suite('license', () => {
       const license = any.word();
-      const repoOwner = 'travi';
-      const repoName = 'cli';
 
       suite('references', () => {
         test('the license file reference is defined for a licensed project', async () => {
@@ -43,7 +42,7 @@ ${description}`)
             projectRoot,
             description,
             license,
-            badges: {consumer: {}}
+            badges: {consumer: {}, status: {}}
           }).then(() => assert.calledWith(
             fs.writeFile,
             `${projectRoot}/README.md`,
@@ -54,7 +53,7 @@ ${description}`)
         });
 
         test('the license file reference is not defined for an unlicensed project', async () => {
-          await scaffoldReadme({projectName, projectRoot, description, badges: {consumer: {}}}).then(() => {
+          await scaffoldReadme({projectName, projectRoot, description, badges: {consumer: {}, status: {}}}).then(() => {
             assert.neverCalledWith(
               fs.writeFile,
               `${projectRoot}/README.md`,
@@ -73,7 +72,7 @@ ${description}`)
             projectRoot,
             description,
             license,
-            badges: {consumer: {license: licenceBadge}}
+            badges: {consumer: {license: licenceBadge}, status: {}}
           }).then(() => assert.calledWith(
             fs.writeFile,
             `${projectRoot}/README.md`,
@@ -84,13 +83,12 @@ ${description}`)
         });
 
         test('the license badge reference is not defined for an unlicensed project', async () => {
-          await scaffoldReadme({projectName, projectRoot, description, badges: {consumer: {}}}).then(() => {
+          await scaffoldReadme({projectName, projectRoot, description, badges: {consumer: {}, status: {}}}).then(() => {
             assert.neverCalledWith(
               fs.writeFile,
               `${projectRoot}/README.md`,
               sinon.match(`
-[license-badge]: https://img.shields.io/github/license/${repoOwner}/${repoName}.svg
-`)
+[license-badge]:`)
             );
           });
         });
@@ -98,26 +96,27 @@ ${description}`)
         test(
           'the license badge reference is not defined for a licensed project that is not Github hosted',
           async () => {
-            await scaffoldReadme({projectName, projectRoot, description, license, badges: {consumer: {}}}).then(() => {
-              assert.neverCalledWith(
-                fs.writeFile,
-                `${projectRoot}/README.md`,
-                sinon.match(`
-[license-badge]: `)
-              );
-            });
+            await scaffoldReadme({projectName, projectRoot, description, license, badges: {consumer: {}, status: {}}})
+              .then(() => {
+                assert.neverCalledWith(
+                  fs.writeFile,
+                  `${projectRoot}/README.md`,
+                  sinon.match(`
+[license-badge]:`)
+                );
+              });
           }
         );
       });
 
       suite('badge', () => {
-        test('that the license badge is shown for licensed, GitHub hosted projects', async () => {
+        test('that the license badge is shown when provided', async () => {
           await scaffoldReadme({
             projectName,
             projectRoot,
             description,
             license,
-            badges: {consumer: {license: any.url()}}
+            badges: {consumer: {license: any.url()}, status: {}}
           }).then(() => assert.calledWith(
             fs.writeFile,
             `${projectRoot}/README.md`,
@@ -127,14 +126,42 @@ ${description}`)
           ));
         });
 
-        test('the license badge is not shown for an unlicensed project', async () => {
+        test('the license badge is not shown when not provided', async () => {
           await scaffoldReadme({
-            projectName, projectRoot, description, badges: {consumer: {license: any.string()}}
+            projectName, projectRoot, description, badges: {consumer: {license: any.string()}, status: {}}
           }).then(() => assert.neverCalledWith(
             fs.writeFile,
             `${projectRoot}/README.md`,
             sinon.match(`
 [![${license} license][license-badge]][license]
+`)
+          ));
+        });
+
+        test('that the ci badge is shown when provided', async () => {
+          await scaffoldReadme({
+            projectName,
+            projectRoot,
+            description,
+            license,
+            badges: {consumer: {}, status: {ci: any.url()}}
+          }).then(() => assert.calledWith(
+            fs.writeFile,
+            `${projectRoot}/README.md`,
+            sinon.match(`
+[![Build Status][ci-badge]][build]
+`)
+          ));
+        });
+
+        test('the ci badge is not shown when not provided', async () => {
+          await scaffoldReadme({
+            projectName, projectRoot, description, badges: {consumer: {}, status: {}}
+          }).then(() => assert.neverCalledWith(
+            fs.writeFile,
+            `${projectRoot}/README.md`,
+            sinon.match(`
+[![Build Status][ci-badge]][build]
 `)
           ));
         });
@@ -145,19 +172,25 @@ ${description}`)
       test('that badges are separated into consumer, status, and contribution groups', async () => {
         const license = any.word();
 
-        await scaffoldReadme({projectName, projectRoot, description, license, badges: {consumer: {license: any.url()}}})
-          .then(() => assert.calledWith(
-            fs.writeFile,
-            `${projectRoot}/README.md`,
-            sinon.match(`
+        await scaffoldReadme({
+          projectName,
+          projectRoot,
+          description,
+          license,
+          badges: {consumer: {license: any.url()}, status: {ci: any.url()}}
+        }).then(() => assert.calledWith(
+          fs.writeFile,
+          `${projectRoot}/README.md`,
+          sinon.match(`
 <!-- consumer badges -->
 [![${license} license][license-badge]][license]
 
 <!-- status badges -->
+[![Build Status][ci-badge]][build]
 
 <!-- contribution badges -->
 `)
-          ));
+        ));
       });
     });
   });

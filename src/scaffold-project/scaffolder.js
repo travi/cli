@@ -95,25 +95,30 @@ export default async function () {
   const projectType = answers[questionNames.PROJECT_TYPE];
   const chosenLicense = answers[questionNames.LICENSE];
   const vcs = await scaffoldVcsHost({host: answers[questionNames.REPO_HOST], projectName, projectRoot});
-  const license = await scaffoldLicense({
-    projectRoot,
-    license: chosenLicense,
-    copyright: {year: answers[questionNames.COPYRIGHT_YEAR], holder: answers[questionNames.COPYRIGHT_HOLDER]},
-    vcs
-  });
+  const [license, ci] = await Promise.all([
+    scaffoldLicense({
+      projectRoot,
+      license: chosenLicense,
+      copyright: {year: answers[questionNames.COPYRIGHT_YEAR], holder: answers[questionNames.COPYRIGHT_HOLDER]},
+      vcs
+    }),
+    scaffoldTravis({projectRoot, projectType, vcs})
+  ]);
 
   function isJavaScriptProject() {
     return 'JavaScript' === projectType;
   }
 
   return Promise.all([
-    scaffoldTravis({projectRoot, projectType}),
     scaffoldReadme({
       projectName,
       projectRoot,
       description: answers[questionNames.DESCRIPTION],
       license: chosenLicense,
-      badges: {consumer: {...license.badge && {license: license.badge}}}
+      badges: {
+        consumer: {license: license.badge},
+        status: {ci: ci.badge}
+      }
     }),
     answers[questionNames.GIT_REPO] ? scaffoldGit({projectRoot}) : undefined,
     copyFile(resolve(__dirname, 'templates', 'editorconfig.txt'), `${projectRoot}/.editorconfig`),

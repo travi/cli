@@ -7,7 +7,8 @@ export default async function ({projectName, projectRoot, description, license, 
   console.log(chalk.blue('Generating README'));     // eslint-disable-line no-console
 
   const markdownBadges = {
-    consumer: [badges.consumer.license && `[![${license} license][license-badge]][license]`].filter(Boolean)
+    consumer: [badges.consumer.license && `[![${license} license][license-badge]][license]`].filter(Boolean),
+    status: [badges.status.ci && '[![Build Status][ci-badge]][build]'].filter(Boolean)
   };
 
   const references = [

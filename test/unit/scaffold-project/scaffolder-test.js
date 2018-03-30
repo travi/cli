@@ -43,6 +43,7 @@ suite('project scaffolder', () => {
     process.cwd.returns(projectPath);
     fs.copyFile.resolves();
     licenseScaffolder.default.resolves({});
+    travisScaffolder.default.resolves({});
   });
 
   teardown(() => sandbox.restore());
@@ -120,6 +121,7 @@ suite('project scaffolder', () => {
   test('that project files are generated', () => {
     const license = any.string();
     const licenseBadge = any.url();
+    const travisBadge = any.url();
     const description = any.string();
     const year = any.word();
     const holder = any.sentence();
@@ -141,19 +143,25 @@ suite('project scaffolder', () => {
       .withArgs({projectRoot: projectPath, license, copyright, vcs})
       .resolves({badge: licenseBadge});
     vcsHostScaffolder.default.withArgs({host: repoHost, projectName, projectRoot: projectPath}).resolves(vcs);
+    travisScaffolder.default.withArgs({projectRoot: projectPath, projectType, vcs}).resolves({badge: travisBadge});
 
     return scaffolder().then(() => {
       assert.calledWith(gitScaffolder.default, {projectRoot: projectPath});
       assert.calledWith(
         readmeScaffolder.default,
-        {projectName, projectRoot: projectPath, description, license, badges: {consumer: {license: licenseBadge}}}
+        {
+          projectName,
+          projectRoot: projectPath,
+          description,
+          license,
+          badges: {consumer: {license: licenseBadge}, status: {ci: travisBadge}}
+        }
       );
       assert.calledWith(
         fs.copyFile,
         path.resolve(__dirname, '../../../', 'src/scaffold-project/templates', 'editorconfig.txt'),
         `${projectPath}/.editorconfig`
       );
-      assert.calledWith(travisScaffolder.default, {projectRoot: projectPath, projectType});
       assert.notCalled(javascriptScaffolder.default);
     });
   });
