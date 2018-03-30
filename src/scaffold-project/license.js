@@ -3,7 +3,11 @@ import chalk from 'chalk';
 import mustache from 'mustache';
 import spdxLicenseList from 'spdx-license-list/full';
 
-export default async function ({projectRoot, license, copyright}) {
+function buildLicenseBadge(vcs) {
+  return (vcs && 'GitHub' === vcs.host) && `https://img.shields.io/github/license/${vcs.owner}/${vcs.name}.svg`;
+}
+
+export default async function ({projectRoot, license, copyright, vcs}) {
   if (license) {
     console.log(chalk.blue('Generating License'));     // eslint-disable-line no-console
 
@@ -14,5 +18,10 @@ export default async function ({projectRoot, license, copyright}) {
       `${projectRoot}/LICENSE`,
       mustache.render(licenseContent, {year: copyright.year, 'copyright holders': copyright.holder})
     );
+
+    const badge = buildLicenseBadge(vcs);
+    return {...badge && {badge}};
   }
+
+  return {};
 }

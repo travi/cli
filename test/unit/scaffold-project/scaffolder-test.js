@@ -10,6 +10,7 @@ import * as gitScaffolder from '../../../src/scaffold-project/vcs/git';
 import * as vcsHostScaffolder from '../../../src/scaffold-project/vcs/host';
 import * as licenseScaffolder from '../../../src/scaffold-project/license';
 import * as javascriptScaffolder from '../../../src/scaffold-project/javascript/scaffolder';
+import * as travisScaffolder from '../../../src/scaffold-project/ci/travis';
 import scaffolder, {questionNames} from '../../../src/scaffold-project/scaffolder';
 import {
   copyrightInformationShouldBeRequested,
@@ -36,10 +37,12 @@ suite('project scaffolder', () => {
     sandbox.stub(vcsHostScaffolder, 'default');
     sandbox.stub(licenseScaffolder, 'default');
     sandbox.stub(javascriptScaffolder, 'default');
+    sandbox.stub(travisScaffolder, 'default');
     sandbox.stub(fs, 'copyFile');
 
     process.cwd.returns(projectPath);
     fs.copyFile.resolves();
+    licenseScaffolder.default.resolves({});
   });
 
   teardown(() => sandbox.restore());
@@ -116,12 +119,15 @@ suite('project scaffolder', () => {
 
   test('that project files are generated', () => {
     const license = any.string();
+    const licenseBadge = any.url();
     const description = any.string();
     const year = any.word();
     const holder = any.sentence();
     const copyright = {year, holder};
+    const projectType = any.word();
     inquirer.prompt.resolves({
       [questionNames.PROJECT_NAME]: projectName,
+      [questionNames.PROJECT_TYPE]: projectType,
       [questionNames.GIT_REPO]: true,
       [questionNames.REPO_HOST]: repoHost,
       [questionNames.LICENSE]: license,
@@ -131,21 +137,23 @@ suite('project scaffolder', () => {
     });
     readmeScaffolder.default.resolves();
     gitScaffolder.default.resolves();
-    licenseScaffolder.default.resolves();
+    licenseScaffolder.default
+      .withArgs({projectRoot: projectPath, license, copyright, vcs})
+      .resolves({badge: licenseBadge});
     vcsHostScaffolder.default.withArgs({host: repoHost, projectName, projectRoot: projectPath}).resolves(vcs);
 
     return scaffolder().then(() => {
       assert.calledWith(gitScaffolder.default, {projectRoot: projectPath});
       assert.calledWith(
         readmeScaffolder.default,
-        {projectName, projectRoot: projectPath, description, license, vcs}
+        {projectName, projectRoot: projectPath, description, license, badges: {consumer: {license: licenseBadge}}}
       );
-      assert.calledWith(licenseScaffolder.default, {projectRoot: projectPath, license, copyright});
       assert.calledWith(
         fs.copyFile,
         path.resolve(__dirname, '../../../', 'src/scaffold-project/templates', 'editorconfig.txt'),
         `${projectPath}/.editorconfig`
       );
+      assert.calledWith(travisScaffolder.default, {projectRoot: projectPath, projectType});
       assert.notCalled(javascriptScaffolder.default);
     });
   });

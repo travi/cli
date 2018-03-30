@@ -8,37 +8,56 @@ import scaffoldLicense from '../../../src/scaffold-project/license';
 
 suite('license', () => {
   let sandbox;
+  const license = any.fromList(Array.from(spdxLicenseList));
+  const year = any.word();
+  const copyrightHolders = any.sentence();
+  const copyright = {year, holder: copyrightHolders};
+  const projectRoot = any.string();
 
   setup(() => {
     sandbox = sinon.sandbox.create();
 
     sandbox.stub(fs, 'writeFile');
+
+    fs.writeFile.resolves();
   });
 
   teardown(() => sandbox.restore());
 
-  test('that no license file is created when no license was chosen', () => {
-    scaffoldLicense({});
+  test('that no license file is created when no license was chosen', async () => {
+    await scaffoldLicense({});
 
     assert.notCalled(fs.writeFile);
   });
 
-  test('that the contents for the chosen license are written to LICENSE', () => {
-    const projectRoot = any.string();
-    const year = any.word();
-    const copyrightHolders = any.sentence();
-    const copyright = {year, holder: copyrightHolders};
-    const license = any.fromList(Array.from(spdxLicenseList));
-    fs.writeFile.resolves();
+  test('that the contents for the chosen license are written to LICENSE', () => assert.becomes(
+    scaffoldLicense({projectRoot, license, copyright}),
+    {}
+  ).then(() => assert.calledWith(
+    fs.writeFile,
+    `${projectRoot}/LICENSE`,
+    `${spdxLicenseListWithContent[license].licenseText}\n`
+      .replace(/\n/gm, '\n\n')
+      .replace('<year>', year)
+      .replace('<copyright holders>', copyrightHolders)
+      .replace(/<(.+?)>/gm, '')
+  )));
 
-    return scaffoldLicense({projectRoot, license, copyright}).then(() => assert.calledWith(
-      fs.writeFile,
-      `${projectRoot}/LICENSE`,
-      `${spdxLicenseListWithContent[license].licenseText}\n`
-        .replace(/\n/gm, '\n\n')
-        .replace('<year>', year)
-        .replace('<copyright holders>', copyrightHolders)
-        .replace(/<(.+)>/g, '')
-    ));
+  test('that badge information is returned if the vcs is hosted at github', () => {
+    const vcs = {host: 'GitHub', owner: any.word(), name: any.word()};
+
+    return assert.becomes(scaffoldLicense({projectRoot, license, copyright, vcs}), {
+      badge: `https://img.shields.io/github/license/${vcs.owner}/${vcs.name}.svg`
+    });
   });
+
+  test('that badge information is not returned when no license was chosen', () => assert.becomes(
+    scaffoldLicense({projectRoot, copyright, vcs: {host: 'GitHub'}}),
+    {}
+  ));
+
+  test('that badge information is not returned if the vcs is hosted somewhere other than github', () => assert.becomes(
+    scaffoldLicense({projectRoot, license, copyright, vcs: {host: any.simpleObject()}}),
+    {}
+  ));
 });

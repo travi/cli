@@ -7,6 +7,7 @@ import scaffoldGit from './vcs/git';
 import scaffoldLicense from './license';
 import scaffoldVcsHost from './vcs/host';
 import scaffoldJavaScriptProject from './javascript/scaffolder';
+import scaffoldTravis from './ci/travis';
 import {
   copyrightInformationShouldBeRequested,
   licenseChoicesShouldBePresented,
@@ -91,33 +92,37 @@ export default async function () {
   ]);
 
   const projectName = answers[questionNames.PROJECT_NAME];
+  const projectType = answers[questionNames.PROJECT_TYPE];
+  const chosenLicense = answers[questionNames.LICENSE];
   const vcs = await scaffoldVcsHost({host: answers[questionNames.REPO_HOST], projectName, projectRoot});
+  const license = await scaffoldLicense({
+    projectRoot,
+    license: chosenLicense,
+    copyright: {year: answers[questionNames.COPYRIGHT_YEAR], holder: answers[questionNames.COPYRIGHT_HOLDER]},
+    vcs
+  });
 
   function isJavaScriptProject() {
-    return 'JavaScript' === answers[questionNames.PROJECT_TYPE];
+    return 'JavaScript' === projectType;
   }
 
   return Promise.all([
+    scaffoldTravis({projectRoot, projectType}),
     scaffoldReadme({
       projectName,
       projectRoot,
       description: answers[questionNames.DESCRIPTION],
-      license: answers[questionNames.LICENSE],
-      vcs
+      license: chosenLicense,
+      badges: {consumer: {...license.badge && {license: license.badge}}}
     }),
     answers[questionNames.GIT_REPO] ? scaffoldGit({projectRoot}) : undefined,
-    scaffoldLicense({
-      projectRoot,
-      license: answers[questionNames.LICENSE],
-      copyright: {year: answers[questionNames.COPYRIGHT_YEAR], holder: answers[questionNames.COPYRIGHT_HOLDER]}
-    }),
     copyFile(resolve(__dirname, 'templates', 'editorconfig.txt'), `${projectRoot}/.editorconfig`),
     isJavaScriptProject() ? scaffoldJavaScriptProject({
       projectRoot,
       projectName,
       vcs,
       visibility: answers[questionNames.VISIBILITY],
-      license: answers[questionNames.LICENSE]
+      license: chosenLicense
     }) : undefined
   ]);
 }
