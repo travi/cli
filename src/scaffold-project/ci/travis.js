@@ -5,5 +5,11 @@ export default async function ({projectRoot, projectType, vcs}) {
 
   await writeYaml(`${projectRoot}/.travis.yml`, {language: 'node_js', notifications: {email: false}});
 
-  return {badge: `https://img.shields.io/travis/${vcs.owner}/${vcs.name}.svg?branch=master`};
+  return {
+    badge: {
+      img: `https://img.shields.io/travis/${vcs.owner}/${vcs.name}.svg?branch=master`,
+      link: `https://travis-ci.org/${vcs.owner}/${vcs.name}`,
+      text: 'Build Status'
+    }
+  };
 }

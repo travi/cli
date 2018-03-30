@@ -28,7 +28,13 @@ suite('travis', () => {
 
       return assert.becomes(
         scaffoldTravis({projectType: 'JavaScript', projectRoot, vcs}),
-        {badge: `https://img.shields.io/travis/${vcs.owner}/${vcs.name}.svg?branch=master`}
+        {
+          badge: {
+            img: `https://img.shields.io/travis/${vcs.owner}/${vcs.name}.svg?branch=master`,
+            link: `https://travis-ci.org/${vcs.owner}/${vcs.name}`,
+            text: 'Build Status'
+          }
+        }
       ).then(() => assert.calledWith(
         yamlWriter.default,
         `${projectRoot}/.travis.yml`,

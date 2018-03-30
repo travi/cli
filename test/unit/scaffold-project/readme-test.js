@@ -35,158 +35,129 @@ ${description}`)
     suite('license', () => {
       const license = any.word();
 
-      suite('references', () => {
-        test('the license file reference is defined for a licensed project', async () => {
-          await scaffoldReadme({
-            projectName,
-            projectRoot,
-            description,
-            license,
-            badges: {consumer: {}, status: {}}
-          }).then(() => assert.calledWith(
-            fs.writeFile,
-            `${projectRoot}/README.md`,
-            sinon.match(`
-[license]: LICENSE
-`)
-          ));
-        });
-
-        test('the license file reference is not defined for an unlicensed project', async () => {
-          await scaffoldReadme({projectName, projectRoot, description, badges: {consumer: {}, status: {}}}).then(() => {
-            assert.neverCalledWith(
-              fs.writeFile,
-              `${projectRoot}/README.md`,
-              sinon.match(`
-[license]: LICENSE
-`)
-            );
-          });
-        });
-
-        test('the license badge reference is defined when a license badge is provided', async () => {
-          const licenceBadge = any.url();
-
-          await scaffoldReadme({
-            projectName,
-            projectRoot,
-            description,
-            license,
-            badges: {consumer: {license: licenceBadge}, status: {}}
-          }).then(() => assert.calledWith(
-            fs.writeFile,
-            `${projectRoot}/README.md`,
-            sinon.match(`
-[license-badge]: ${licenceBadge}
-`)
-          ));
-        });
-
-        test('the license badge reference is not defined for an unlicensed project', async () => {
-          await scaffoldReadme({projectName, projectRoot, description, badges: {consumer: {}, status: {}}}).then(() => {
-            assert.neverCalledWith(
-              fs.writeFile,
-              `${projectRoot}/README.md`,
-              sinon.match(`
-[license-badge]:`)
-            );
-          });
-        });
-
-        test(
-          'the license badge reference is not defined for a licensed project that is not Github hosted',
-          async () => {
-            await scaffoldReadme({projectName, projectRoot, description, license, badges: {consumer: {}, status: {}}})
-              .then(() => {
-                assert.neverCalledWith(
-                  fs.writeFile,
-                  `${projectRoot}/README.md`,
-                  sinon.match(`
-[license-badge]:`)
-                );
-              });
-          }
-        );
-      });
-
-      suite('badge', () => {
-        test('that the license badge is shown when provided', async () => {
-          await scaffoldReadme({
-            projectName,
-            projectRoot,
-            description,
-            license,
-            badges: {consumer: {license: any.url()}, status: {}}
-          }).then(() => assert.calledWith(
-            fs.writeFile,
-            `${projectRoot}/README.md`,
-            sinon.match(`
-[![${license} license][license-badge]][license]
-`)
-          ));
-        });
-
-        test('the license badge is not shown when not provided', async () => {
-          await scaffoldReadme({
-            projectName, projectRoot, description, badges: {consumer: {license: any.string()}, status: {}}
-          }).then(() => assert.neverCalledWith(
-            fs.writeFile,
-            `${projectRoot}/README.md`,
-            sinon.match(`
-[![${license} license][license-badge]][license]
-`)
-          ));
-        });
-
-        test('that the ci badge is shown when provided', async () => {
-          await scaffoldReadme({
-            projectName,
-            projectRoot,
-            description,
-            license,
-            badges: {consumer: {}, status: {ci: any.url()}}
-          }).then(() => assert.calledWith(
-            fs.writeFile,
-            `${projectRoot}/README.md`,
-            sinon.match(`
-[![Build Status][ci-badge]][build]
-`)
-          ));
-        });
-
-        test('the ci badge is not shown when not provided', async () => {
-          await scaffoldReadme({
-            projectName, projectRoot, description, badges: {consumer: {}, status: {}}
-          }).then(() => assert.neverCalledWith(
-            fs.writeFile,
-            `${projectRoot}/README.md`,
-            sinon.match(`
-[![Build Status][ci-badge]][build]
-`)
-          ));
-        });
-      });
-    });
-
-    suite('grouping', () => {
-      test('that badges are separated into consumer, status, and contribution groups', async () => {
-        const license = any.word();
+      test('that the license badge is shown when provided', async () => {
+        const licenseText = any.sentence();
+        const licenseBadge = any.url();
+        const licenseLink = any.url();
 
         await scaffoldReadme({
           projectName,
           projectRoot,
           description,
           license,
-          badges: {consumer: {license: any.url()}, status: {ci: any.url()}}
+          badges: {consumer: {license: {img: licenseBadge, text: licenseText, link: licenseLink}}, status: {}}
+        }).then(() => {
+          assert.calledWith(
+            fs.writeFile,
+            `${projectRoot}/README.md`,
+            sinon.match(`
+[![${licenseText}][license-badge]][license-link]
+`)
+          );
+          assert.calledWith(
+            fs.writeFile,
+            `${projectRoot}/README.md`,
+            sinon.match(`
+[license-badge]: ${licenseBadge}
+`)
+          );
+          assert.calledWith(
+            fs.writeFile,
+            `${projectRoot}/README.md`,
+            sinon.match(`
+[license-link]: ${licenseLink}
+`)
+          );
+        });
+      });
+
+      test('the license badge is not shown when not provided', async () => {
+        await scaffoldReadme({
+          projectName, projectRoot, description, badges: {consumer: {}, status: {}}
+        }).then(() => {
+          assert.neverCalledWith(
+            fs.writeFile,
+            `${projectRoot}/README.md`,
+            sinon.match('[license-badge]][license-link]')
+          );
+          assert.neverCalledWith(fs.writeFile, `${projectRoot}/README.md`, sinon.match('[license-link]:'));
+          assert.neverCalledWith(fs.writeFile, `${projectRoot}/README.md`, sinon.match('[license-badge]:'));
+        });
+      });
+
+      test('that the ci badge is shown when provided', async () => {
+        const ciText = any.sentence();
+        const ciBadge = any.url();
+        const ciLink = any.url();
+
+        await scaffoldReadme({
+          projectName,
+          projectRoot,
+          description,
+          license,
+          badges: {consumer: {}, status: {ci: {img: ciBadge, text: ciText, link: ciLink}}}
+        }).then(() => {
+          assert.calledWith(
+            fs.writeFile,
+            `${projectRoot}/README.md`,
+            sinon.match(`
+[![${ciText}][ci-badge]][ci-link]
+`)
+          );
+          assert.calledWith(
+            fs.writeFile,
+            `${projectRoot}/README.md`,
+            sinon.match(`
+[ci-badge]: ${ciBadge}
+`)
+          );
+          assert.calledWith(
+            fs.writeFile,
+            `${projectRoot}/README.md`,
+            sinon.match(`
+[ci-link]: ${ciLink}
+`)
+          );
+        });
+      });
+
+      test('the ci badge is not shown when not provided', async () => {
+        await scaffoldReadme({
+          projectName, projectRoot, description, badges: {consumer: {}, status: {}}
+        }).then(() => {
+          assert.neverCalledWith(
+            fs.writeFile,
+            `${projectRoot}/README.md`,
+            sinon.match('[ci-badge]][build]')
+          );
+          assert.neverCalledWith(fs.writeFile, `${projectRoot}/README.md`, sinon.match('[ci-link]:'));
+          assert.neverCalledWith(fs.writeFile, `${projectRoot}/README.md`, sinon.match('[ci-badge]:'));
+        });
+      });
+    });
+
+    suite('grouping', () => {
+      test('that badges are separated into consumer, status, and contribution groups', async () => {
+        const licenseText = any.sentence();
+        const ciText = any.sentence();
+
+        await scaffoldReadme({
+          projectName,
+          projectRoot,
+          description,
+          badges: {
+            consumer: {license: {img: any.url(), text: licenseText}},
+            status: {ci: {img: any.url(), text: ciText}}
+          }
         }).then(() => assert.calledWith(
           fs.writeFile,
           `${projectRoot}/README.md`,
           sinon.match(`
 <!-- consumer badges -->
-[![${license} license][license-badge]][license]
+[![${licenseText}][license-badge]][license-link]
 
 <!-- status badges -->
-[![Build Status][ci-badge]][build]
+[![${ciText}][ci-badge]][ci-link]
 
 <!-- contribution badges -->
 `)
