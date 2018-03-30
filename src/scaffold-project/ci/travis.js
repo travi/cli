@@ -1,7 +1,9 @@
 import writeYaml from '../../../third-party-wrappers/write-yaml';
 
-export default function ({projectRoot, projectType}) {
+export default async function ({projectRoot, projectType, vcs}) {
   if ('JavaScript' !== projectType) return Promise.resolve();
 
-  return writeYaml(`${projectRoot}/.travis.yml`, {language: 'node_js', notifications: {email: false}});
+  await writeYaml(`${projectRoot}/.travis.yml`, {language: 'node_js', notifications: {email: false}});
+
+  return {badge: `https://img.shields.io/travis/${vcs.owner}/${vcs.name}.svg?branch=master`};
 }

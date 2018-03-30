@@ -21,10 +21,14 @@ suite('travis', () => {
 
   suite('javascript', () => {
     test('that a base config is created for a javascript project', () => {
+      const vcs = {owner: any.word(), name: any.word()};
       const projectRoot = any.string();
       yamlWriter.default.resolves();
 
-      return scaffoldTravis({projectType: 'JavaScript', projectRoot}).then(() => assert.calledWith(
+      return assert.becomes(
+        scaffoldTravis({projectType: 'JavaScript', projectRoot, vcs}),
+        {badge: `https://img.shields.io/travis/${vcs.owner}/${vcs.name}.svg?branch=master`}
+      ).then(() => assert.calledWith(
         yamlWriter.default,
         `${projectRoot}/.travis.yml`,
         {language: 'node_js', notifications: {email: false}}
