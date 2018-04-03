@@ -127,6 +127,7 @@ suite('project scaffolder', () => {
     const holder = any.sentence();
     const copyright = {year, holder};
     const projectType = any.word();
+    const visibility = any.word();
     inquirer.prompt.resolves({
       [questionNames.PROJECT_NAME]: projectName,
       [questionNames.PROJECT_TYPE]: projectType,
@@ -135,7 +136,8 @@ suite('project scaffolder', () => {
       [questionNames.LICENSE]: license,
       [questionNames.DESCRIPTION]: description,
       [questionNames.COPYRIGHT_HOLDER]: holder,
-      [questionNames.COPYRIGHT_YEAR]: year
+      [questionNames.COPYRIGHT_YEAR]: year,
+      [questionNames.VISIBILITY]: visibility
     });
     readmeScaffolder.default.resolves();
     gitScaffolder.default.resolves();
@@ -143,7 +145,9 @@ suite('project scaffolder', () => {
       .withArgs({projectRoot: projectPath, license, copyright, vcs})
       .resolves({badge: licenseBadge});
     vcsHostScaffolder.default.withArgs({host: repoHost, projectName, projectRoot: projectPath}).resolves(vcs);
-    travisScaffolder.default.withArgs({projectRoot: projectPath, projectType, vcs}).resolves({badge: travisBadge});
+    travisScaffolder.default
+      .withArgs({projectRoot: projectPath, projectType, vcs, visibility})
+      .resolves({badge: travisBadge});
 
     return scaffolder().then(() => {
       assert.calledWith(gitScaffolder.default, {projectRoot: projectPath});

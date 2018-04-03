@@ -21,13 +21,14 @@ suite('travis', () => {
   ).then(() => assert.notCalled(yamlWriter.default)));
 
   suite('javascript', () => {
+    const projectRoot = any.string();
+    const vcs = {owner: any.word(), name: any.word()};
+
     test('that a base config is created for a javascript project', () => {
-      const vcs = {owner: any.word(), name: any.word()};
-      const projectRoot = any.string();
       yamlWriter.default.resolves();
 
       return assert.becomes(
-        scaffoldTravis({projectType: 'JavaScript', projectRoot, vcs}),
+        scaffoldTravis({projectType: 'JavaScript', projectRoot, vcs, visibility: 'Public'}),
         {
           badge: {
             img: `https://img.shields.io/travis/${vcs.owner}/${vcs.name}.svg?branch=master`,
@@ -41,5 +42,10 @@ suite('travis', () => {
         {language: 'node_js', notifications: {email: false}}
       ));
     });
+
+    test('that a badge is not defined for a private project', () => assert.becomes(
+      scaffoldTravis({projectType: 'JavaScript', projectRoot, vcs, visibility: 'Private'}),
+      {}
+    ));
   });
 });

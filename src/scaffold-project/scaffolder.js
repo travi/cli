@@ -94,6 +94,7 @@ export default async function () {
   const projectName = answers[questionNames.PROJECT_NAME];
   const projectType = answers[questionNames.PROJECT_TYPE];
   const chosenLicense = answers[questionNames.LICENSE];
+  const visibility = answers[questionNames.VISIBILITY];
   const vcs = await scaffoldVcsHost({host: answers[questionNames.REPO_HOST], projectName, projectRoot});
   const [license, ci] = await Promise.all([
     scaffoldLicense({
@@ -102,7 +103,7 @@ export default async function () {
       copyright: {year: answers[questionNames.COPYRIGHT_YEAR], holder: answers[questionNames.COPYRIGHT_HOLDER]},
       vcs
     }),
-    scaffoldTravis({projectRoot, projectType, vcs})
+    scaffoldTravis({projectRoot, projectType, vcs, visibility})
   ]);
 
   function isJavaScriptProject() {
@@ -126,7 +127,7 @@ export default async function () {
       projectRoot,
       projectName,
       vcs,
-      visibility: answers[questionNames.VISIBILITY],
+      visibility,
       license: chosenLicense
     }) : undefined
   ]);
