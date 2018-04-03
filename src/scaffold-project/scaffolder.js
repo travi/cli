@@ -91,24 +91,31 @@ export default async function () {
     }
   ]);
 
-  const projectName = answers[questionNames.PROJECT_NAME];
   const projectType = answers[questionNames.PROJECT_TYPE];
+  function isJavaScriptProject() {
+    return 'JavaScript' === projectType;
+  }
+
+  const projectName = answers[questionNames.PROJECT_NAME];
   const chosenLicense = answers[questionNames.LICENSE];
   const visibility = answers[questionNames.VISIBILITY];
   const vcs = await scaffoldVcsHost({host: answers[questionNames.REPO_HOST], projectName, projectRoot});
-  const [license, ci] = await Promise.all([
+  const [license, ci, language] = await Promise.all([
     scaffoldLicense({
       projectRoot,
       license: chosenLicense,
       copyright: {year: answers[questionNames.COPYRIGHT_YEAR], holder: answers[questionNames.COPYRIGHT_HOLDER]},
       vcs
     }),
-    scaffoldTravis({projectRoot, projectType, vcs, visibility})
+    scaffoldTravis({projectRoot, projectType, vcs, visibility}),
+    isJavaScriptProject() ? scaffoldJavaScriptProject({
+      projectRoot,
+      projectName,
+      vcs,
+      visibility,
+      license: chosenLicense
+    }) : undefined
   ]);
-
-  function isJavaScriptProject() {
-    return 'JavaScript' === projectType;
-  }
 
   return Promise.all([
     scaffoldReadme({
@@ -121,14 +128,12 @@ export default async function () {
         status: {ci: ci.badge}
       }
     }),
-    answers[questionNames.GIT_REPO] ? scaffoldGit({projectRoot}) : undefined,
-    copyFile(resolve(__dirname, 'templates', 'editorconfig.txt'), `${projectRoot}/.editorconfig`),
-    isJavaScriptProject() ? scaffoldJavaScriptProject({
-      projectRoot,
-      projectName,
-      vcs,
-      visibility,
-      license: chosenLicense
-    }) : undefined
+    answers[questionNames.GIT_REPO]
+      ? scaffoldGit({
+        projectRoot,
+        ignore: language ? language.vcsIgnore : {}
+      })
+      : undefined,
+    copyFile(resolve(__dirname, 'templates', 'editorconfig.txt'), `${projectRoot}/.editorconfig`)
   ]);
 }

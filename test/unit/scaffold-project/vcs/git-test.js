@@ -19,12 +19,19 @@ suite('scaffold git', () => {
 
   test('that the git repo is initialized', () => {
     const projectRoot = any.string();
+    const directories = any.listOf(any.string);
+    const files = any.listOf(any.string);
     fs.writeFile.resolves();
     gitRepository.init.resolves();
 
-    return scaffoldGit({projectRoot}).then(() => {
+    return scaffoldGit({projectRoot, ignore: {directories, files}}).then(() => {
       assert.calledWith(gitRepository.init, projectRoot, 0);
       assert.calledWith(fs.writeFile, `${projectRoot}/.gitattributes`, '* text=auto');
+      assert.calledWith(
+        fs.writeFile,
+        `${projectRoot}/.gitignore`,
+        `${directories.join('\n')}\n\n${files.join('\n')}`
+      );
     });
   });
 });

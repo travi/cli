@@ -150,7 +150,7 @@ suite('project scaffolder', () => {
       .resolves({badge: travisBadge});
 
     return scaffolder().then(() => {
-      assert.calledWith(gitScaffolder.default, {projectRoot: projectPath});
+      assert.calledWith(gitScaffolder.default, {projectRoot: projectPath, ignore: {}});
       assert.calledWith(
         readmeScaffolder.default,
         {
@@ -182,21 +182,20 @@ suite('project scaffolder', () => {
   test('that the javascript project scaffolder is run for a js project', () => {
     const visibility = any.boolean();
     const license = any.word();
+    const ignore = any.simpleObject();
     inquirer.prompt.resolves({
       [questionNames.PROJECT_NAME]: projectName,
       [questionNames.PROJECT_TYPE]: 'JavaScript',
       [questionNames.VISIBILITY]: visibility,
       [questionNames.REPO_HOST]: repoHost,
+      [questionNames.GIT_REPO]: true,
       [questionNames.LICENSE]: license
     });
+    javascriptScaffolder.default
+      .withArgs({projectName, projectRoot: projectPath, visibility, license, vcs})
+      .resolves({vcsIgnore: ignore});
     vcsHostScaffolder.default.withArgs({host: repoHost, projectName, projectRoot: projectPath}).resolves(vcs);
 
-    return scaffolder().then(() => assert.calledWith(javascriptScaffolder.default, {
-      projectName,
-      projectRoot: projectPath,
-      visibility,
-      license,
-      vcs
-    }));
+    return scaffolder().then(() => assert.calledWith(gitScaffolder.default, {projectRoot: projectPath, ignore}));
   });
 });
