@@ -3,21 +3,30 @@ import {resolve} from 'path';
 import chalk from 'chalk';
 import mustache from 'mustache';
 
+function buildBadgeMarkdown([name, badge]) {
+  return `[![${badge.text}][${name}-badge]][${name}-link]`;
+}
+
+function buildBadgeReferences(acc, [name, badge]) {
+  return ([
+    ...acc,
+    {key: `${name}-link`, value: badge.link},
+    {key: `${name}-badge`, value: badge.img}
+  ]);
+}
+
+
 export default async function ({projectName, projectRoot, description, badges}) {
   console.log(chalk.blue('Generating README'));     // eslint-disable-line no-console
 
   const markdownBadges = {
-    consumer: [
-      badges.consumer.license && `[![${badges.consumer.license.text}][license-badge]][license-link]`
-    ].filter(Boolean),
-    status: [badges.status.ci && `[![${badges.status.ci.text}][ci-badge]][ci-link]`].filter(Boolean)
+    consumer: Object.entries(badges.consumer).map(buildBadgeMarkdown),
+    status: Object.entries(badges.status).map(buildBadgeMarkdown)
   };
 
   const references = [
-    badges.consumer.license && {key: 'license-link', value: badges.consumer.license.link},
-    badges.consumer.license && {key: 'license-badge', value: badges.consumer.license.img},
-    badges.status.ci && {key: 'ci-link', value: badges.status.ci.link},
-    badges.status.ci && {key: 'ci-badge', value: badges.status.ci.img}
+    ...Object.entries(badges.consumer).reduce(buildBadgeReferences, []),
+    ...Object.entries(badges.status).reduce(buildBadgeReferences, [])
   ].filter(Boolean);
 
   await writeFile(

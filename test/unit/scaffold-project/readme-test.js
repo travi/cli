@@ -32,137 +32,61 @@ ${description}`)
   });
 
   suite('badges', () => {
-    suite('license', () => {
-      const license = any.word();
-
-      test('that the license badge is shown when provided', async () => {
-        const licenseText = any.sentence();
-        const licenseBadge = any.url();
-        const licenseLink = any.url();
-
-        await scaffoldReadme({
-          projectName,
-          projectRoot,
-          description,
-          license,
-          badges: {consumer: {license: {img: licenseBadge, text: licenseText, link: licenseLink}}, status: {}}
-        }).then(() => {
-          assert.calledWith(
-            fs.writeFile,
-            `${projectRoot}/README.md`,
-            sinon.match(`
-[![${licenseText}][license-badge]][license-link]
+    const badgeFactory = () => ({img: any.url(), link: any.url(), text: any.sentence()});
+    const consumerBadges = any.objectWithKeys(any.listOf(any.word), {factory: badgeFactory});
+    const statusBadges = any.objectWithKeys(any.listOf(any.word), {factory: badgeFactory});
+    const assertBadgeIncludedInMarkdown = badgeData => Object.entries(badgeData).forEach(([name, badge]) => {
+      assert.calledWith(
+        fs.writeFile,
+        `${projectRoot}/README.md`,
+        sinon.match(`
+[![${badge.text}][${name}-badge]][${name}-link]
 `)
-          );
-          assert.calledWith(
-            fs.writeFile,
-            `${projectRoot}/README.md`,
-            sinon.match(`
-[license-badge]: ${licenseBadge}
+      );
+      assert.calledWith(
+        fs.writeFile,
+        `${projectRoot}/README.md`,
+        sinon.match(`
+[${name}-badge]: ${badge.img}
 `)
-          );
-          assert.calledWith(
-            fs.writeFile,
-            `${projectRoot}/README.md`,
-            sinon.match(`
-[license-link]: ${licenseLink}
+      );
+      assert.calledWith(
+        fs.writeFile,
+        `${projectRoot}/README.md`,
+        sinon.match(`
+[${name}-link]: ${badge.link}
 `)
-          );
-        });
-      });
+      );
+    });
+    const buildBadgeGroup = badgeData => Object.entries(badgeData)
+      .map(([name, badge]) => `[![${badge.text}][${name}-badge]][${name}-link]`);
 
-      test('the license badge is not shown when not provided', async () => {
-        await scaffoldReadme({
-          projectName, projectRoot, description, badges: {consumer: {}, status: {}}
-        }).then(() => {
-          assert.neverCalledWith(
-            fs.writeFile,
-            `${projectRoot}/README.md`,
-            sinon.match('[license-badge]][license-link]')
-          );
-          assert.neverCalledWith(fs.writeFile, `${projectRoot}/README.md`, sinon.match('[license-link]:'));
-          assert.neverCalledWith(fs.writeFile, `${projectRoot}/README.md`, sinon.match('[license-badge]:'));
-        });
-      });
+    test('that the badges and references are generated from the provided data', async () => {
+      await scaffoldReadme({projectRoot, badges: {consumer: consumerBadges, status: statusBadges}});
 
-      test('that the ci badge is shown when provided', async () => {
-        const ciText = any.sentence();
-        const ciBadge = any.url();
-        const ciLink = any.url();
-
-        await scaffoldReadme({
-          projectName,
-          projectRoot,
-          description,
-          license,
-          badges: {consumer: {}, status: {ci: {img: ciBadge, text: ciText, link: ciLink}}}
-        }).then(() => {
-          assert.calledWith(
-            fs.writeFile,
-            `${projectRoot}/README.md`,
-            sinon.match(`
-[![${ciText}][ci-badge]][ci-link]
-`)
-          );
-          assert.calledWith(
-            fs.writeFile,
-            `${projectRoot}/README.md`,
-            sinon.match(`
-[ci-badge]: ${ciBadge}
-`)
-          );
-          assert.calledWith(
-            fs.writeFile,
-            `${projectRoot}/README.md`,
-            sinon.match(`
-[ci-link]: ${ciLink}
-`)
-          );
-        });
-      });
-
-      test('the ci badge is not shown when not provided', async () => {
-        await scaffoldReadme({
-          projectName, projectRoot, description, badges: {consumer: {}, status: {}}
-        }).then(() => {
-          assert.neverCalledWith(
-            fs.writeFile,
-            `${projectRoot}/README.md`,
-            sinon.match('[ci-badge]][build]')
-          );
-          assert.neverCalledWith(fs.writeFile, `${projectRoot}/README.md`, sinon.match('[ci-link]:'));
-          assert.neverCalledWith(fs.writeFile, `${projectRoot}/README.md`, sinon.match('[ci-badge]:'));
-        });
-      });
+      assertBadgeIncludedInMarkdown(consumerBadges);
+      assertBadgeIncludedInMarkdown(statusBadges);
     });
 
-    suite('grouping', () => {
-      test('that badges are separated into consumer, status, and contribution groups', async () => {
-        const licenseText = any.sentence();
-        const ciText = any.sentence();
-
-        await scaffoldReadme({
-          projectName,
-          projectRoot,
-          description,
-          badges: {
-            consumer: {license: {img: any.url(), text: licenseText}},
-            status: {ci: {img: any.url(), text: ciText}}
-          }
-        }).then(() => assert.calledWith(
-          fs.writeFile,
-          `${projectRoot}/README.md`,
-          sinon.match(`
+    test('that badges are separated into consumer, status, and contribution groups', async () => {
+      await scaffoldReadme({
+        projectName,
+        projectRoot,
+        description,
+        badges: {consumer: consumerBadges, status: statusBadges}
+      }).then(() => assert.calledWith(
+        fs.writeFile,
+        `${projectRoot}/README.md`,
+        sinon.match(`
 <!-- consumer badges -->
-[![${licenseText}][license-badge]][license-link]
+${buildBadgeGroup(consumerBadges).join('\n')}
 
 <!-- status badges -->
-[![${ciText}][ci-badge]][ci-link]
+${buildBadgeGroup(statusBadges).join('\n')}
 
 <!-- contribution badges -->
 `)
-        ));
-      });
+      ));
     });
   });
 });
