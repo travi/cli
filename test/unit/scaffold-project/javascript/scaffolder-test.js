@@ -192,6 +192,7 @@ suite('javascript project scaffolder', () => {
     });
 
     test('that the project is allowed to use semver ranges if it is a package', () => {
+      packageBuilder.default.returns({name: any.word()});
       inquirer.prompt.resolves({
         [questionNames.NODE_VERSION_CATEGORY]: any.fromList(nodeVersionCategoryChoices),
         [questionNames.PACKAGE_TYPE]: 'Package'
@@ -228,17 +229,56 @@ suite('javascript project scaffolder', () => {
   });
 
   suite('data passed downstream', () => {
-    test('that files and directories are defined to be ignored from version control', async () => {
-      inquirer.prompt.resolves({
-        [questionNames.NODE_VERSION_CATEGORY]: any.word()
+    suite('badges', () => {
+      test('that the npm badge is defined for public packages', async () => {
+        const packageName = any.word();
+        packageBuilder.default.returns({name: packageName});
+        inquirer.prompt.resolves({
+          [questionNames.NODE_VERSION_CATEGORY]: any.word(),
+          [questionNames.PACKAGE_TYPE]: 'Package'
+        });
+
+        const {badges} = await scaffoldJavaScript({projectRoot, projectName, visibility: 'Public'});
+
+        assert.deepEqual(badges.consumer.npm, {img: `https://img.shields.io/npm/v/${packageName}.svg`});
       });
 
-      const {vcsIgnore} = await scaffoldJavaScript({projectRoot, projectName, visibility: 'Public'});
+      test('that the npm badge is not defined for private packages', async () => {
+        inquirer.prompt.resolves({
+          [questionNames.NODE_VERSION_CATEGORY]: any.word(),
+          [questionNames.PACKAGE_TYPE]: 'Package'
+        });
 
-      assert.include(vcsIgnore.files, '.eslintcache');
+        const {badges} = await scaffoldJavaScript({projectRoot, projectName, visibility: 'Private'});
 
-      assert.include(vcsIgnore.directories, '/node_modules/');
-      assert.include(vcsIgnore.directories, '/lib/');
+        assert.isUndefined(badges.consumer.npm);
+      });
+
+      test('that the npm badge is not defined if the project is not a package', async () => {
+        inquirer.prompt.resolves({
+          [questionNames.NODE_VERSION_CATEGORY]: any.word(),
+          [questionNames.PACKAGE_TYPE]: any.word()
+        });
+
+        const {badges} = await scaffoldJavaScript({projectRoot, projectName, visibility: 'Public'});
+
+        assert.isUndefined(badges.consumer.npm);
+      });
+    });
+
+    suite('vsc ignore', () => {
+      test('that files and directories are defined to be ignored from version control', async () => {
+        inquirer.prompt.resolves({
+          [questionNames.NODE_VERSION_CATEGORY]: any.word()
+        });
+
+        const {vcsIgnore} = await scaffoldJavaScript({projectRoot, projectName, visibility: 'Public'});
+
+        assert.include(vcsIgnore.files, '.eslintcache');
+
+        assert.include(vcsIgnore.directories, '/node_modules/');
+        assert.include(vcsIgnore.directories, '/lib/');
+      });
     });
   });
 });

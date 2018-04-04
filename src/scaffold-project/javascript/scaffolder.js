@@ -84,24 +84,29 @@ export default async function ({projectRoot, projectName, visibility, license, v
   const nodeVersion = await determineNodeVersionForProject(answers[questionNames.NODE_VERSION_CATEGORY]);
 
   console.log(chalk.grey('Writing project files'));      // eslint-disable-line no-console
+
+  const packageType = answers[questionNames.PACKAGE_TYPE];
+
+  const packageData = buildPackage({
+    projectName,
+    visibility,
+    scope: answers[questionNames.SCOPE],
+    packageType,
+    license,
+    vcs,
+    tests: {
+      unit: answers[questionNames.UNIT_TESTS],
+      integration: answers[questionNames.INTEGRATION_TESTS]
+    }
+  });
+
   await Promise.all([
     writeFile(`${projectRoot}/.nvmrc`, nodeVersion),
     writeFile(
       `${projectRoot}/package.json`,
-      JSON.stringify(buildPackage({
-        projectName,
-        visibility,
-        scope: answers[questionNames.SCOPE],
-        packageType: answers[questionNames.PACKAGE_TYPE],
-        license,
-        vcs,
-        tests: {
-          unit: answers[questionNames.UNIT_TESTS],
-          integration: answers[questionNames.INTEGRATION_TESTS]
-        }
-      }))
+      JSON.stringify(packageData)
     ),
-    ('Application' === answers[questionNames.PACKAGE_TYPE]) && writeFile(`${projectRoot}/.npmrc`, 'save-exact=true')
+    ('Application' === packageType) && writeFile(`${projectRoot}/.npmrc`, 'save-exact=true')
   ]);
 
   console.log(chalk.grey(`Installing ${                           // eslint-disable-line no-console
@@ -114,6 +119,13 @@ export default async function ({projectRoot, projectName, visibility, license, v
   await install(devDependencies);
 
   return {
+    badges: {
+      consumer: {
+        ...('Public' === visibility && 'Package' === packageType) && {
+          npm: {img: `https://img.shields.io/npm/v/${packageData.name}.svg`}
+        }
+      }
+    },
     vcsIgnore: {
       files: ['.eslintcache'],
       directories: ['/node_modules/', '/lib/']
