@@ -124,15 +124,12 @@ export default async function () {
       description: answers[questionNames.DESCRIPTION],
       license: chosenLicense,
       badges: {
-        consumer: {license: license.badge},
+        consumer: {...language && language.badges.consumer, license: license.badge},
         status: {ci: ci.badge}
       }
     }),
     answers[questionNames.GIT_REPO]
-      ? scaffoldGit({
-        projectRoot,
-        ignore: language ? language.vcsIgnore : {}
-      })
+      ? scaffoldGit({projectRoot, ignore: language ? language.vcsIgnore : {}})
       : undefined,
     copyFile(resolve(__dirname, 'templates', 'editorconfig.txt'), `${projectRoot}/.editorconfig`)
   ]);

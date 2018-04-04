@@ -122,7 +122,11 @@ export default async function ({projectRoot, projectName, visibility, license, v
     badges: {
       consumer: {
         ...('Public' === visibility && 'Package' === packageType) && {
-          npm: {img: `https://img.shields.io/npm/v/${packageData.name}.svg`}
+          npm: {
+            img: `https://img.shields.io/npm/v/${packageData.name}.svg`,
+            text: 'npm',
+            link: `https://www.npmjs.com/package/${packageData.name}`
+          }
         }
       }
     },

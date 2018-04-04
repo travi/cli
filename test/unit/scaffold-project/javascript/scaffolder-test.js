@@ -240,7 +240,11 @@ suite('javascript project scaffolder', () => {
 
         const {badges} = await scaffoldJavaScript({projectRoot, projectName, visibility: 'Public'});
 
-        assert.deepEqual(badges.consumer.npm, {img: `https://img.shields.io/npm/v/${packageName}.svg`});
+        assert.deepEqual(badges.consumer.npm, {
+          img: `https://img.shields.io/npm/v/${packageName}.svg`,
+          text: 'npm',
+          link: `https://www.npmjs.com/package/${packageName}`
+        });
       });
 
       test('that the npm badge is not defined for private packages', async () => {
@@ -266,7 +270,7 @@ suite('javascript project scaffolder', () => {
       });
     });
 
-    suite('vsc ignore', () => {
+    suite('vcs ignore', () => {
       test('that files and directories are defined to be ignored from version control', async () => {
         inquirer.prompt.resolves({
           [questionNames.NODE_VERSION_CATEGORY]: any.word()

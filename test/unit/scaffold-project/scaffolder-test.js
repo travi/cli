@@ -191,11 +191,18 @@ suite('project scaffolder', () => {
       [questionNames.GIT_REPO]: true,
       [questionNames.LICENSE]: license
     });
+    const jsConsumerBadges = any.simpleObject();
     javascriptScaffolder.default
       .withArgs({projectName, projectRoot: projectPath, visibility, license, vcs})
-      .resolves({vcsIgnore: ignore});
+      .resolves({vcsIgnore: ignore, badges: {consumer: jsConsumerBadges}});
     vcsHostScaffolder.default.withArgs({host: repoHost, projectName, projectRoot: projectPath}).resolves(vcs);
 
-    return scaffolder().then(() => assert.calledWith(gitScaffolder.default, {projectRoot: projectPath, ignore}));
+    return scaffolder().then(() => {
+      assert.calledWith(gitScaffolder.default, {projectRoot: projectPath, ignore});
+      assert.calledWith(
+        readmeScaffolder.default,
+        sinon.match({badges: {consumer: {...jsConsumerBadges, license: undefined}, status: {ci: undefined}}})
+      );
+    });
   });
 });
