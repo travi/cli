@@ -2,12 +2,14 @@ import {basename, resolve} from 'path';
 import {prompt} from 'inquirer';
 import {copyFile} from 'mz/fs';
 import spdxLicenseList from 'spdx-license-list/simple';
+import chalk from 'chalk';
 import scaffoldReadme from './readme';
 import scaffoldGit from './vcs/git';
 import scaffoldLicense from './license';
 import scaffoldVcsHost from './vcs/host';
 import scaffoldJavaScriptProject from './javascript/scaffolder';
 import scaffoldTravis from './ci/travis';
+import exec from './shell/exec-as-promised';
 import {
   copyrightInformationShouldBeRequested,
   licenseChoicesShouldBePresented,
@@ -117,7 +119,7 @@ export default async function () {
     }) : undefined
   ]);
 
-  return Promise.all([
+  await Promise.all([
     scaffoldReadme({
       projectName,
       projectRoot,
@@ -133,4 +135,7 @@ export default async function () {
       : undefined,
     copyFile(resolve(__dirname, 'templates', 'editorconfig.txt'), `${projectRoot}/.editorconfig`)
   ]);
+
+  console.log(chalk.blue('Verifying the generated project'));       // eslint-disable-line no-console
+  if (language && language.verificationCommand) await exec(language.verificationCommand, {silent: false});
 }

@@ -12,6 +12,7 @@ export default function ({projectName, visibility, scope, packageType, license, 
     scripts: {
       ...('Application' === packageType) && {start: './lib/index.js'},
       'lint:js': 'eslint . --cache',
+      test: 'run-s lint:*',
       ...tests.unit && {'test:unit': 'mocha --recursive test/unit'},
       ...tests.integration && {'test:integration': 'cucumber-js test/integration --require-module babel-register --format-options \'{"snippetInterface": "async-await"}\''}     // eslint-disable-line max-len
     },

@@ -77,6 +77,7 @@ export default async function ({projectRoot, projectName, visibility, license, v
 
   const devDependencies = uniq([
     '@travi/eslint-config-travi',
+    'npm-run-all',
     ...answers[questionNames.UNIT_TESTS] ? ['mocha', 'chai', 'sinon'] : [],
     ...answers[questionNames.INTEGRATION_TESTS] ? ['cucumber', 'chai'] : []
   ]);
@@ -133,6 +134,7 @@ export default async function ({projectRoot, projectName, visibility, license, v
     vcsIgnore: {
       files: ['.eslintcache'],
       directories: ['/node_modules/', '/lib/']
-    }
+    },
+    verificationCommand: 'npm test'
   };
 }

@@ -11,6 +11,7 @@ import * as vcsHostScaffolder from '../../../src/scaffold-project/vcs/host';
 import * as licenseScaffolder from '../../../src/scaffold-project/license';
 import * as javascriptScaffolder from '../../../src/scaffold-project/javascript/scaffolder';
 import * as travisScaffolder from '../../../src/scaffold-project/ci/travis';
+import * as exec from '../../../src/scaffold-project/shell/exec-as-promised';
 import scaffolder, {questionNames} from '../../../src/scaffold-project/scaffolder';
 import {
   copyrightInformationShouldBeRequested,
@@ -39,6 +40,7 @@ suite('project scaffolder', () => {
     sandbox.stub(javascriptScaffolder, 'default');
     sandbox.stub(travisScaffolder, 'default');
     sandbox.stub(fs, 'copyFile');
+    sandbox.stub(exec, 'default');
 
     process.cwd.returns(projectPath);
     fs.copyFile.resolves();
@@ -192,9 +194,10 @@ suite('project scaffolder', () => {
       [questionNames.LICENSE]: license
     });
     const jsConsumerBadges = any.simpleObject();
+    const verificationCommand = any.string();
     javascriptScaffolder.default
       .withArgs({projectName, projectRoot: projectPath, visibility, license, vcs})
-      .resolves({vcsIgnore: ignore, badges: {consumer: jsConsumerBadges}});
+      .resolves({vcsIgnore: ignore, badges: {consumer: jsConsumerBadges}, verificationCommand});
     vcsHostScaffolder.default.withArgs({host: repoHost, projectName, projectRoot: projectPath}).resolves(vcs);
 
     return scaffolder().then(() => {
@@ -203,6 +206,14 @@ suite('project scaffolder', () => {
         readmeScaffolder.default,
         sinon.match({badges: {consumer: {...jsConsumerBadges, license: undefined}, status: {ci: undefined}}})
       );
+      assert.calledWith(exec.default, verificationCommand, {silent: false});
     });
+  });
+
+  test('that running a verification command is not attempted when not provided', () => {
+    inquirer.prompt.resolves({[questionNames.PROJECT_TYPE]: 'JavaScript'});
+    javascriptScaffolder.default.resolves({badges: {}});
+
+    return scaffolder().then(() => assert.notCalled(exec.default));
   });
 });

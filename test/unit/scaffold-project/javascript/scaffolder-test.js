@@ -119,6 +119,16 @@ suite('javascript project scaffolder', () => {
     });
 
     suite('dependencies', () => {
+      suite('scripts', () => {
+        test('that scripting tools are installed', async () => {
+          inquirer.prompt.resolves({[questionNames.NODE_VERSION_CATEGORY]: any.word()});
+
+          await scaffoldJavaScript({});
+
+          assert.calledWith(installer.default, ['@travi/eslint-config-travi', 'npm-run-all']);
+        });
+      });
+
       suite('testing', () => {
         test('that mocha, chai, and sinon are installed when the project will be unit tested', async () => {
           inquirer.prompt.resolves({
@@ -128,7 +138,7 @@ suite('javascript project scaffolder', () => {
 
           await scaffoldJavaScript({});
 
-          assert.calledWith(installer.default, ['@travi/eslint-config-travi', 'mocha', 'chai', 'sinon']);
+          assert.calledWith(installer.default, ['@travi/eslint-config-travi', 'npm-run-all', 'mocha', 'chai', 'sinon']);
         });
 
         test('that mocha, chai, and sinon are not installed when the project will not be unit tested', async () => {
@@ -139,7 +149,7 @@ suite('javascript project scaffolder', () => {
 
           await scaffoldJavaScript({});
 
-          assert.calledWith(installer.default, ['@travi/eslint-config-travi']);
+          assert.calledWith(installer.default, ['@travi/eslint-config-travi', 'npm-run-all']);
         });
 
         test('that cucumber and chai are installed when the project will be integration tested', async () => {
@@ -150,7 +160,7 @@ suite('javascript project scaffolder', () => {
 
           await scaffoldJavaScript({});
 
-          assert.calledWith(installer.default, ['@travi/eslint-config-travi', 'cucumber', 'chai']);
+          assert.calledWith(installer.default, ['@travi/eslint-config-travi', 'npm-run-all', 'cucumber', 'chai']);
         });
 
         test('that cucumber and chai are not installed when the project will not be integration tested', async () => {
@@ -161,7 +171,7 @@ suite('javascript project scaffolder', () => {
 
           await scaffoldJavaScript({});
 
-          assert.calledWith(installer.default, ['@travi/eslint-config-travi']);
+          assert.calledWith(installer.default, ['@travi/eslint-config-travi', 'npm-run-all']);
         });
 
         test('that unique dependencies are requested when various reasons overlap', async () => {
@@ -173,7 +183,10 @@ suite('javascript project scaffolder', () => {
 
           await scaffoldJavaScript({});
 
-          assert.calledWith(installer.default, ['@travi/eslint-config-travi', 'mocha', 'chai', 'sinon', 'cucumber']);
+          assert.calledWith(
+            installer.default,
+            ['@travi/eslint-config-travi', 'npm-run-all', 'mocha', 'chai', 'sinon', 'cucumber']
+          );
         });
       });
     });
@@ -272,9 +285,7 @@ suite('javascript project scaffolder', () => {
 
     suite('vcs ignore', () => {
       test('that files and directories are defined to be ignored from version control', async () => {
-        inquirer.prompt.resolves({
-          [questionNames.NODE_VERSION_CATEGORY]: any.word()
-        });
+        inquirer.prompt.resolves({[questionNames.NODE_VERSION_CATEGORY]: any.word()});
 
         const {vcsIgnore} = await scaffoldJavaScript({projectRoot, projectName, visibility: 'Public'});
 
@@ -282,6 +293,16 @@ suite('javascript project scaffolder', () => {
 
         assert.include(vcsIgnore.directories, '/node_modules/');
         assert.include(vcsIgnore.directories, '/lib/');
+      });
+    });
+
+    suite('verification', () => {
+      test('that `npm test` is defined as the verification command', async () => {
+        inquirer.prompt.resolves({[questionNames.NODE_VERSION_CATEGORY]: any.word()});
+
+        const {verificationCommand} = await scaffoldJavaScript({projectRoot, projectName, visibility: any.word()});
+
+        assert.equal(verificationCommand, 'npm test');
       });
     });
   });
