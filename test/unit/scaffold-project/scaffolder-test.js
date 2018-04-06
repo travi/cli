@@ -146,7 +146,9 @@ suite('project scaffolder', () => {
     licenseScaffolder.default
       .withArgs({projectRoot: projectPath, license, copyright, vcs})
       .resolves({badge: licenseBadge});
-    vcsHostScaffolder.default.withArgs({host: repoHost, projectName, projectRoot: projectPath}).resolves(vcs);
+    vcsHostScaffolder.default
+      .withArgs({host: repoHost, projectName, projectRoot: projectPath, projectType})
+      .resolves(vcs);
     travisScaffolder.default
       .withArgs({projectRoot: projectPath, projectType, vcs, visibility})
       .resolves({badge: travisBadge});
@@ -185,9 +187,10 @@ suite('project scaffolder', () => {
     const visibility = any.boolean();
     const license = any.word();
     const ignore = any.simpleObject();
+    const projectType = 'JavaScript';
     inquirer.prompt.resolves({
       [questionNames.PROJECT_NAME]: projectName,
-      [questionNames.PROJECT_TYPE]: 'JavaScript',
+      [questionNames.PROJECT_TYPE]: projectType,
       [questionNames.VISIBILITY]: visibility,
       [questionNames.REPO_HOST]: repoHost,
       [questionNames.GIT_REPO]: true,
@@ -198,7 +201,9 @@ suite('project scaffolder', () => {
     javascriptScaffolder.default
       .withArgs({projectName, projectRoot: projectPath, visibility, license, vcs})
       .resolves({vcsIgnore: ignore, badges: {consumer: jsConsumerBadges}, verificationCommand});
-    vcsHostScaffolder.default.withArgs({host: repoHost, projectName, projectRoot: projectPath}).resolves(vcs);
+    vcsHostScaffolder.default
+      .withArgs({host: repoHost, projectName, projectRoot: projectPath, projectType})
+      .resolves(vcs);
 
     return scaffolder().then(() => {
       assert.calledWith(gitScaffolder.default, {projectRoot: projectPath, ignore});

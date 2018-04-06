@@ -27,11 +27,12 @@ suite('vcs host scaffolder', () => {
   test('that github is scaffolded if github was chosen as the host', () => {
     const host = 'GitHub';
     const projectRoot = any.string();
+    const projectType = any.string();
     githubScaffolder.default.resolves();
 
     return assert.becomes(
-      scaffoldVcsHost({host, projectName, projectRoot}),
+      scaffoldVcsHost({host, projectName, projectRoot, projectType}),
       {host, owner: 'travi', name: projectName}
-    ).then(() => assert.calledWith(githubScaffolder.default, {projectRoot}));
+    ).then(() => assert.calledWith(githubScaffolder.default, {projectRoot, projectType}));
   });
 });
