@@ -39,7 +39,11 @@ suite('travis', () => {
       ).then(() => assert.calledWith(
         yamlWriter.default,
         `${projectRoot}/.travis.yml`,
-        {language: 'node_js', notifications: {email: false}}
+        {
+          language: 'node_js',
+          notifications: {email: false},
+          env: {global: {FORCE_COLOR: 1, NPM_CONFIG_COLOR: 'always'}}
+        }
       ));
     });
 

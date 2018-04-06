@@ -3,7 +3,11 @@ import writeYaml from '../../../third-party-wrappers/write-yaml';
 export default async function ({projectRoot, projectType, vcs, visibility}) {
   if ('JavaScript' !== projectType) return Promise.resolve({});
 
-  await writeYaml(`${projectRoot}/.travis.yml`, {language: 'node_js', notifications: {email: false}});
+  await writeYaml(`${projectRoot}/.travis.yml`, {
+    language: 'node_js',
+    notifications: {email: false},
+    env: {global: {FORCE_COLOR: 1, NPM_CONFIG_COLOR: 'always'}}
+  });
 
   return {
     ...'Public' === visibility && {
