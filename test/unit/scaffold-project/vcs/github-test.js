@@ -30,7 +30,16 @@ suite('github', () => {
           allow_squash_merge: false,
           allow_merge_commit: true,
           allow_rebase_merge: true
-        }
+        },
+        labels: [
+          {name: 'bug', color: 'ee0701'},
+          {name: 'duplicate', color: 'cccccc'},
+          {name: 'enhancement', color: '84b6eb'},
+          {name: 'help wanted', color: '128A0C'},
+          {name: 'invalid', color: 'e6e6e6'},
+          {name: 'question', color: 'cc317c'},
+          {name: 'wontfix', color: 'ffffff'}
+        ]
       }
     ));
   });
@@ -41,7 +50,18 @@ suite('github', () => {
     return scaffoldGithub({projectRoot, projectType: 'JavaScript'}).then(() => assert.calledWith(
       yamlWriter.default,
       `${projectRoot}/.github/settings.yml`,
-      sinon.match({labels: [{name: 'greenkeeper', color: '00c775'}]})
+      sinon.match({
+        labels: [
+          {name: 'bug', color: 'ee0701'},
+          {name: 'duplicate', color: 'cccccc'},
+          {name: 'enhancement', color: '84b6eb'},
+          {name: 'help wanted', color: '128A0C'},
+          {name: 'invalid', color: 'e6e6e6'},
+          {name: 'question', color: 'cc317c'},
+          {name: 'wontfix', color: 'ffffff'},
+          {name: 'greenkeeper', color: '00c775'}
+        ]
+      })
     ));
   });
 });
