@@ -1,0 +1,16 @@
+/src/
+/test/
+/.nyc_output/
+
+.babelrc
+.commitlintrc.js
+.editorconfig
+.eslintcache
+.eslintignore
+.eslintrc.yml
+.gitattributes
+.markdownlintrc
+.nvmrc
+.nycrc
+.travis.yml
+rollup.config.js
