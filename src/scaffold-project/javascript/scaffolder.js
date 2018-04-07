@@ -2,7 +2,8 @@ import {writeFile} from 'mz/fs';
 import chalk from 'chalk';
 import {prompt} from 'inquirer';
 import uniq from 'lodash.uniq';
-import exec from '../shell/exec-as-promised';
+import npmConfFactory from '../../../third-party-wrappers/npm-conf';
+import exec from '../../../third-party-wrappers/exec-as-promised';
 import buildPackage from './package';
 import install from './install';
 import {scopePromptShouldBePresented, shouldBeScopedPromptShouldBePresented} from './prompt-condiftionals';
@@ -13,7 +14,10 @@ export const questionNames = {
   SHOULD_BE_SCOPED: 'shouldBeScoped',
   SCOPE: 'scope',
   UNIT_TESTS: 'unitTests',
-  INTEGRATION_TESTS: 'integrationTests'
+  INTEGRATION_TESTS: 'integrationTests',
+  AUTHOR_NAME: 'authorName',
+  AUTHOR_EMAIL: 'authorEmail',
+  AUTHOR_URL: 'authorUrl'
 };
 
 const testingQuestions = [
@@ -44,6 +48,25 @@ async function determineNodeVersionForProject(nodeVersionCategory) {
 export default async function ({projectRoot, projectName, visibility, license, vcs}) {
   console.log(chalk.blue('Initializing JavaScript project'));     // eslint-disable-line no-console
 
+  const npmConf = npmConfFactory();
+  const authorQuestions = [
+    {
+      name: questionNames.AUTHOR_NAME,
+      message: 'What is the author\'s name?',
+      default: npmConf.get('init.author.name')
+    },
+    {
+      name: questionNames.AUTHOR_EMAIL,
+      message: 'What is the author\'s email?',
+      default: npmConf.get('init.author.email')
+    },
+    {
+      name: questionNames.AUTHOR_URL,
+      message: 'What is the author\'s website url?',
+      default: npmConf.get('init.author.url')
+    }
+  ];
+
   const answers = await prompt([
     {
       name: questionNames.NODE_VERSION_CATEGORY,
@@ -72,6 +95,7 @@ export default async function ({projectRoot, projectName, visibility, license, v
       when: scopePromptShouldBePresented,
       default: 'travi'
     },
+    ...authorQuestions,
     ...testingQuestions
   ]);
 

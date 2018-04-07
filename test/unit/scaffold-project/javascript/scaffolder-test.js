@@ -9,8 +9,9 @@ import {
 } from '../../../../src/scaffold-project/javascript/prompt-condiftionals';
 import * as packageBuilder from '../../../../src/scaffold-project/javascript/package';
 import * as installer from '../../../../src/scaffold-project/javascript/install';
-import * as exec from '../../../../src/scaffold-project/shell/exec-as-promised';
+import * as exec from '../../../../third-party-wrappers/exec-as-promised';
 import scaffoldJavaScript, {questionNames} from '../../../../src/scaffold-project/javascript/scaffolder';
+import * as npmConf from '../../../../third-party-wrappers/npm-conf';
 
 suite('javascript project scaffolder', () => {
   let sandbox;
@@ -29,6 +30,7 @@ suite('javascript project scaffolder', () => {
     sandbox.stub(packageBuilder, 'default');
     sandbox.stub(installer, 'default');
     sandbox.stub(exec, 'default');
+    sandbox.stub(npmConf, 'default');
 
     fs.writeFile.resolves();
     exec.default
@@ -37,14 +39,21 @@ suite('javascript project scaffolder', () => {
     exec.default
       .withArgs('. ~/.nvm/nvm.sh && nvm ls-remote --lts')
       .resolves([...any.listOf(any.word), ltsVersion, ''].join('\n'));
+    npmConf.default.returns({get: () => undefined});
   });
 
   teardown(() => sandbox.restore());
 
   test('that the user is prompted for the necessary details', () => {
-    inquirer.prompt.resolves({
-      [questionNames.NODE_VERSION_CATEGORY]: any.fromList(nodeVersionCategoryChoices)
-    });
+    const authorName = any.string();
+    const authorEmail = any.string();
+    const authorUrl = any.url();
+    const get = sinon.stub();
+    npmConf.default.returns({get});
+    get.withArgs('init.author.name').returns(authorName);
+    get.withArgs('init.author.email').returns(authorEmail);
+    get.withArgs('init.author.url').returns(authorUrl);
+    inquirer.prompt.resolves({[questionNames.NODE_VERSION_CATEGORY]: any.fromList(nodeVersionCategoryChoices)});
 
     return scaffoldJavaScript({visibility}).then(() => assert.calledWith(
       inquirer.prompt,
@@ -75,6 +84,21 @@ suite('javascript project scaffolder', () => {
           message: 'What is the scope?',
           when: scopePromptShouldBePresented,
           default: 'travi'
+        },
+        {
+          name: questionNames.AUTHOR_NAME,
+          message: 'What is the author\'s name?',
+          default: authorName
+        },
+        {
+          name: questionNames.AUTHOR_EMAIL,
+          message: 'What is the author\'s email?',
+          default: authorEmail
+        },
+        {
+          name: questionNames.AUTHOR_URL,
+          message: 'What is the author\'s website url?',
+          default: authorUrl
         },
         {
           name: questionNames.UNIT_TESTS,

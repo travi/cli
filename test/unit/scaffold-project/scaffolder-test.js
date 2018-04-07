@@ -11,7 +11,7 @@ import * as vcsHostScaffolder from '../../../src/scaffold-project/vcs/host';
 import * as licenseScaffolder from '../../../src/scaffold-project/license';
 import * as javascriptScaffolder from '../../../src/scaffold-project/javascript/scaffolder';
 import * as travisScaffolder from '../../../src/scaffold-project/ci/travis';
-import * as exec from '../../../src/scaffold-project/shell/exec-as-promised';
+import * as exec from '../../../third-party-wrappers/exec-as-promised';
 import scaffolder, {questionNames} from '../../../src/scaffold-project/scaffolder';
 import {
   copyrightInformationShouldBeRequested,

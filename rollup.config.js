@@ -21,7 +21,8 @@ export default {
     'shelljs',
     'lodash.uniq',
     'write-yaml',
-    'util'
+    'util',
+    'npm-conf'
   ],
   plugins: [
     nodeResolve({
