@@ -209,4 +209,12 @@ suite('package details builder', () => {
       });
     });
   });
+
+  suite('config', () => {
+    test('that commitizen is configured', () => {
+      const packageDetails = buildPackageDetails({tests: {}, vcs: {}, author: {}});
+
+      assert.deepEqual(packageDetails.config.commitizen.path, './node_modules/cz-conventional-changelog');
+    });
+  });
 });

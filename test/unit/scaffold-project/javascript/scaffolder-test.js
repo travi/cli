@@ -168,7 +168,12 @@ suite('javascript project scaffolder', () => {
     });
 
     suite('dependencies', () => {
-      const defaultDependencies = ['@travi/eslint-config-travi', 'npm-run-all', 'husky@next'];
+      const defaultDependencies = [
+        '@travi/eslint-config-travi',
+        'npm-run-all',
+        'husky@next',
+        'cz-conventional-changelog'
+      ];
 
       suite('scripts', () => {
         test('that scripting tools are installed', async () => {

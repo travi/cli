@@ -104,6 +104,7 @@ export default async function ({projectRoot, projectName, visibility, license, v
     '@travi/eslint-config-travi',
     'npm-run-all',
     'husky@next',
+    'cz-conventional-changelog',
     ...answers[questionNames.UNIT_TESTS] ? ['mocha', 'chai', 'sinon'] : [],
     ...answers[questionNames.INTEGRATION_TESTS] ? ['cucumber', 'chai'] : []
   ]);
