@@ -1,4 +1,5 @@
 import inquirer from 'inquirer';
+import path from 'path';
 import fs from 'mz/fs';
 import {assert} from 'chai';
 import any from '@travi/any';
@@ -26,6 +27,7 @@ suite('javascript project scaffolder', () => {
     sandbox = sinon.sandbox.create();
 
     sandbox.stub(fs, 'writeFile');
+    sandbox.stub(fs, 'copyFile');
     sandbox.stub(inquirer, 'prompt');
     sandbox.stub(packageBuilder, 'default');
     sandbox.stub(installer, 'default');
@@ -33,6 +35,7 @@ suite('javascript project scaffolder', () => {
     sandbox.stub(npmConf, 'default');
 
     fs.writeFile.resolves();
+    fs.copyFile.resolves();
     exec.default
       .withArgs('. ~/.nvm/nvm.sh && nvm ls-remote')
       .resolves([...any.listOf(any.word), latestVersion, ''].join('\n'));
@@ -55,65 +58,72 @@ suite('javascript project scaffolder', () => {
     get.withArgs('init.author.url').returns(authorUrl);
     inquirer.prompt.resolves({[questionNames.NODE_VERSION_CATEGORY]: any.fromList(nodeVersionCategoryChoices)});
 
-    return scaffoldJavaScript({visibility}).then(() => assert.calledWith(
-      inquirer.prompt,
-      [
-        {
-          name: questionNames.NODE_VERSION_CATEGORY,
-          message: 'What node.js version should be used?',
-          type: 'list',
-          choices: nodeVersionCategoryChoices,
-          default: 'Latest'
-        },
-        {
-          name: questionNames.PACKAGE_TYPE,
-          message: 'What type of JavaScript project is this?',
-          type: 'list',
-          choices: ['Application', 'Package'],
-          default: 'Package'
-        },
-        {
-          name: questionNames.SHOULD_BE_SCOPED,
-          message: 'Should this package be scoped?',
-          type: 'confirm',
-          when: shouldBeScopedPromptShouldBePresented,
-          default: true
-        },
-        {
-          name: questionNames.SCOPE,
-          message: 'What is the scope?',
-          when: scopePromptShouldBePresented,
-          default: 'travi'
-        },
-        {
-          name: questionNames.AUTHOR_NAME,
-          message: 'What is the author\'s name?',
-          default: authorName
-        },
-        {
-          name: questionNames.AUTHOR_EMAIL,
-          message: 'What is the author\'s email?',
-          default: authorEmail
-        },
-        {
-          name: questionNames.AUTHOR_URL,
-          message: 'What is the author\'s website url?',
-          default: authorUrl
-        },
-        {
-          name: questionNames.UNIT_TESTS,
-          message: 'Will this project be unit tested?',
-          type: 'confirm',
-          default: true
-        },
-        {
-          name: questionNames.INTEGRATION_TESTS,
-          message: 'Will this project be integration tested?',
-          type: 'confirm',
-          default: true
-        }
-      ]
-    ));
+    return scaffoldJavaScript({visibility, projectRoot}).then(() => {
+      assert.calledWith(
+        inquirer.prompt,
+        [
+          {
+            name: questionNames.NODE_VERSION_CATEGORY,
+            message: 'What node.js version should be used?',
+            type: 'list',
+            choices: nodeVersionCategoryChoices,
+            default: 'Latest'
+          },
+          {
+            name: questionNames.PACKAGE_TYPE,
+            message: 'What type of JavaScript project is this?',
+            type: 'list',
+            choices: ['Application', 'Package'],
+            default: 'Package'
+          },
+          {
+            name: questionNames.SHOULD_BE_SCOPED,
+            message: 'Should this package be scoped?',
+            type: 'confirm',
+            when: shouldBeScopedPromptShouldBePresented,
+            default: true
+          },
+          {
+            name: questionNames.SCOPE,
+            message: 'What is the scope?',
+            when: scopePromptShouldBePresented,
+            default: 'travi'
+          },
+          {
+            name: questionNames.AUTHOR_NAME,
+            message: 'What is the author\'s name?',
+            default: authorName
+          },
+          {
+            name: questionNames.AUTHOR_EMAIL,
+            message: 'What is the author\'s email?',
+            default: authorEmail
+          },
+          {
+            name: questionNames.AUTHOR_URL,
+            message: 'What is the author\'s website url?',
+            default: authorUrl
+          },
+          {
+            name: questionNames.UNIT_TESTS,
+            message: 'Will this project be unit tested?',
+            type: 'confirm',
+            default: true
+          },
+          {
+            name: questionNames.INTEGRATION_TESTS,
+            message: 'Will this project be integration tested?',
+            type: 'confirm',
+            default: true
+          }
+        ]
+      );
+      assert.calledWith(
+        fs.copyFile,
+        path.resolve(__dirname, '../../../../', 'src/scaffold-project/javascript/templates', 'huskyrc.json'),
+        `${projectRoot}/.huskyrc.json`
+      );
+    });
   });
 
   suite('package', () => {
@@ -158,13 +168,15 @@ suite('javascript project scaffolder', () => {
     });
 
     suite('dependencies', () => {
+      const defaultDependencies = ['@travi/eslint-config-travi', 'npm-run-all', 'husky@next'];
+
       suite('scripts', () => {
         test('that scripting tools are installed', async () => {
           inquirer.prompt.resolves({[questionNames.NODE_VERSION_CATEGORY]: any.word()});
 
           await scaffoldJavaScript({});
 
-          assert.calledWith(installer.default, ['@travi/eslint-config-travi', 'npm-run-all']);
+          assert.calledWith(installer.default, [...defaultDependencies]);
         });
       });
 
@@ -177,7 +189,7 @@ suite('javascript project scaffolder', () => {
 
           await scaffoldJavaScript({});
 
-          assert.calledWith(installer.default, ['@travi/eslint-config-travi', 'npm-run-all', 'mocha', 'chai', 'sinon']);
+          assert.calledWith(installer.default, [...defaultDependencies, 'mocha', 'chai', 'sinon']);
         });
 
         test('that mocha, chai, and sinon are not installed when the project will not be unit tested', async () => {
@@ -188,7 +200,7 @@ suite('javascript project scaffolder', () => {
 
           await scaffoldJavaScript({});
 
-          assert.calledWith(installer.default, ['@travi/eslint-config-travi', 'npm-run-all']);
+          assert.calledWith(installer.default, [...defaultDependencies]);
         });
 
         test('that cucumber and chai are installed when the project will be integration tested', async () => {
@@ -199,7 +211,7 @@ suite('javascript project scaffolder', () => {
 
           await scaffoldJavaScript({});
 
-          assert.calledWith(installer.default, ['@travi/eslint-config-travi', 'npm-run-all', 'cucumber', 'chai']);
+          assert.calledWith(installer.default, [...defaultDependencies, 'cucumber', 'chai']);
         });
 
         test('that cucumber and chai are not installed when the project will not be integration tested', async () => {
@@ -210,7 +222,7 @@ suite('javascript project scaffolder', () => {
 
           await scaffoldJavaScript({});
 
-          assert.calledWith(installer.default, ['@travi/eslint-config-travi', 'npm-run-all']);
+          assert.calledWith(installer.default, [...defaultDependencies]);
         });
 
         test('that unique dependencies are requested when various reasons overlap', async () => {
@@ -222,10 +234,7 @@ suite('javascript project scaffolder', () => {
 
           await scaffoldJavaScript({});
 
-          assert.calledWith(
-            installer.default,
-            ['@travi/eslint-config-travi', 'npm-run-all', 'mocha', 'chai', 'sinon', 'cucumber']
-          );
+          assert.calledWith(installer.default, [...defaultDependencies, 'mocha', 'chai', 'sinon', 'cucumber']);
         });
       });
     });

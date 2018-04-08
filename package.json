@@ -10,6 +10,7 @@
   "scripts": {
     "clean": "rimraf bin/",
     "copy:templates": "cpy 'templates/**/*.*' '../../bin/' --parents --cwd=src/scaffold-project",
+    "copy:js-templates": "cpy 'templates/**/*.*' '../../../bin/' --parents --cwd=src/scaffold-project/javascript",
     "lint:md": "globstar --node -- markdownlint **/*.md",
     "lint:js": "eslint . --cache",
     "tests:unit": "mocha --recursive test/unit",

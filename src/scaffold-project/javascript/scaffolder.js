@@ -1,4 +1,5 @@
-import {writeFile} from 'mz/fs';
+import {resolve} from 'path';
+import {copyFile, writeFile} from 'mz/fs';
 import chalk from 'chalk';
 import {prompt} from 'inquirer';
 import uniq from 'lodash.uniq';
@@ -102,6 +103,7 @@ export default async function ({projectRoot, projectName, visibility, license, v
   const devDependencies = uniq([
     '@travi/eslint-config-travi',
     'npm-run-all',
+    'husky@next',
     ...answers[questionNames.UNIT_TESTS] ? ['mocha', 'chai', 'sinon'] : [],
     ...answers[questionNames.INTEGRATION_TESTS] ? ['cucumber', 'chai'] : []
   ]);
@@ -136,7 +138,8 @@ export default async function ({projectRoot, projectName, visibility, license, v
       `${projectRoot}/package.json`,
       JSON.stringify(packageData)
     ),
-    ('Application' === packageType) && writeFile(`${projectRoot}/.npmrc`, 'save-exact=true')
+    ('Application' === packageType) && writeFile(`${projectRoot}/.npmrc`, 'save-exact=true'),
+    copyFile(resolve(__dirname, 'templates', 'huskyrc.json'), `${projectRoot}/.huskyrc.json`)
   ]);
 
   console.log(chalk.grey(`Installing ${                           // eslint-disable-line no-console
