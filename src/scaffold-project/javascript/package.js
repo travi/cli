@@ -1,4 +1,4 @@
-export default function ({projectName, visibility, scope, packageType, license, tests, vcs}) {
+export default function ({projectName, visibility, scope, packageType, license, tests, vcs, author}) {
   return {
     name: `${scope ? `@${scope}/` : ''}${projectName}`,
     ...('Package' === packageType) && {version: '0.0.0-semantically-released'},
@@ -9,6 +9,7 @@ export default function ({projectName, visibility, scope, packageType, license, 
       bugs: `https://github.com/${vcs.owner}/${vcs.name}/issues`,
       homepage: `https://github.com/${vcs.owner}/${vcs.name}#readme`
     },
+    author: `${author.name} <${author.email}> (${author.url})`,
     scripts: {
       ...('Application' === packageType) && {start: './lib/index.js'},
       'lint:js': 'eslint . --cache',

@@ -122,6 +122,11 @@ export default async function ({projectRoot, projectName, visibility, license, v
     tests: {
       unit: answers[questionNames.UNIT_TESTS],
       integration: answers[questionNames.INTEGRATION_TESTS]
+    },
+    author: {
+      name: answers[questionNames.AUTHOR_NAME],
+      email: answers[questionNames.AUTHOR_EMAIL],
+      url: answers[questionNames.AUTHOR_URL]
     }
   });
 

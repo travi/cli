@@ -124,15 +124,30 @@ suite('javascript project scaffolder', () => {
       const license = any.string();
       const tests = {unit: any.boolean(), integration: any.boolean()};
       const vcs = any.simpleObject();
+      const authorName = any.string();
+      const authorEmail = any.string();
+      const authorUrl = any.url();
       inquirer.prompt.resolves({
         [questionNames.SCOPE]: scope,
         [questionNames.PACKAGE_TYPE]: packageType,
         [questionNames.UNIT_TESTS]: tests.unit,
         [questionNames.INTEGRATION_TESTS]: tests.integration,
-        [questionNames.NODE_VERSION_CATEGORY]: any.fromList(nodeVersionCategoryChoices)
+        [questionNames.NODE_VERSION_CATEGORY]: any.fromList(nodeVersionCategoryChoices),
+        [questionNames.AUTHOR_NAME]: authorName,
+        [questionNames.AUTHOR_EMAIL]: authorEmail,
+        [questionNames.AUTHOR_URL]: authorUrl
       });
       packageBuilder.default
-        .withArgs({projectName, visibility, scope, packageType, license, tests, vcs})
+        .withArgs({
+          projectName,
+          visibility,
+          scope,
+          packageType,
+          license,
+          tests,
+          vcs,
+          author: {name: authorName, email: authorEmail, url: authorUrl}
+        })
         .returns(packageDetails);
 
       return scaffoldJavaScript({projectRoot, projectName, visibility, license, vcs}).then(() => assert.calledWith(
