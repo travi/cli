@@ -162,7 +162,7 @@ suite('project scaffolder', () => {
           projectRoot: projectPath,
           description,
           license,
-          badges: {consumer: {license: licenseBadge}, status: {ci: travisBadge}}
+          badges: {consumer: {license: licenseBadge}, status: {ci: travisBadge}, contribution: {}}
         }
       );
       assert.calledWith(
@@ -197,10 +197,15 @@ suite('project scaffolder', () => {
       [questionNames.LICENSE]: license
     });
     const jsConsumerBadges = any.simpleObject();
+    const jsContibutionBadges = any.simpleObject();
     const verificationCommand = any.string();
     javascriptScaffolder.default
       .withArgs({projectName, projectRoot: projectPath, visibility, license, vcs})
-      .resolves({vcsIgnore: ignore, badges: {consumer: jsConsumerBadges}, verificationCommand});
+      .resolves({
+        vcsIgnore: ignore,
+        badges: {consumer: jsConsumerBadges, contribution: jsContibutionBadges},
+        verificationCommand
+      });
     vcsHostScaffolder.default
       .withArgs({host: repoHost, projectName, projectRoot: projectPath, projectType})
       .resolves(vcs);
@@ -209,7 +214,13 @@ suite('project scaffolder', () => {
       assert.calledWith(gitScaffolder.default, {projectRoot: projectPath, ignore});
       assert.calledWith(
         readmeScaffolder.default,
-        sinon.match({badges: {consumer: {...jsConsumerBadges, license: undefined}, status: {ci: undefined}}})
+        sinon.match({
+          badges: {
+            consumer: {...jsConsumerBadges, license: undefined},
+            status: {ci: undefined},
+            contribution: jsContibutionBadges
+          }
+        })
       );
       assert.calledWith(exec.default, verificationCommand, {silent: false});
     });

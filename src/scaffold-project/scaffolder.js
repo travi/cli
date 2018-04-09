@@ -127,7 +127,8 @@ export default async function () {
       license: chosenLicense,
       badges: {
         consumer: {...language && language.badges.consumer, license: license.badge},
-        status: {ci: ci.badge}
+        status: {ci: ci.badge},
+        contribution: {...language && language.badges.contribution}
       }
     }),
     answers[questionNames.GIT_REPO]
