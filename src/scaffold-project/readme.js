@@ -21,12 +21,14 @@ export default async function ({projectName, projectRoot, description, badges}) 
 
   const markdownBadges = {
     consumer: Object.entries(badges.consumer).map(buildBadgeMarkdown),
-    status: Object.entries(badges.status).map(buildBadgeMarkdown)
+    status: Object.entries(badges.status).map(buildBadgeMarkdown),
+    contribution: Object.entries(badges.contribution).map(buildBadgeMarkdown)
   };
 
   const references = [
     ...Object.entries(badges.consumer).reduce(buildBadgeReferences, []),
-    ...Object.entries(badges.status).reduce(buildBadgeReferences, [])
+    ...Object.entries(badges.status).reduce(buildBadgeReferences, []),
+    ...Object.entries(badges.contribution).reduce(buildBadgeReferences, [])
   ].filter(Boolean);
 
   await writeFile(
