@@ -123,6 +123,11 @@ suite('javascript project scaffolder', () => {
         path.resolve(__dirname, '../../../../', 'src/scaffold-project/javascript/templates', 'huskyrc.json'),
         `${projectRoot}/.huskyrc.json`
       );
+      assert.calledWith(
+        fs.copyFile,
+        path.resolve(__dirname, '../../../../', 'src/scaffold-project/javascript/templates', 'commitlintrc.js'),
+        `${projectRoot}/.commitlintrc.js`
+      );
     });
   });
 
