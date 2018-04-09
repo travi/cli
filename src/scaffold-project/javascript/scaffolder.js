@@ -162,6 +162,18 @@ export default async function ({projectRoot, projectName, visibility, license, v
             link: `https://www.npmjs.com/package/${packageData.name}`
           }
         }
+      },
+      contribution: {
+        'commit-convention': {
+          img: 'https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg',
+          text: 'Conventional Commits',
+          link: 'https://conventionalcommits.org'
+        },
+        commitizen: {
+          img: 'https://img.shields.io/badge/commitizen-friendly-brightgreen.svg',
+          text: 'Commitizen friendly',
+          link: 'http://commitizen.github.io/cz-cli/'
+        }
       }
     },
     vcsIgnore: {

@@ -334,6 +334,25 @@ suite('javascript project scaffolder', () => {
 
         assert.isUndefined(badges.consumer.npm);
       });
+
+      test('that the commit-convention badges are provided', async () => {
+        const packageName = any.word();
+        packageBuilder.default.returns({name: packageName});
+        inquirer.prompt.resolves({[questionNames.NODE_VERSION_CATEGORY]: any.word()});
+
+        const {badges} = await scaffoldJavaScript({projectRoot, projectName});
+
+        assert.deepEqual(badges.contribution['commit-convention'], {
+          img: 'https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg',
+          text: 'Conventional Commits',
+          link: 'https://conventionalcommits.org'
+        });
+        assert.deepEqual(badges.contribution.commitizen, {
+          img: 'https://img.shields.io/badge/commitizen-friendly-brightgreen.svg',
+          text: 'Commitizen friendly',
+          link: 'http://commitizen.github.io/cz-cli/'
+        });
+      });
     });
 
     suite('vcs ignore', () => {
