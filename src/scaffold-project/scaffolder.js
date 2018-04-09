@@ -126,8 +126,8 @@ export default async function () {
       description: answers[questionNames.DESCRIPTION],
       license: chosenLicense,
       badges: {
-        consumer: {...language && language.badges.consumer, license: license.badge},
-        status: {ci: ci.badge},
+        consumer: {...language && language.badges.consumer, ...license.badge && {license: license.badge}},
+        status: {...ci.badge && {ci: ci.badge}},
         contribution: {...language && language.badges.contribution}
       }
     }),

@@ -174,6 +174,30 @@ suite('project scaffolder', () => {
     });
   });
 
+  test('that the badge lists passed to the readme are empty if none are defined', () => {
+    const license = any.string();
+    const description = any.string();
+    licenseScaffolder.default.resolves({});
+    inquirer.prompt.resolves({
+      [questionNames.PROJECT_NAME]: projectName,
+      [questionNames.LICENSE]: license,
+      [questionNames.DESCRIPTION]: description,
+      [questionNames.GIT_REPO]: false
+    });
+    readmeScaffolder.default.resolves();
+
+    return scaffolder().then(() => assert.calledWith(
+      readmeScaffolder.default,
+      {
+        projectName,
+        projectRoot: projectPath,
+        description,
+        license,
+        badges: {consumer: {}, status: {}, contribution: {}}
+      }
+    ));
+  });
+
   test('that the git repo is not initialized if not requested', () => {
     inquirer.prompt.resolves({
       [questionNames.GIT_REPO]: false
