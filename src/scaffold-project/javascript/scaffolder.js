@@ -134,17 +134,30 @@ export default async function ({projectRoot, projectName, visibility, license, v
     ci
   });
 
+  const npmIgnoreDirectories = ['/src/', '/test/'];
+  const npmIgnoreFiles = [
+    '.editorconfig',
+    '.eslintcache',
+    '.eslintignore',
+    '.eslintrc.yml',
+    '.markdownlintrc',
+    '.nvmrc'
+  ];
+
   await Promise.all([
     writeFile(`${projectRoot}/.nvmrc`, nodeVersion),
     writeFile(`${projectRoot}/package.json`, JSON.stringify(packageData)),
     ('Application' === packageType) && writeFile(`${projectRoot}/.npmrc`, 'save-exact=true'),
     copyFile(resolve(__dirname, 'templates', 'huskyrc.json'), `${projectRoot}/.huskyrc.json`),
-    copyFile(resolve(__dirname, 'templates', 'commitlintrc.js'), `${projectRoot}/.commitlintrc.js`)
+    copyFile(resolve(__dirname, 'templates', 'commitlintrc.js'), `${projectRoot}/.commitlintrc.js`),
+    ('Package' === packageType) && writeFile(
+      `${projectRoot}/.npmignore`,
+      `${npmIgnoreDirectories.join('\n')}\n\n${npmIgnoreFiles.join('\n')}`
+    )
   ]);
 
-  console.log(chalk.grey(`Installing ${                           // eslint-disable-line no-console
-    answers[questionNames.NODE_VERSION_CATEGORY].toLowerCase()
-  } version of node using nvm`));
+  const versionCategory = answers[questionNames.NODE_VERSION_CATEGORY].toLowerCase();
+  console.log(chalk.grey(`Installing ${versionCategory} version of node using nvm`));  // eslint-disable-line no-console
   await exec('. ~/.nvm/nvm.sh && nvm install', {silent: false});
 
 

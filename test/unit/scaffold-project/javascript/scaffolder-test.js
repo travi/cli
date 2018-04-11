@@ -375,6 +375,43 @@ suite('javascript project scaffolder', () => {
       });
     });
 
+    suite('npm ignore', () => {
+      test('that files and directories are defined to be ignored from the published npm package', async () => {
+        inquirer.prompt.resolves({
+          [questionNames.NODE_VERSION_CATEGORY]: any.word(),
+          [questionNames.PACKAGE_TYPE]: 'Package'
+        });
+        packageBuilder.default.returns({});
+
+        await scaffoldJavaScript({projectRoot, projectName, visibility: 'Public'});
+
+        assert.calledWith(
+          fs.writeFile,
+          `${projectRoot}/.npmignore`,
+          sinon.match(`/src/
+/test/
+
+.editorconfig
+.eslintcache
+.eslintignore
+.eslintrc.yml
+.markdownlintrc
+.nvmrc`)
+        );
+      });
+
+      test('that no npm ignore file is generated for non-packages', async () => {
+        inquirer.prompt.resolves({
+          [questionNames.NODE_VERSION_CATEGORY]: any.word(),
+          [questionNames.PACKAGE_TYPE]: any.word()
+        });
+
+        await scaffoldJavaScript({projectRoot, projectName, visibility: 'Public'});
+
+        assert.neverCalledWith(fs.writeFile, `${projectRoot}/.npmignore`);
+      });
+    });
+
     suite('verification', () => {
       test('that `npm test` is defined as the verification command', async () => {
         inquirer.prompt.resolves({[questionNames.NODE_VERSION_CATEGORY]: any.word()});
