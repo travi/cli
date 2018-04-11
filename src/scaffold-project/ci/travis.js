@@ -6,6 +6,7 @@ export default async function ({projectRoot, projectType, vcs, visibility}) {
   await writeYaml(`${projectRoot}/.travis.yml`, {
     language: 'node_js',
     notifications: {email: false},
+    install: ['npm install', 'gem install travis'],
     env: {global: {FORCE_COLOR: 1, NPM_CONFIG_COLOR: 'always'}}
   });
 
