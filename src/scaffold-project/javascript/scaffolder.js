@@ -141,8 +141,10 @@ export default async function ({projectRoot, projectName, visibility, license, v
     '.eslintignore',
     '.eslintrc.yml',
     '.markdownlintrc',
-    '.nvmrc'
-  ];
+    '.nvmrc',
+    ('Travis' === ci) && '.travis.yml',
+    'rollup.config.js'
+  ].filter(Boolean);
 
   await Promise.all([
     writeFile(`${projectRoot}/.nvmrc`, nodeVersion),

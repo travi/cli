@@ -396,7 +396,26 @@ suite('javascript project scaffolder', () => {
 .eslintignore
 .eslintrc.yml
 .markdownlintrc
-.nvmrc`)
+.nvmrc
+rollup.config.js`)
+        );
+      });
+
+      test('that the travis config is ignored when travis it the ci service', async () => {
+        inquirer.prompt.resolves({
+          [questionNames.NODE_VERSION_CATEGORY]: any.word(),
+          [questionNames.PACKAGE_TYPE]: 'Package'
+        });
+        packageBuilder.default.returns({});
+
+        await scaffoldJavaScript({projectRoot, projectName, visibility: 'Public', ci: 'Travis'});
+
+        assert.calledWith(
+          fs.writeFile,
+          `${projectRoot}/.npmignore`,
+          sinon.match(`
+.travis.yml
+`)
         );
       });
 
