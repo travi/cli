@@ -142,6 +142,7 @@ suite('javascript project scaffolder', () => {
       const authorName = any.string();
       const authorEmail = any.string();
       const authorUrl = any.url();
+      const ci = any.word();
       inquirer.prompt.resolves({
         [questionNames.SCOPE]: scope,
         [questionNames.PACKAGE_TYPE]: packageType,
@@ -161,11 +162,12 @@ suite('javascript project scaffolder', () => {
           license,
           tests,
           vcs,
-          author: {name: authorName, email: authorEmail, url: authorUrl}
+          author: {name: authorName, email: authorEmail, url: authorUrl},
+          ci
         })
         .returns(packageDetails);
 
-      return scaffoldJavaScript({projectRoot, projectName, visibility, license, vcs}).then(() => assert.calledWith(
+      return scaffoldJavaScript({projectRoot, projectName, visibility, license, vcs, ci}).then(() => assert.calledWith(
         fs.writeFile,
         `${projectRoot}/package.json`,
         JSON.stringify(packageDetails)

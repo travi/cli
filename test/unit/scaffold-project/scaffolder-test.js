@@ -26,6 +26,10 @@ suite('project scaffolder', () => {
   const projectName = any.string();
   const vcs = any.simpleObject();
   const repoHost = any.word();
+  const description = any.string();
+  const license = any.string();
+  const projectType = any.word();
+  const licenseBadge = any.url();
 
   setup(() => {
     sandbox = sinon.sandbox.create();
@@ -115,20 +119,22 @@ suite('project scaffolder', () => {
           type: 'list',
           message: 'What type of project is this?',
           choices: ['JavaScript', 'Other']
+        },
+        {
+          name: questionNames.CI,
+          type: 'list',
+          message: 'Which continuous integration service will be used?',
+          choices: ['Travis', 'GitLab CI']
         }
       ]
     ));
   });
 
   test('that project files are generated', () => {
-    const license = any.string();
-    const licenseBadge = any.url();
     const travisBadge = any.url();
-    const description = any.string();
     const year = any.word();
     const holder = any.sentence();
     const copyright = {year, holder};
-    const projectType = any.word();
     const visibility = any.word();
     inquirer.prompt.resolves({
       [questionNames.PROJECT_NAME]: projectName,
@@ -139,7 +145,8 @@ suite('project scaffolder', () => {
       [questionNames.DESCRIPTION]: description,
       [questionNames.COPYRIGHT_HOLDER]: holder,
       [questionNames.COPYRIGHT_YEAR]: year,
-      [questionNames.VISIBILITY]: visibility
+      [questionNames.VISIBILITY]: visibility,
+      [questionNames.CI]: 'Travis'
     });
     readmeScaffolder.default.resolves();
     gitScaffolder.default.resolves();
@@ -174,9 +181,33 @@ suite('project scaffolder', () => {
     });
   });
 
+  test('that the travis scaffolder is not run if travis was not chosen as the ci service', () => {
+    inquirer.prompt.resolves({
+      [questionNames.PROJECT_NAME]: projectName,
+      [questionNames.PROJECT_TYPE]: projectType,
+      [questionNames.GIT_REPO]: true,
+      [questionNames.LICENSE]: license,
+      [questionNames.DESCRIPTION]: description,
+      [questionNames.CI]: any.word()
+    });
+    licenseScaffolder.default.resolves({badge: licenseBadge});
+
+    return scaffolder().then(() => {
+      assert.notCalled(travisScaffolder.default);
+      assert.calledWith(
+        readmeScaffolder.default,
+        {
+          projectName,
+          projectRoot: projectPath,
+          description,
+          license,
+          badges: {consumer: {license: licenseBadge}, status: {}, contribution: {}}
+        }
+      );
+    });
+  });
+
   test('that the badge lists passed to the readme are empty if none are defined', () => {
-    const license = any.string();
-    const description = any.string();
     licenseScaffolder.default.resolves({});
     inquirer.prompt.resolves({
       [questionNames.PROJECT_NAME]: projectName,
@@ -209,29 +240,30 @@ suite('project scaffolder', () => {
 
   test('that the javascript project scaffolder is run for a js project', () => {
     const visibility = any.boolean();
-    const license = any.word();
     const ignore = any.simpleObject();
-    const projectType = 'JavaScript';
+    const javascriptProjectType = 'JavaScript';
+    const ci = any.word();
     inquirer.prompt.resolves({
       [questionNames.PROJECT_NAME]: projectName,
-      [questionNames.PROJECT_TYPE]: projectType,
+      [questionNames.PROJECT_TYPE]: javascriptProjectType,
       [questionNames.VISIBILITY]: visibility,
       [questionNames.REPO_HOST]: repoHost,
       [questionNames.GIT_REPO]: true,
-      [questionNames.LICENSE]: license
+      [questionNames.LICENSE]: license,
+      [questionNames.CI]: ci
     });
     const jsConsumerBadges = any.simpleObject();
     const jsContibutionBadges = any.simpleObject();
     const verificationCommand = any.string();
     javascriptScaffolder.default
-      .withArgs({projectName, projectRoot: projectPath, visibility, license, vcs})
+      .withArgs({projectName, projectRoot: projectPath, visibility, license, vcs, ci})
       .resolves({
         vcsIgnore: ignore,
         badges: {consumer: jsConsumerBadges, contribution: jsContibutionBadges},
         verificationCommand
       });
     vcsHostScaffolder.default
-      .withArgs({host: repoHost, projectName, projectRoot: projectPath, projectType})
+      .withArgs({host: repoHost, projectName, projectRoot: projectPath, projectType: javascriptProjectType})
       .resolves(vcs);
 
     return scaffolder().then(() => {

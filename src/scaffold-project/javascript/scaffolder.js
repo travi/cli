@@ -46,7 +46,7 @@ async function determineNodeVersionForProject(nodeVersionCategory) {
   return lsLine.match(/(v[0-9]+\.[0-9]+\.[0-9]+)/)[1];
 }
 
-export default async function ({projectRoot, projectName, visibility, license, vcs}) {
+export default async function ({projectRoot, projectName, visibility, license, vcs, ci}) {
   console.log(chalk.blue('Initializing JavaScript project'));     // eslint-disable-line no-console
 
   const npmConf = npmConfFactory();
@@ -130,15 +130,13 @@ export default async function ({projectRoot, projectName, visibility, license, v
       name: answers[questionNames.AUTHOR_NAME],
       email: answers[questionNames.AUTHOR_EMAIL],
       url: answers[questionNames.AUTHOR_URL]
-    }
+    },
+    ci
   });
 
   await Promise.all([
     writeFile(`${projectRoot}/.nvmrc`, nodeVersion),
-    writeFile(
-      `${projectRoot}/package.json`,
-      JSON.stringify(packageData)
-    ),
+    writeFile(`${projectRoot}/package.json`, JSON.stringify(packageData)),
     ('Application' === packageType) && writeFile(`${projectRoot}/.npmrc`, 'save-exact=true'),
     copyFile(resolve(__dirname, 'templates', 'huskyrc.json'), `${projectRoot}/.huskyrc.json`),
     copyFile(resolve(__dirname, 'templates', 'commitlintrc.js'), `${projectRoot}/.commitlintrc.js`)

@@ -27,7 +27,8 @@ export const questionNames = {
   LICENSE: 'license',
   COPYRIGHT_HOLDER: 'copyrightHolder',
   COPYRIGHT_YEAR: 'copyrightYear',
-  PROJECT_TYPE: 'projectType'
+  PROJECT_TYPE: 'projectType',
+  CI: 'ci'
 };
 
 const licenseQuestions = [
@@ -90,6 +91,12 @@ export default async function () {
       type: 'list',
       message: 'What type of project is this?',
       choices: ['JavaScript', 'Other']
+    },
+    {
+      name: questionNames.CI,
+      type: 'list',
+      message: 'Which continuous integration service will be used?',
+      choices: ['Travis', 'GitLab CI']
     }
   ]);
 
@@ -109,13 +116,16 @@ export default async function () {
       copyright: {year: answers[questionNames.COPYRIGHT_YEAR], holder: answers[questionNames.COPYRIGHT_HOLDER]},
       vcs
     }),
-    scaffoldTravis({projectRoot, projectType, vcs, visibility}),
+    ('Travis' === answers[questionNames.CI])
+      ? scaffoldTravis({projectRoot, projectType, vcs, visibility})
+      : Promise.resolve({}),
     isJavaScriptProject() ? scaffoldJavaScriptProject({
       projectRoot,
       projectName,
       vcs,
       visibility,
-      license: chosenLicense
+      license: chosenLicense,
+      ci: answers[questionNames.CI]
     }) : undefined
   ]);
 

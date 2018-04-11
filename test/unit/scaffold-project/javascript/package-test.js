@@ -206,6 +206,18 @@ suite('package details builder', () => {
 
           assert.equal(packageDetails.scripts['lint:js'], 'eslint . --cache');
         });
+
+        test('that the travis config file is linted when the ci service is travis', () => {
+          const packageDetails = buildPackageDetails({tests: {}, vcs: {}, author: {}, ci: 'Travis'});
+
+          assert.equal(packageDetails.scripts['lint:travis'], 'travis lint --no-interactive');
+        });
+
+        test('that the travis config file is not linted when the ci service is not travis', () => {
+          const packageDetails = buildPackageDetails({tests: {}, vcs: {}, author: {}});
+
+          assert.isUndefined(packageDetails.scripts['lint:travis']);
+        });
       });
     });
   });

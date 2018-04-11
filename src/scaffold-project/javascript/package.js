@@ -1,4 +1,4 @@
-export default function ({projectName, visibility, scope, packageType, license, tests, vcs, author}) {
+export default function ({projectName, visibility, scope, packageType, license, tests, vcs, author, ci}) {
   return {
     name: `${scope ? `@${scope}/` : ''}${projectName}`,
     ...('Package' === packageType) && {version: '0.0.0-semantically-released'},
@@ -13,6 +13,7 @@ export default function ({projectName, visibility, scope, packageType, license, 
     scripts: {
       ...('Application' === packageType) && {start: './lib/index.js'},
       'lint:js': 'eslint . --cache',
+      ...('Travis' === ci) && {'lint:travis': 'travis lint --no-interactive'},
       test: 'run-s lint:*',
       ...tests.unit && {'test:unit': 'mocha --recursive test/unit'},
       ...tests.integration && {'test:integration': 'cucumber-js test/integration --require-module babel-register --format-options \'{"snippetInterface": "async-await"}\''}     // eslint-disable-line max-len
