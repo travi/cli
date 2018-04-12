@@ -1,4 +1,4 @@
-import {questionNames} from './scaffolder';
+import {questionNames} from './prompts';
 
 export function vcsHostPromptShouldBePresented(answers) {
   return answers[questionNames.GIT_REPO];

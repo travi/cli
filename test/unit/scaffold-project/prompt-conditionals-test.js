@@ -1,6 +1,6 @@
 import {assert} from 'chai';
 import any from '@travi/any';
-import {questionNames} from '../../../src/scaffold-project/scaffolder';
+import {questionNames} from '../../../src/scaffold-project/prompts';
 import {
   vcsHostPromptShouldBePresented,
   unlicensedConfirmationShouldBePresented,
