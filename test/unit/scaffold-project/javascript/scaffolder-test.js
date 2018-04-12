@@ -179,7 +179,8 @@ suite('javascript project scaffolder', () => {
         '@travi/eslint-config-travi',
         'npm-run-all',
         'husky@next',
-        'cz-conventional-changelog'
+        'cz-conventional-changelog',
+        'greenkeeper-lockfile'
       ];
 
       suite('scripts', () => {

@@ -220,6 +220,15 @@ suite('package details builder', () => {
         });
       });
     });
+
+    suite('greenkeeper', () => {
+      test('that the lockfile scripts expose the commands for the ci steps', () => {
+        const packageDetails = buildPackageDetails({packageType: 'Application', tests: {}, vcs: {}, author: {}});
+
+        assert.equal(packageDetails.scripts['greenkeeper:update-lockfile'], 'greenkeeper-lockfile-update');
+        assert.equal(packageDetails.scripts['greenkeeper:upload-lockfile'], 'greenkeeper-lockfile-upload');
+      });
+    });
   });
 
   suite('config', () => {

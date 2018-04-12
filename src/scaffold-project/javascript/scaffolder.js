@@ -105,6 +105,7 @@ export default async function ({projectRoot, projectName, visibility, license, v
     'npm-run-all',
     'husky@next',
     'cz-conventional-changelog',
+    'greenkeeper-lockfile',
     ...answers[questionNames.UNIT_TESTS] ? ['mocha', 'chai', 'sinon'] : [],
     ...answers[questionNames.INTEGRATION_TESTS] ? ['cucumber', 'chai'] : []
   ]);

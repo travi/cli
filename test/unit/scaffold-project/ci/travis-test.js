@@ -43,6 +43,8 @@ suite('travis', () => {
           language: 'node_js',
           notifications: {email: false},
           install: ['npm install', 'gem install travis'],
+          before_script: 'npm run greenkeeper:update-lockfile',
+          after_script: 'npm run greenkeeper:upload-lockfile',
           env: {global: {FORCE_COLOR: 1, NPM_CONFIG_COLOR: 'always'}}
         }
       ));
