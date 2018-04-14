@@ -1,13 +1,17 @@
 export default function ({projectName, visibility, scope, packageType, license, tests, vcs, author, ci}) {
+  const packageName = `${scope ? `@${scope}/` : ''}${projectName}`;
+
   return {
-    name: `${scope ? `@${scope}/` : ''}${projectName}`,
+    name: packageName,
     ...('Package' === packageType) && {version: '0.0.0-semantically-released'},
     license: license || 'UNLICENSED',
     ...('Application' === packageType) && {private: true},
     ...('GitHub' === vcs.host) && {
       repository: `${vcs.owner}/${vcs.name}`,
       bugs: `https://github.com/${vcs.owner}/${vcs.name}/issues`,
-      homepage: `https://github.com/${vcs.owner}/${vcs.name}#readme`
+      homepage: ('Package' === packageType)
+        ? `https://npm.im/${packageName}`
+        : `https://github.com/${vcs.owner}/${vcs.name}#readme`
     },
     author: `${author.name} <${author.email}> (${author.url})`,
     scripts: {

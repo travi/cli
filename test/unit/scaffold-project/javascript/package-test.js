@@ -71,15 +71,42 @@ suite('package details builder', () => {
   });
 
   suite('github', () => {
-    test('that the repository details are defined', () => {
-      const repoName = any.word();
-      const owner = any.word();
+    const repoName = any.word();
+    const owner = any.word();
 
+    test('that the repository details are defined', () => {
       const packageDetails = buildPackageDetails({tests: {}, vcs: {host: 'GitHub', name: repoName, owner}, author: {}});
 
       assert.equal(packageDetails.repository, `${owner}/${repoName}`);
       assert.equal(packageDetails.bugs, `https://github.com/${owner}/${repoName}/issues`);
       assert.equal(packageDetails.homepage, `https://github.com/${owner}/${repoName}#readme`);
+    });
+
+    test('that the homepage is set to npm for packages', () => {
+      const packageDetails = buildPackageDetails({
+        packageType: 'Package',
+        projectName,
+        tests: {},
+        vcs: {host: 'GitHub', name: repoName, owner},
+        author: {}
+      });
+
+      assert.equal(packageDetails.homepage, `https://npm.im/${projectName}`);
+    });
+
+    test('that the npm homepage includes the scope for scoped packages', () => {
+      const scope = any.word();
+
+      const packageDetails = buildPackageDetails({
+        packageType: 'Package',
+        projectName,
+        scope,
+        tests: {},
+        vcs: {host: 'GitHub', name: repoName, owner},
+        author: {}
+      });
+
+      assert.equal(packageDetails.homepage, `https://npm.im/@${scope}/${projectName}`);
     });
   });
 
