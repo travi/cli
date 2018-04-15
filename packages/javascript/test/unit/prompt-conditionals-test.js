@@ -3,8 +3,8 @@ import {assert} from 'chai';
 import {
   shouldBeScopedPromptShouldBePresented,
   scopePromptShouldBePresented
-} from '../../../../src/scaffold-project/javascript/prompt-condiftionals';
-import {questionNames} from '../../../../src/scaffold-project/javascript/scaffolder';
+} from '../../src/prompt-condiftionals';
+import {questionNames} from '../../src/scaffolder';
 
 suite('javascript prompt conditionals', () => {
   suite('scope', () => {

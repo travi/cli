@@ -7,7 +7,7 @@ import * as readmeScaffolder from '../../../src/scaffold-project/readme';
 import * as gitScaffolder from '../../../src/scaffold-project/vcs/git';
 import * as vcsHostScaffolder from '../../../src/scaffold-project/vcs/host';
 import * as licenseScaffolder from '../../../src/scaffold-project/license';
-import * as javascriptScaffolder from '../../../src/scaffold-project/javascript/scaffolder';
+import * as javascriptScaffolder from '../../../packages/javascript/src/scaffolder';
 import * as travisScaffolder from '../../../src/scaffold-project/ci/travis';
 import * as exec from '../../../third-party-wrappers/exec-as-promised';
 import * as prompts from '../../../src/scaffold-project/prompts';

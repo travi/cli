@@ -7,11 +7,11 @@ import sinon from 'sinon';
 import {
   scopePromptShouldBePresented,
   shouldBeScopedPromptShouldBePresented
-} from '../../../../src/scaffold-project/javascript/prompt-condiftionals';
-import * as packageBuilder from '../../../../src/scaffold-project/javascript/package';
-import * as installer from '../../../../src/scaffold-project/javascript/install';
+} from '../../src/prompt-condiftionals';
+import * as packageBuilder from '../../src/package';
+import * as installer from '../../src/install';
 import * as exec from '../../../../third-party-wrappers/exec-as-promised';
-import scaffoldJavaScript, {questionNames} from '../../../../src/scaffold-project/javascript/scaffolder';
+import scaffoldJavaScript, {questionNames} from '../../src/scaffolder';
 import * as npmConf from '../../../../third-party-wrappers/npm-conf';
 
 suite('javascript project scaffolder', () => {
@@ -120,12 +120,12 @@ suite('javascript project scaffolder', () => {
       );
       assert.calledWith(
         fs.copyFile,
-        path.resolve(__dirname, '../../../../', 'src/scaffold-project/javascript/templates', 'huskyrc.json'),
+        path.resolve(__dirname, '../../../../', 'packages/javascript/src/templates', 'huskyrc.json'),
         `${projectRoot}/.huskyrc.json`
       );
       assert.calledWith(
         fs.copyFile,
-        path.resolve(__dirname, '../../../../', 'src/scaffold-project/javascript/templates', 'commitlintrc.js'),
+        path.resolve(__dirname, '../../../../', 'packages/javascript/src/templates', 'commitlintrc.js'),
         `${projectRoot}/.commitlintrc.js`
       );
     });
