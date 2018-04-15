@@ -34,7 +34,7 @@ export default async function ({projectName, projectRoot, description, badges}) 
   await writeFile(
     `${projectRoot}/README.md`,
     mustache.render(
-      await readFile(resolve(__dirname, './templates/README.mustache'), 'utf8'),
+      await readFile(resolve(__dirname, '..', 'templates/README.mustache'), 'utf8'),
       {projectName, description, references, badges: markdownBadges}
     )
   );

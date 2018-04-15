@@ -1,8 +1,8 @@
 import {assert} from 'chai';
 import sinon from 'sinon';
 import any from '@travi/any';
-import * as yamlWriter from '../../../../third-party-wrappers/write-yaml';
-import scaffoldGithub from '../../../../src/scaffold-project/vcs/github';
+import * as yamlWriter from '../../../../../third-party-wrappers/write-yaml';
+import scaffoldGithub from '../../../src/vcs/github';
 
 suite('github', () => {
   let sandbox;

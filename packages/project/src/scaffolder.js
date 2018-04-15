@@ -5,9 +5,9 @@ import scaffoldReadme from './readme';
 import scaffoldGit from './vcs/git';
 import scaffoldLicense from './license';
 import scaffoldVcsHost from './vcs/host';
-import scaffoldJavaScriptProject from '../../packages/javascript/src/scaffolder';
+import scaffoldJavaScriptProject from '../../javascript/src/scaffolder';
 import scaffoldTravis from './ci/travis';
-import exec from '../../third-party-wrappers/exec-as-promised';
+import exec from '../../../third-party-wrappers/exec-as-promised';
 import {prompt, questionNames} from './prompts';
 
 export default async function () {
@@ -58,7 +58,7 @@ export default async function () {
     answers[questionNames.GIT_REPO]
       ? scaffoldGit({projectRoot, ...language && {ignore: language.vcsIgnore}})
       : undefined,
-    copyFile(resolve(__dirname, 'templates', 'editorconfig.txt'), `${projectRoot}/.editorconfig`)
+    copyFile(resolve(__dirname, '..', 'templates', 'editorconfig.txt'), `${projectRoot}/.editorconfig`)
   ]);
 
   console.log(chalk.blue('Verifying the generated project'));       // eslint-disable-line no-console

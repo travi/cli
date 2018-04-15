@@ -2,20 +2,20 @@ import {readFile} from 'mz/fs';
 import {resolve} from 'path';
 import {Before, After, When} from 'cucumber';
 import stubbedFs from 'mock-fs';
-import scaffold from '../../../../src/scaffold-project/scaffolder';
+import scaffold from '../../../../packages/project/src/scaffolder';
 
 Before(async () => {
-  const templatePath = '../../../../src/scaffold-project/templates';
+  const projectTemplatePath = '../../../../packages/project/templates';
 
   // work around for overly aggressive mock-fs, see:
   // https://github.com/tschaub/mock-fs/issues/213#issuecomment-347002795
   require('mock-stdin'); // eslint-disable-line import/no-extraneous-dependencies
 
   stubbedFs({
-    src: {
-      'scaffold-project': {
+    packages: {
+      project: {
         templates: {
-          'README.mustache': await readFile(resolve(__dirname, templatePath, './README.mustache'))
+          'README.mustache': await readFile(resolve(__dirname, projectTemplatePath, './README.mustache'))
         }
       }
     }

@@ -2,7 +2,7 @@ import fs from 'mz/fs';
 import any from '@travi/any';
 import sinon from 'sinon';
 import {assert} from 'chai';
-import scaffoldReadme from '../../../src/scaffold-project/readme';
+import scaffoldReadme from '../../src/readme';
 
 const assertBadgeIncludedInMarkdown = (badgeData, projectRoot) => Object.entries(badgeData).forEach(([name, badge]) => {
   assert.calledWith(

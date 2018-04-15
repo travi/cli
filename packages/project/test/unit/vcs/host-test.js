@@ -1,8 +1,8 @@
 import {assert} from 'chai';
 import any from '@travi/any';
 import sinon from 'sinon';
-import * as githubScaffolder from '../../../../src/scaffold-project/vcs/github';
-import scaffoldVcsHost from '../../../../src/scaffold-project/vcs/host';
+import * as githubScaffolder from '../../../src/vcs/github';
+import scaffoldVcsHost from '../../../src/vcs/host';
 
 suite('vcs host scaffolder', () => {
   let sandbox;

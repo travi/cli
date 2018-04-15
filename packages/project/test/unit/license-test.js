@@ -4,7 +4,7 @@ import spdxLicenseListWithContent from 'spdx-license-list/full';
 import sinon from 'sinon';
 import {assert} from 'chai';
 import any from '@travi/any';
-import scaffoldLicense from '../../../src/scaffold-project/license';
+import scaffoldLicense from '../../src/license';
 
 suite('license', () => {
   let sandbox;

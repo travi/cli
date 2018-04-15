@@ -1,4 +1,4 @@
-import scaffolder from './scaffolder';
+import scaffolder from '../../packages/project/src/scaffolder';
 
 export default function (program) {
   program

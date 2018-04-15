@@ -3,15 +3,15 @@ import fs from 'mz/fs';
 import sinon from 'sinon';
 import {assert} from 'chai';
 import any from '@travi/any';
-import * as readmeScaffolder from '../../../src/scaffold-project/readme';
-import * as gitScaffolder from '../../../src/scaffold-project/vcs/git';
-import * as vcsHostScaffolder from '../../../src/scaffold-project/vcs/host';
-import * as licenseScaffolder from '../../../src/scaffold-project/license';
-import * as javascriptScaffolder from '../../../packages/javascript/src/scaffolder';
-import * as travisScaffolder from '../../../src/scaffold-project/ci/travis';
-import * as exec from '../../../third-party-wrappers/exec-as-promised';
-import * as prompts from '../../../src/scaffold-project/prompts';
-import scaffolder from '../../../src/scaffold-project/scaffolder';
+import * as readmeScaffolder from '../../src/readme';
+import * as gitScaffolder from '../../src/vcs/git';
+import * as vcsHostScaffolder from '../../src/vcs/host';
+import * as licenseScaffolder from '../../src/license';
+import * as javascriptScaffolder from '../../../javascript/src/scaffolder';
+import * as travisScaffolder from '../../src/ci/travis';
+import * as exec from '../../../../third-party-wrappers/exec-as-promised';
+import * as prompts from '../../src/prompts';
+import scaffolder from '../../src/scaffolder';
 
 suite('project scaffolder', () => {
   let sandbox;
@@ -90,7 +90,7 @@ suite('project scaffolder', () => {
       );
       assert.calledWith(
         fs.copyFile,
-        path.resolve(__dirname, '../../../', 'src/scaffold-project/templates', 'editorconfig.txt'),
+        path.resolve(__dirname, '../../', 'templates', 'editorconfig.txt'),
         `${projectPath}/.editorconfig`
       );
       assert.notCalled(javascriptScaffolder.default);
