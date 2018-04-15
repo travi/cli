@@ -16,7 +16,7 @@
     "test:unit": "nyc run-s test:unit:base",
     "test:unit:base": "mocha --recursive test/unit",
     "test:javascript-scaffolder": "mocha --recursive packages/javascript/test/unit",
-    "tests:integration": "cucumber-js test/integration --require-module babel-register --format-options '{\"snippetInterface\": \"async-await\"}'",
+    "test:integration": "cucumber-js test/integration --require-module babel-register --format-options '{\"snippetInterface\": \"async-await\"}'",
     "test": "run-s lint:* test:* build",
     "coverage:report": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "commitmsg": "commitlint -e",

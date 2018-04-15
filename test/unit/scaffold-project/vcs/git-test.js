@@ -19,19 +19,27 @@ suite('scaffold git', () => {
 
   test('that the git repo is initialized', () => {
     const projectRoot = any.string();
+    fs.writeFile.resolves();
+    gitRepository.init.resolves();
+
+    return scaffoldGit({projectRoot}).then(() => {
+      assert.calledWith(gitRepository.init, projectRoot, 0);
+      assert.calledWith(fs.writeFile, `${projectRoot}/.gitattributes`, '* text=auto');
+      assert.neverCalledWith(fs.writeFile, `${projectRoot}/.gitignore`);
+    });
+  });
+
+  test('that ignore file is created when patterns are defined', () => {
+    const projectRoot = any.string();
     const directories = any.listOf(any.string);
     const files = any.listOf(any.string);
     fs.writeFile.resolves();
     gitRepository.init.resolves();
 
-    return scaffoldGit({projectRoot, ignore: {directories, files}}).then(() => {
-      assert.calledWith(gitRepository.init, projectRoot, 0);
-      assert.calledWith(fs.writeFile, `${projectRoot}/.gitattributes`, '* text=auto');
-      assert.calledWith(
-        fs.writeFile,
-        `${projectRoot}/.gitignore`,
-        `${directories.join('\n')}\n\n${files.join('\n')}`
-      );
-    });
+    return scaffoldGit({projectRoot, ignore: {directories, files}}).then(() => assert.calledWith(
+      fs.writeFile,
+      `${projectRoot}/.gitignore`,
+      `${directories.join('\n')}\n\n${files.join('\n')}`
+    ));
   });
 });

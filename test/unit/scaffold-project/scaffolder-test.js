@@ -77,7 +77,7 @@ suite('project scaffolder', () => {
       .resolves({badge: travisBadge});
 
     return scaffolder().then(() => {
-      assert.calledWith(gitScaffolder.default, {projectRoot: projectPath, ignore: {}});
+      assert.calledWith(gitScaffolder.default, {projectRoot: projectPath});
       assert.calledWith(
         readmeScaffolder.default,
         {

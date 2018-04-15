@@ -56,7 +56,7 @@ export default async function () {
       }
     }),
     answers[questionNames.GIT_REPO]
-      ? scaffoldGit({projectRoot, ignore: language ? language.vcsIgnore : {}})
+      ? scaffoldGit({projectRoot, ...language && {ignore: language.vcsIgnore}})
       : undefined,
     copyFile(resolve(__dirname, 'templates', 'editorconfig.txt'), `${projectRoot}/.editorconfig`)
   ]);
