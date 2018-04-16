@@ -10,13 +10,11 @@
   "scripts": {
     "clean": "rimraf bin/",
     "copy:project-templates": "cpy 'templates/**/*.*' '../../' --parents --cwd=packages/project",
-    "copy:js-templates": "cpy 'templates/**/*.*' '../../' --parents --cwd=packages/javascript",
     "lint:md": "globstar --node -- markdownlint **/*.md",
     "lint:js": "eslint . --cache",
     "test:unit": "nyc run-s test:unit:base",
     "test:unit:base": "mocha --recursive test/unit",
     "test:project-scaffolder": "mocha --recursive packages/project/test/unit",
-    "test:javascript-scaffolder": "mocha --recursive packages/javascript/test/unit",
     "test:integration": "cucumber-js test/integration --require-module babel-register --format-options '{\"snippetInterface\": \"async-await\"}'",
     "test": "run-s lint:* test:* build",
     "coverage:report": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
@@ -73,6 +71,7 @@
     "sinon": "4.5.0"
   },
   "dependencies": {
+    "@travi/javascript-scaffolder": "1.0.0-beta.2",
     "chalk": "2.3.2",
     "commander": "2.15.1",
     "cp-file": "5.0.0",

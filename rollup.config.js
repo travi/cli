@@ -7,6 +7,7 @@ import executable from 'rollup-plugin-executable';
 export default {
   input: 'src/index.js',
   external: [
+    '@travi/javascript-scaffolder',
     'path',
     'commander',
     'inquirer',
