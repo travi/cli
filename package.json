@@ -72,7 +72,7 @@
   },
   "dependencies": {
     "@travi/javascript-scaffolder": "1.1.1",
-    "chalk": "2.3.2",
+    "chalk": "2.4.0",
     "commander": "2.15.1",
     "cp-file": "5.0.0",
     "inquander": "1.1.1",
