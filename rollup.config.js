@@ -8,6 +8,7 @@ export default {
   input: 'src/index.js',
   external: [
     '@travi/javascript-scaffolder',
+    '@travi/project-scaffolder',
     'path',
     'commander',
     'inquirer',
