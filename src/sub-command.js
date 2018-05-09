@@ -1,6 +1,6 @@
 import {scaffold} from '@travi/project-scaffolder';
 
-export default function (program) {
+export function addSubCommand(program) {
   program
     .command('scaffold')
     .description('scaffold a new project')

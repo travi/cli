@@ -1,1 +1,1 @@
-export {default} from './sub-command';
+export * from './sub-command';

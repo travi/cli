@@ -2,7 +2,7 @@ import sinon from 'sinon';
 import {assert} from 'chai';
 import any from '@travi/any';
 import * as projectScaffolder from '@travi/project-scaffolder';
-import scaffolder from '../../src/sub-command';
+import * as scaffolder from '../../src/sub-command';
 
 suite('scaffold-project sub-command', () => {
   let sandbox;
@@ -28,7 +28,7 @@ suite('scaffold-project sub-command', () => {
     const error = new Error();
     projectScaffolder.scaffold.rejects(error);
 
-    scaffolder({command});
+    scaffolder.addSubCommand({command});
 
     return action.getCall(0).args[0]().then(() => {
       assert.equal(process.exitCode, 1);
@@ -47,7 +47,7 @@ suite('scaffold-project sub-command', () => {
     error.data = {code};
     projectScaffolder.scaffold.rejects(error);
 
-    scaffolder({command});
+    scaffolder.addSubCommand({command});
 
     return action.getCall(0).args[0]().then(() => assert.equal(process.exitCode, code));
   });
