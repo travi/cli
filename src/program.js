@@ -1,7 +1,7 @@
-import scaffoldProject from './scaffold-project';
+import {addSubCommand} from '@travi/scaffolder-sub-command';
 
 export default function (program, {version}) {
   program.version(version);
 
-  scaffoldProject(program);
+  addSubCommand(program);
 }

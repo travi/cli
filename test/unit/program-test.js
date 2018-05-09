@@ -1,8 +1,8 @@
+import * as scaffoldSubCommand from '@travi/scaffolder-sub-command';
 import sinon from 'sinon';
 import {assert} from 'chai';
 import any from '@travi/any';
 import configureProgram from '../../src/program';
-import * as scaffoldSubCommand from '../../src/scaffold-project/sub-command';
 
 suite('cli', () => {
   let sandbox;
@@ -10,7 +10,7 @@ suite('cli', () => {
   setup(() => {
     sandbox = sinon.sandbox.create();
 
-    sandbox.stub(scaffoldSubCommand, 'default');
+    sandbox.stub(scaffoldSubCommand, 'addSubCommand');
   });
 
   teardown(() => sandbox.restore());
@@ -23,6 +23,6 @@ suite('cli', () => {
     configureProgram(program, {version});
 
     assert.calledWith(versionStub, version);
-    assert.calledWith(scaffoldSubCommand.default, program);
+    assert.calledWith(scaffoldSubCommand.addSubCommand, program);
   });
 });
