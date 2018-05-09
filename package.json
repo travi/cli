@@ -6,7 +6,7 @@
   "author": "Matt Travi <npm@travi.org> (https://matt.travi.org/)",
   "repository": "travi/cli",
   "bugs": "https://github.com/travi/cli/issues",
-  "homepage": "https://github.com/travi/cli#readme",
+  "homepage": "https://npm.im/@travi/cli",
   "scripts": {
     "clean": "rimraf bin/",
     "lint:md": "globstar --node -- markdownlint **/*.md",

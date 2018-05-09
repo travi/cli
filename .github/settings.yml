@@ -1,5 +1,6 @@
 repository:
   description: cli for my various tools
+  homepage: https://npm.im/@travi/cli
   has_wiki: false
   has_projects: false
   has_downloads: false
