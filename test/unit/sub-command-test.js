@@ -2,16 +2,24 @@ import sinon from 'sinon';
 import {assert} from 'chai';
 import any from '@travi/any';
 import * as projectScaffolder from '@travi/project-scaffolder';
+import {scaffold as scaffoldJavaScript} from '@travi/javascript-scaffolder';
 import * as scaffolder from '../../src/sub-command';
 
 suite('scaffold-project sub-command', () => {
-  let sandbox;
+  let sandbox, command, description, action;
 
   setup(() => {
     sandbox = sinon.createSandbox();
 
+    command = sinon.stub();
+    description = sinon.stub();
+    action = sinon.stub();
+
     sandbox.stub(projectScaffolder, 'scaffold');
     sandbox.stub(console, 'error');
+
+    command.withArgs('scaffold').returns({description});
+    description.withArgs('scaffold a new project').returns({action});
   });
 
   teardown(() => {
@@ -19,12 +27,18 @@ suite('scaffold-project sub-command', () => {
     sandbox.restore();
   });
 
+  test('that language scaffolders are provided to the project scaffolder', () => {
+    projectScaffolder.scaffold.resolves();
+
+    scaffolder.addSubCommand({command});
+
+    return action.getCall(0).args[0]().then(() => assert.calledWith(
+      projectScaffolder.scaffold,
+      {languages: {JavaScript: scaffoldJavaScript}}
+    ));
+  });
+
   test('that the exit-code is set to `1` upon failure when a code is not provided', () => {
-    const command = sinon.stub();
-    const description = sinon.stub();
-    const action = sinon.stub();
-    command.withArgs('scaffold').returns({description});
-    description.withArgs('scaffold a new project').returns({action});
     const error = new Error();
     projectScaffolder.scaffold.rejects(error);
 
@@ -37,12 +51,7 @@ suite('scaffold-project sub-command', () => {
   });
 
   test('that the exit-code is set to the provided code upon failure when provided', () => {
-    const command = sinon.stub();
-    const description = sinon.stub();
-    const action = sinon.stub();
     const code = any.integer();
-    command.withArgs('scaffold').returns({description});
-    description.withArgs('scaffold a new project').returns({action});
     const error = new Error();
     error.data = {code};
     projectScaffolder.scaffold.rejects(error);
