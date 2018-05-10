@@ -2,8 +2,8 @@ import sinon from 'sinon';
 import {assert} from 'chai';
 import any from '@travi/any';
 import * as projectScaffolder from '@travi/project-scaffolder';
-import {scaffold as scaffoldJavaScript} from '@travi/javascript-scaffolder';
 import * as scaffolder from '../../src/sub-command';
+import * as scaffolderFactories from '../../src/scaffolder-factories';
 
 suite('scaffold-project sub-command', () => {
   let sandbox, command, description, action;
@@ -17,6 +17,7 @@ suite('scaffold-project sub-command', () => {
 
     sandbox.stub(projectScaffolder, 'scaffold');
     sandbox.stub(console, 'error');
+    sandbox.stub(scaffolderFactories, 'javascript');
 
     command.withArgs('scaffold').returns({description});
     description.withArgs('scaffold a new project').returns({action});
@@ -28,7 +29,9 @@ suite('scaffold-project sub-command', () => {
   });
 
   test('that language scaffolders are provided to the project scaffolder', () => {
+    const scaffoldJavaScript = () => undefined;
     projectScaffolder.scaffold.resolves();
+    scaffolderFactories.javascript.returns(scaffoldJavaScript);
 
     scaffolder.addSubCommand({command});
 
