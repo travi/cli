@@ -3,7 +3,7 @@ import {assert} from 'chai';
 import any from '@travi/any';
 import * as projectScaffolder from '@travi/project-scaffolder';
 import * as scaffolder from '../../src/sub-command';
-import * as scaffolderFactories from '../../src/scaffolder-factories';
+import * as scaffolderFactories from '../../src/enhanced-scaffolders';
 
 suite('scaffold-project sub-command', () => {
   let sandbox, command, description, action;

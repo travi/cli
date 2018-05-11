@@ -1,5 +1,5 @@
 import {scaffold} from '@travi/project-scaffolder';
-import {javascript} from './scaffolder-factories';
+import {javascript} from './enhanced-scaffolders';
 
 export function addSubCommand(program) {
   program

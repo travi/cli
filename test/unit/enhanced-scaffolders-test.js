@@ -2,7 +2,7 @@ import * as javascriptScaffolder from '@travi/javascript-scaffolder';
 import any from '@travi/any';
 import {assert} from 'chai';
 import sinon from 'sinon';
-import {javascript} from '../../src/scaffolder-factories';
+import {javascript} from '../../src/enhanced-scaffolders';
 
 suite('scaffolder factories', () => {
   let sandbox;
@@ -21,6 +21,6 @@ suite('scaffolder factories', () => {
 
     javascriptScaffolder.scaffold.withArgs({...options, eslintConfigPrefix: '@travi/travi'}).resolves(output);
 
-    return assert.becomes(javascript()(options), output);
+    return assert.becomes(javascript(options), output);
   });
 });
