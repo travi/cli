@@ -20,7 +20,13 @@ suite('scaffolder factories', () => {
     const output = any.simpleObject();
 
     javascriptScaffolder.scaffold
-      .withArgs({...options, configs: {eslint: {prefix: '@travi/travi', packageName: '@travi/eslint-config-travi'}}})
+      .withArgs({
+        ...options,
+        configs: {
+          eslint: {prefix: '@travi/travi', packageName: '@travi/eslint-config-travi'},
+          commitlint: {name: 'travi', packageName: 'commitlint-config-travi'}
+        }
+      })
       .resolves(output);
 
     return assert.becomes(javascript(options), output);
