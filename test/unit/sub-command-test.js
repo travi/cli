@@ -34,7 +34,7 @@ suite('scaffold-project sub-command', () => {
 
     return action.getCall(0).args[0]().then(() => assert.calledWith(
       projectScaffolder.scaffold,
-      {languages: {JavaScript: javascript}}
+      {languages: {JavaScript: javascript}, overrides: {copyrightHolder: 'Matt Travi'}}
     ));
   });
 
