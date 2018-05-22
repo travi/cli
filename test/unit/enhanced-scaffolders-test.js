@@ -24,7 +24,8 @@ suite('scaffolder factories', () => {
         ...options,
         configs: {
           eslint: {prefix: '@travi/travi', packageName: '@travi/eslint-config-travi'},
-          commitlint: {name: 'travi', packageName: 'commitlint-config-travi'}
+          commitlint: {name: 'travi', packageName: 'commitlint-config-travi'},
+          babelPreset: {name: 'travi', packageName: 'babel-preset-travi'}
         }
       })
       .resolves(output);
