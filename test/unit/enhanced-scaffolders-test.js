@@ -1,4 +1,5 @@
 import * as javascriptScaffolder from '@travi/javascript-scaffolder';
+import {scaffold} from '@travi/travis-scaffolder-javascript';
 import any from '@travi/any';
 import {assert} from 'chai';
 import sinon from 'sinon';
@@ -26,7 +27,8 @@ suite('scaffolder factories', () => {
           eslint: {prefix: '@travi/travi', packageName: '@travi/eslint-config-travi'},
           commitlint: {name: 'travi', packageName: 'commitlint-config-travi'},
           babelPreset: {name: 'travi', packageName: 'babel-preset-travi'}
-        }
+        },
+        ciServices: {Travis: {scaffolder: scaffold, public: true}}
       })
       .resolves(output);
 
