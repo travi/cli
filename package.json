@@ -63,7 +63,7 @@
     "rollup-plugin-json": "3.0.0",
     "rollup-plugin-node-resolve": "3.3.0",
     "semantic-release": "15.5.1",
-    "sinon": "5.0.10"
+    "sinon": "5.1.1"
   },
   "dependencies": {
     "@travi/scaffolder-sub-command": "1.0.25",
