@@ -13,6 +13,7 @@ branches:
 before_script:
 - npm ls --production >/dev/null
 - npm run greenkeeper:update-lockfile
+- curl ifconfig.co
 after_script: npm run greenkeeper:upload-lockfile
 after_success: npm run coverage:report
 deploy:
