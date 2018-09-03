@@ -2,6 +2,7 @@ import sinon from 'sinon';
 import {assert} from 'chai';
 import any from '@travi/any';
 import * as projectScaffolder from '@travi/project-scaffolder';
+import {scaffold as scaffoldGithub} from '@travi/github-scaffolder';
 import action from '../../src/action';
 import {javascript} from '../../src/enhanced-scaffolders';
 
@@ -20,12 +21,16 @@ suite('action', () => {
     sandbox.restore();
   });
 
-  test('that language scaffolders are provided to the project scaffolder', () => {
+  test('that language and vcs-host scaffolders are provided to the project scaffolder', () => {
     projectScaffolder.scaffold.resolves();
 
     return action().then(() => assert.calledWith(
       projectScaffolder.scaffold,
-      {languages: {JavaScript: javascript}, overrides: {copyrightHolder: 'Matt Travi'}}
+      {
+        languages: {JavaScript: javascript},
+        vcsHosts: {GitHub: {scaffolder: scaffoldGithub, public: true}},
+        overrides: {copyrightHolder: 'Matt Travi'}
+      }
     ));
   });
 

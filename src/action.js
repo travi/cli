@@ -1,10 +1,14 @@
-import {scaffold} from '@travi/project-scaffolder/lib/index.cjs';
+import {scaffold as scaffoldProject} from '@travi/project-scaffolder';
+import {scaffold as scaffoldGithub} from '@travi/github-scaffolder';
 import {javascript} from './enhanced-scaffolders';
 
 export default function () {
-  return scaffold({languages: {JavaScript: javascript}, overrides: {copyrightHolder: 'Matt Travi'}})
-    .catch(err => {
-      console.error(err);     // eslint-disable-line no-console
-      process.exitCode = (err.data && err.data.code) || 1;
-    });
+  return scaffoldProject({
+    languages: {JavaScript: javascript},
+    vcsHosts: {GitHub: {scaffolder: scaffoldGithub, public: true}},
+    overrides: {copyrightHolder: 'Matt Travi'}
+  }).catch(err => {
+    console.error(err);     // eslint-disable-line no-console
+    process.exitCode = (err.data && err.data.code) || 1;
+  });
 }
