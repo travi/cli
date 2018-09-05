@@ -64,7 +64,7 @@
     "sinon": "6.0.1"
   },
   "dependencies": {
-    "@travi/scaffolder-sub-command": "1.0.55",
+    "@travi/scaffolder-sub-command": "1.0.56",
     "commander": "2.17.1",
     "inquander": "1.1.1",
     "update-notifier": "2.5.0"
