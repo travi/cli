@@ -1,7 +1,7 @@
 import {scaffold as scaffoldProject} from '@travi/project-scaffolder';
-import {scaffold as scaffoldGithub, prompt as githubPrompt} from '@travi/github-scaffolder';
-import {scaffold as scaffoldGitlab, prompt as gitlabPrompt} from '@travi/gitlab-scaffolder';
-import {javascript} from './enhanced-scaffolders';
+import {prompt as githubPrompt, scaffold as scaffoldGithub} from '@travi/github-scaffolder';
+import {scaffold as scaffoldGitlab} from '@travi/gitlab-scaffolder';
+import {gitlabPrompt, javascript} from './enhanced-scaffolders';
 
 export default function () {
   return scaffoldProject({

@@ -3,9 +3,9 @@ import {assert} from 'chai';
 import any from '@travi/any';
 import * as projectScaffolder from '@travi/project-scaffolder';
 import {scaffold as scaffoldGithub, prompt as githubPrompt} from '@travi/github-scaffolder';
-import {scaffold as scaffoldGitlab, prompt as gitlabPrompt} from '@travi/gitlab-scaffolder';
+import {scaffold as scaffoldGitlab} from '@travi/gitlab-scaffolder';
 import action from '../../src/action';
-import {javascript} from '../../src/enhanced-scaffolders';
+import {gitlabPrompt, javascript} from '../../src/enhanced-scaffolders';
 
 suite('action', () => {
   let sandbox;

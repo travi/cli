@@ -1,9 +1,10 @@
 import * as javascriptScaffolder from '@travi/javascript-scaffolder';
+import * as gitlabScaffolder from '@travi/gitlab-scaffolder';
 import {scaffold} from '@travi/travis-scaffolder-javascript';
 import any from '@travi/any';
 import {assert} from 'chai';
 import sinon from 'sinon';
-import {javascript} from '../../src/enhanced-scaffolders';
+import {gitlabPrompt, javascript} from '../../src/enhanced-scaffolders';
 
 suite('scaffolder factories', () => {
   let sandbox;
@@ -12,6 +13,7 @@ suite('scaffolder factories', () => {
     sandbox = sinon.createSandbox();
 
     sandbox.stub(javascriptScaffolder, 'scaffold');
+    sandbox.stub(gitlabScaffolder, 'prompt');
   });
 
   teardown(() => sandbox.restore());
@@ -33,5 +35,12 @@ suite('scaffolder factories', () => {
       .resolves(output);
 
     return assert.becomes(javascript(options), output);
+  });
+
+  test('that the owner account is passed to the github prompts', async () => {
+    const output = any.simpleObject();
+    gitlabScaffolder.prompt.withArgs({account: 'travi'}).resolves(output);
+
+    assert.equal(await gitlabPrompt(), output);
   });
 });

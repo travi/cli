@@ -1,5 +1,6 @@
 import {scaffold as scaffoldJavaScript} from '@travi/javascript-scaffolder';
 import {scaffold as scaffoldTravis} from '@travi/travis-scaffolder-javascript';
+import {prompt} from '@travi/gitlab-scaffolder';
 
 export function javascript(options) {
   return scaffoldJavaScript({
@@ -11,4 +12,8 @@ export function javascript(options) {
     },
     ciServices: {Travis: {scaffolder: scaffoldTravis, public: true}}
   });
+}
+
+export function gitlabPrompt() {
+  return prompt({account: 'travi'});
 }
