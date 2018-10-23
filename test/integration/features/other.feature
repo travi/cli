@@ -4,4 +4,4 @@ Feature: Other Project Type
     Given the project should be versioned in git
     And the project language should be Other
     When the project is scaffolded
-    Then JavaScript ignores are defined
+    Then core ignores are defined

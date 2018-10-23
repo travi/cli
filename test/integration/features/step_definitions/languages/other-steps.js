@@ -1,7 +1,9 @@
-import {Given} from 'cucumber';
+import {Given, Then} from 'cucumber';
+import {assert} from 'chai';
 import bddStdIn from 'bdd-stdin';
+import {exists} from 'mz/fs';
 
-Given('the project language should be Other', async function () {
+Given(/^the project language should be Other$/, async function () {
   this.setAnswerFor('projectType', bddStdIn.keys.down);
   this.setAnswerFor('gitRepo', '\n');
 
@@ -21,4 +23,9 @@ Given('the project language should be Other', async function () {
     'n', '\n',
     'n', '\n'
   );
+});
+
+Then(/^core ignores are defined$/, async function () {
+  assert.isTrue(await exists(`${process.cwd()}/.editorconfig`));
+  assert.isTrue(await exists(`${process.cwd()}/README.md`));
 });

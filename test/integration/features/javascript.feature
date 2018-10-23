@@ -5,4 +5,5 @@ Feature: JavaScript Project
     Given the project should be versioned in git
     And the project language should be JavaScript
     When the project is scaffolded
-    Then JavaScript ignores are defined
+    Then core ignores are defined
+    And JavaScript ignores are defined

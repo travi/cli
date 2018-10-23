@@ -3,7 +3,7 @@ import {Given, Then} from 'cucumber';
 import bddStdIn from 'bdd-stdin';
 import {assert} from 'chai';
 
-Given('the project should be versioned in git', async function () {
+Given(/^the project should be versioned in git$/, async function () {
   this.setAnswerFor('gitRepo', '\n');
 
   bddStdIn(
@@ -18,7 +18,7 @@ Given('the project should be versioned in git', async function () {
   );
 });
 
-Given('the project should not be versioned in git', async function () {
+Given(/^the project should not be versioned in git$/, async function () {
   this.setAnswerFor('gitRepo', 'n');
 
   bddStdIn(
@@ -33,7 +33,7 @@ Given('the project should not be versioned in git', async function () {
   );
 });
 
-Then('the base git files should be present', async function () {
+Then(/^the base git files should be present$/, async function () {
   const gitAttributes = await readFile(`${process.cwd()}/.gitattributes`);
 
   assert.equal(gitAttributes, '* text=auto');
