@@ -8,16 +8,13 @@ Given(/^the project language should be JavaScript$/, async function () {
   this.setAnswerFor('gitRepo', '\n');
 
   bddStdIn(
+    '\n',
     'project-name', '\n',
-    'some project description',
+    'some project description', '\n',
     '\n',
-    '\n',
-    this.getAnswerFor('gitRepo'),
-    '\n',
-    '\n',
-    this.getAnswerFor('projectType'),
-    '\n',
-    '\n',
+    this.getAnswerFor('gitRepo'), '\n',
+    this.getAnswerFor('projectType'), '\n',
+    'travi', '\n',
     '\n',
     bddStdIn.keys.up, '\n',
     '\n',
