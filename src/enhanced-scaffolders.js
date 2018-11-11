@@ -9,7 +9,7 @@ export function javascript(options) {
     configs: {
       eslint: {prefix: '@travi/travi', packageName: '@travi/eslint-config-travi'},
       commitlint: {name: 'travi', packageName: 'commitlint-config-travi'},
-      babelPreset: {name: 'travi', packageName: 'babel-preset-travi'},
+      babelPreset: {name: '@travi', packageName: '@travi/babel-preset'},
       remark: 'remark-preset-lint-travi'
     },
     ciServices: {Travis: {scaffolder: scaffoldTravis, public: true}},
