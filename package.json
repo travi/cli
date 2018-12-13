@@ -46,7 +46,7 @@
     "cz-conventional-changelog": "2.1.0",
     "doctoc": "1.4.0",
     "globstar": "1.0.0",
-    "husky": "1.2.0",
+    "husky": "1.2.1",
     "markdownlint-cli": "0.13.0",
     "mocha": "5.2.0",
     "mz": "2.7.0",
