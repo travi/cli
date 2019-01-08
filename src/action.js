@@ -7,8 +7,8 @@ export default function () {
   return scaffoldProject({
     languages: {JavaScript: javascript},
     vcsHosts: {
-      GitHub: {scaffolder: scaffoldGithub, prompt: githubPrompt, public: true},
-      GitLab: {scaffolder: scaffoldGitlab, prompt: gitlabPrompt, public: true}
+      GitHub: {scaffolder: scaffoldGithub, prompt: githubPrompt, public: true, private: true},
+      GitLab: {scaffolder: scaffoldGitlab, prompt: gitlabPrompt, private: true}
     },
     overrides: {copyrightHolder: 'Matt Travi'}
   }).catch(err => {
