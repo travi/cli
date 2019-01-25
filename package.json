@@ -55,7 +55,7 @@
     "rimraf": "2.6.3",
     "rollup": "1.1.2",
     "rollup-plugin-babel": "3.0.7",
-    "rollup-plugin-executable": "1.4.3",
+    "rollup-plugin-executable": "1.4.4",
     "rollup-plugin-json": "3.1.0",
     "rollup-plugin-node-resolve": "4.0.0",
     "sinon": "7.2.3"
