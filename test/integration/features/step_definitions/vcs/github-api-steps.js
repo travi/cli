@@ -18,7 +18,7 @@ After(() => {
   nock.cleanAll();
 });
 
-Given('the GitHub token is valid', async function () {
+Given(/^the GitHub token is valid$/, async function () {
   githubScope
     .matchHeader('Authorization', `token ${githubToken}`)
     .post('/user/repos')

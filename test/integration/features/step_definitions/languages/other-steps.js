@@ -13,15 +13,15 @@ Given(/^the project language should be Other$/, async function () {
     '\n',
     '\n',
     this.getAnswerFor('gitRepo'),
+    '\n',
+    '\n',
     this.getAnswerFor('projectType'), '\n',
-    '\n',
-    '\n',
-    bddStdIn.keys.up, '\n',
-    '\n',
-    '\n',
-    '\n',
-    'n', '\n',
-    'n', '\n'
+    // bddStdIn.keys.up, '\n',
+    // '\n',
+    // '\n',
+    // '\n',
+    // 'n', '\n',
+    // 'n', '\n'
   );
 });
 

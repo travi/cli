@@ -6,16 +6,16 @@ import {assert} from 'chai';
 Given(/^the project should be versioned in git$/, async function () {
   this.setAnswerFor('gitRepo', '\n');
 
-  bddStdIn(
-    'project-name',
-    'some project description',
-    bddStdIn.keys.down, '\n', '\n',
-    'y', '\n',
-    'y', '\n',
-    this.getAnswerFor('gitRepo'), '\n',
-    bddStdIn.keys.down, '\n', '\n',
-    '\n'
-  );
+  // bddStdIn(
+  //   'project-name',
+  //   'some project description',
+  //   bddStdIn.keys.down, '\n', '\n',
+  //   'y', '\n',
+  //   'y', '\n',
+  //   this.getAnswerFor('gitRepo'), '\n',
+  //   bddStdIn.keys.down, '\n', '\n',
+  //   '\n'
+  // );
 });
 
 Given(/^the project should not be versioned in git$/, async function () {
