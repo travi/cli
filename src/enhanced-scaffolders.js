@@ -1,6 +1,7 @@
 import {scaffold as scaffoldJavaScript} from '@travi/javascript-scaffolder';
 import {scaffold as scaffoldTravis} from '@travi/travis-scaffolder-javascript';
 import {scaffold as scaffoldNetlify} from '@travi/netlify-scaffolder';
+import {scaffold as scaffoldAppEngine} from '@travi/node-app-engine-standard-scaffolder';
 import {prompt} from '@travi/gitlab-scaffolder';
 
 export function javascript(options) {
@@ -13,7 +14,10 @@ export function javascript(options) {
       remark: 'remark-preset-lint-travi'
     },
     ciServices: {Travis: {scaffolder: scaffoldTravis, public: true}},
-    hosts: {Netlify: {projectTypes: ['static'], scaffolder: scaffoldNetlify}}
+    hosts: {
+      Netlify: {projectTypes: ['static'], scaffolder: scaffoldNetlify},
+      'App Engine Standard': {projectTypes: ['node'], scaffolder: scaffoldAppEngine}
+    }
   });
 }
 
