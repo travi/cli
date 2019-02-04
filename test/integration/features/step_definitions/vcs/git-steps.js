@@ -2,6 +2,7 @@ import {exists, readFile} from 'mz/fs';
 import {Given, Then} from 'cucumber';
 import bddStdIn from 'bdd-stdin';
 import {assert} from 'chai';
+// import toml from '@iarna/toml';
 
 Given(/^the project should be versioned in git$/, async function () {
   this.setAnswerFor('gitRepo', '\n');
@@ -37,6 +38,7 @@ Then(/^the base git files should be present$/, async function () {
   const gitAttributes = await readFile(`${process.cwd()}/.gitattributes`);
 
   assert.equal(gitAttributes, '* text=auto');
+  // console.log(toml.parse(await readFile(`${process.cwd()}/.git/config`)))
   // assert.isTrue(gitDirectoryStats.isDirectory());
 });
 

@@ -6,3 +6,4 @@ Feature: Other Project Type
     And the project language should be Other
     When the project is scaffolded
     Then core ignores are defined
+    And the base git files should be present

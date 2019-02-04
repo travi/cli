@@ -23,7 +23,7 @@ Given(/^the GitHub token is valid$/, async function () {
     .matchHeader('Authorization', `token ${githubToken}`)
     .post('/user/repos')
     .reply(OK, {
-      ssl_url: any.url(),
-      https_url: any.url()
+      // ssh_url: any.url(),
+      html_url: any.url()
     });
 });
