@@ -31,6 +31,7 @@ Before(async () => {
   const octokitFiles = await readdir(resolve(...pathToNodeModules, 'octokit-pagination-methods/lib/'));
   stubbedFs({
     [`${process.env.HOME}/.netrc`]: `machine github.com\n  login ${githubToken}`,
+    [`${process.env.HOME}/.gitconfig`]: '[github]\n\tuser = travi',
     node_modules: {
       'octokit-pagination-methods': {
         lib: (await Promise.all(loadOctokitFiles(octokitFiles))).reduce(buildOctokitFileMap(octokitFiles), {})

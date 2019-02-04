@@ -22,5 +22,8 @@ Given(/^the GitHub token is valid$/, async function () {
   githubScope
     .matchHeader('Authorization', `token ${githubToken}`)
     .post('/user/repos')
-    .reply(OK);
+    .reply(OK, {
+      ssl_url: any.url(),
+      https_url: any.url()
+    });
 });
