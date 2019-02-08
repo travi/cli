@@ -3,6 +3,7 @@ import sinon from 'sinon';
 import {assert} from 'chai';
 import any from '@travi/any';
 import configureProgram from '../../src/program';
+import * as travisTokens from '../../src/travis-tokens/sub-command';
 
 suite('cli', () => {
   let sandbox;
@@ -11,6 +12,7 @@ suite('cli', () => {
     sandbox = sinon.createSandbox();
 
     sandbox.stub(scaffoldSubCommand, 'addSubCommand');
+    sandbox.stub(travisTokens, 'default');
   });
 
   teardown(() => sandbox.restore());
@@ -24,5 +26,6 @@ suite('cli', () => {
 
     assert.calledWith(versionStub, version);
     assert.calledWith(scaffoldSubCommand.addSubCommand, program);
+    assert.calledWith(travisTokens.default, program);
   });
 });
