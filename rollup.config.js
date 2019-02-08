@@ -3,29 +3,12 @@ import babel from 'rollup-plugin-babel';
 import json from 'rollup-plugin-json';
 import nodeResolve from 'rollup-plugin-node-resolve';
 import executable from 'rollup-plugin-executable';
+import autoExternal from 'rollup-plugin-auto-external';
 
 export default {
   input: 'src/index.js',
-  external: [
-    '@travi/scaffolder-sub-command',
-    'path',
-    'commander',
-    'inquirer',
-    'inquander',
-    'chalk',
-    'update-notifier',
-    'mz/fs',
-    'nodegit',
-    'spdx-license-list/simple',
-    'spdx-license-list/full',
-    'mustache',
-    'shelljs',
-    'lodash.uniq',
-    'write-yaml',
-    'util',
-    'npm-conf'
-  ],
   plugins: [
+    autoExternal(),
     nodeResolve({
       module: true,
       jsnext: true
@@ -34,8 +17,7 @@ export default {
     babel({
       babelrc: false,
       exclude: ['./node_modules/**'],
-      presets: [['env', {targets: {node: 'current'}, modules: false}]],
-      plugins: [['transform-object-rest-spread', {useBuiltIns: true}]]
+      presets: [['@travi', {targets: {node: '8'}, modules: false}]]
     }),
     executable()
   ],

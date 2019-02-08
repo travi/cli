@@ -35,10 +35,11 @@
     }
   },
   "devDependencies": {
+    "@babel/node": "7.2.2",
+    "@babel/register": "7.0.0",
     "@travi/any": "1.8.5",
+    "@travi/babel-preset": "3.0.0",
     "@travi/eslint-config-travi": "1.8.0",
-    "babel-preset-travi": "1.4.2",
-    "babel-register": "6.26.0",
     "chai": "4.1.2",
     "chai-as-promised": "7.1.1",
     "codecov": "3.1.0",
@@ -54,7 +55,8 @@
     "nyc": "13.2.0",
     "rimraf": "2.6.3",
     "rollup": "1.1.2",
-    "rollup-plugin-babel": "3.0.7",
+    "rollup-plugin-auto-external": "2.0.0",
+    "rollup-plugin-babel": "4.3.2",
     "rollup-plugin-executable": "1.4.4",
     "rollup-plugin-json": "3.1.0",
     "rollup-plugin-node-resolve": "4.0.0",
@@ -64,6 +66,7 @@
     "@travi/scaffolder-sub-command": "1.11.2",
     "commander": "2.19.0",
     "inquander": "1.1.1",
+    "travis-token-updater": "1.0.0-alpha.6",
     "update-notifier": "2.5.0"
   }
 }
