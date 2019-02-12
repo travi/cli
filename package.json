@@ -26,6 +26,9 @@
   "bin": {
     "travi": "bin/travi.js"
   },
+  "files": [
+    "bin/"
+  ],
   "publishConfig": {
     "access": "public"
   },
