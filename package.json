@@ -63,7 +63,7 @@
     "rollup-plugin-executable": "1.4.4",
     "rollup-plugin-json": "3.1.0",
     "rollup-plugin-node-resolve": "4.0.0",
-    "sinon": "7.2.3"
+    "sinon": "7.2.4"
   },
   "dependencies": {
     "@travi/scaffolder-sub-command": "1.11.6",
