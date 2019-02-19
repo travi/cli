@@ -66,7 +66,7 @@
     "sinon": "7.2.4"
   },
   "dependencies": {
-    "@travi/scaffolder-sub-command": "1.11.6",
+    "@travi/scaffolder-sub-command": "1.11.7",
     "commander": "2.19.0",
     "inquander": "1.1.1",
     "travis-token-updater": "1.0.0-alpha.17",
