@@ -1,6 +1,7 @@
 import * as javascriptScaffolder from '@travi/javascript-scaffolder';
 import * as gitlabScaffolder from '@travi/gitlab-scaffolder';
-import {scaffold} from '@travi/travis-scaffolder-javascript';
+import {scaffold as scaffoldtravis} from '@travi/travis-scaffolder-javascript';
+import {scaffold as scaffoldCircle} from '@travi/circle-scaffolder-javascript';
 import {scaffold as scaffoldNetlify} from '@travi/netlify-scaffolder';
 import {scaffold as scaffoldAppEngine} from '@travi/node-app-engine-standard-scaffolder';
 import any from '@travi/any';
@@ -33,7 +34,10 @@ suite('scaffolder factories', () => {
           babelPreset: {name: '@travi', packageName: '@travi/babel-preset'},
           remark: 'remark-preset-lint-travi'
         },
-        ciServices: {Travis: {scaffolder: scaffold, public: true}},
+        ciServices: {
+          Travis: {scaffolder: scaffoldtravis, public: true},
+          Circle: {scaffolder: scaffoldCircle, public: true, private: true}
+        },
         hosts: {
           Netlify: {projectTypes: ['static'], scaffolder: scaffoldNetlify},
           'App Engine Standard': {projectTypes: ['node'], scaffolder: scaffoldAppEngine}

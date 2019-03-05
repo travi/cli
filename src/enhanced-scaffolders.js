@@ -1,5 +1,6 @@
 import {scaffold as scaffoldJavaScript} from '@travi/javascript-scaffolder';
 import {scaffold as scaffoldTravis} from '@travi/travis-scaffolder-javascript';
+import {scaffold as scaffoldCircle} from '@travi/circle-scaffolder-javascript';
 import {scaffold as scaffoldNetlify} from '@travi/netlify-scaffolder';
 import {scaffold as scaffoldAppEngine} from '@travi/node-app-engine-standard-scaffolder';
 import {prompt} from '@travi/gitlab-scaffolder';
@@ -13,7 +14,10 @@ export function javascript(options) {
       babelPreset: {name: '@travi', packageName: '@travi/babel-preset'},
       remark: 'remark-preset-lint-travi'
     },
-    ciServices: {Travis: {scaffolder: scaffoldTravis, public: true}},
+    ciServices: {
+      Travis: {scaffolder: scaffoldTravis, public: true},
+      Circle: {scaffolder: scaffoldCircle, public: true, private: true}
+    },
     hosts: {
       Netlify: {projectTypes: ['static'], scaffolder: scaffoldNetlify},
       'App Engine Standard': {projectTypes: ['node'], scaffolder: scaffoldAppEngine}
