@@ -4,8 +4,9 @@ import any from '@travi/any';
 import * as projectScaffolder from '@travi/project-scaffolder';
 import {scaffold as scaffoldGithub, prompt as githubPrompt} from '@travi/github-scaffolder';
 import {scaffold as scaffoldGitlab} from '@travi/gitlab-scaffolder';
-import action from '../../src/action';
+import {scaffold as scaffoldShell} from '@travi/shell-scaffolder';
 import {gitlabPrompt, javascript} from '../../src/enhanced-scaffolders';
+import action from '../../src/action';
 
 suite('action', () => {
   let sandbox;
@@ -28,7 +29,7 @@ suite('action', () => {
     return action().then(() => assert.calledWith(
       projectScaffolder.scaffold,
       {
-        languages: {JavaScript: javascript},
+        languages: {JavaScript: javascript, Shell: scaffoldShell},
         vcsHosts: {
           GitHub: {scaffolder: scaffoldGithub, prompt: githubPrompt, public: true, private: true},
           GitLab: {scaffolder: scaffoldGitlab, prompt: gitlabPrompt, private: true}

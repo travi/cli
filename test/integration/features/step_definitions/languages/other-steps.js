@@ -15,7 +15,7 @@ Given(/^the project language should be Other$/, async function () {
     this.getAnswerFor('gitRepo'),
     '\n',
     '\n',
-    this.getAnswerFor('projectType'), '\n',
+    this.getAnswerFor('projectType'), bddStdIn.keys.down, '\n',
     // bddStdIn.keys.up, '\n',
     // '\n',
     // '\n',
