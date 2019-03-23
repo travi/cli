@@ -1,30 +1,32 @@
 import * as javascriptScaffolder from '@travi/javascript-scaffolder';
+import * as shellScaffolder from '@travi/shell-scaffolder';
 import * as gitlabScaffolder from '@travi/gitlab-scaffolder';
-import {scaffold as scaffoldtravis} from '@travi/travis-scaffolder-javascript';
+import {scaffold as scaffoldTravisForJavaScript} from '@travi/travis-scaffolder-javascript';
+import {scaffold as scaffoldTravisForShell} from '@travi/travis-scaffolder-shell';
 import {scaffold as scaffoldCircle} from '@travi/circle-scaffolder-javascript';
 import {scaffold as scaffoldNetlify} from '@travi/netlify-scaffolder';
 import {scaffold as scaffoldAppEngine} from '@travi/node-app-engine-standard-scaffolder';
 import any from '@travi/any';
 import {assert} from 'chai';
 import sinon from 'sinon';
-import {gitlabPrompt, javascript} from '../../src/enhanced-scaffolders';
+import {gitlabPrompt, javascript, shell} from '../../src/enhanced-scaffolders';
 
 suite('scaffolder factories', () => {
   let sandbox;
+  const options = any.simpleObject();
+  const output = any.simpleObject();
 
   setup(() => {
     sandbox = sinon.createSandbox();
 
     sandbox.stub(javascriptScaffolder, 'scaffold');
+    sandbox.stub(shellScaffolder, 'scaffold');
     sandbox.stub(gitlabScaffolder, 'prompt');
   });
 
   teardown(() => sandbox.restore());
 
-  test('that the custom properties are passed along with the provided options', () => {
-    const options = any.simpleObject();
-    const output = any.simpleObject();
-
+  test('that the custom properties are passed along with the provided options to the js scaffolder', () => {
     javascriptScaffolder.scaffold
       .withArgs({
         ...options,
@@ -35,7 +37,7 @@ suite('scaffolder factories', () => {
           remark: 'remark-preset-lint-travi'
         },
         ciServices: {
-          Travis: {scaffolder: scaffoldtravis, public: true},
+          Travis: {scaffolder: scaffoldTravisForJavaScript, public: true},
           Circle: {scaffolder: scaffoldCircle, public: true, private: true}
         },
         hosts: {
@@ -48,8 +50,15 @@ suite('scaffolder factories', () => {
     return assert.becomes(javascript(options), output);
   });
 
+  test('that the custom properties are passed along with the provided options to the shell scaffolder', async () => {
+    shellScaffolder.scaffold
+      .withArgs({...options, ciServices: {Travis: {scaffolder: scaffoldTravisForShell, public: true}}})
+      .resolves(output);
+
+    assert.equal(await shell(options), output);
+  });
+
   test('that the owner account is passed to the github prompts', async () => {
-    const output = any.simpleObject();
     gitlabScaffolder.prompt.withArgs({account: 'travi'}).resolves(output);
 
     assert.equal(await gitlabPrompt(), output);

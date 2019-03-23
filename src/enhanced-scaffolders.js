@@ -1,5 +1,7 @@
 import {scaffold as scaffoldJavaScript} from '@travi/javascript-scaffolder';
-import {scaffold as scaffoldTravis} from '@travi/travis-scaffolder-javascript';
+import {scaffold as scaffoldShell} from '@travi/shell-scaffolder';
+import {scaffold as scaffoldTravisForJavaScript} from '@travi/travis-scaffolder-javascript';
+import {scaffold as scaffoldTravisForShell} from '@travi/travis-scaffolder-shell';
 import {scaffold as scaffoldCircle} from '@travi/circle-scaffolder-javascript';
 import {scaffold as scaffoldNetlify} from '@travi/netlify-scaffolder';
 import {scaffold as scaffoldAppEngine} from '@travi/node-app-engine-standard-scaffolder';
@@ -15,7 +17,7 @@ export function javascript(options) {
       remark: 'remark-preset-lint-travi'
     },
     ciServices: {
-      Travis: {scaffolder: scaffoldTravis, public: true},
+      Travis: {scaffolder: scaffoldTravisForJavaScript, public: true},
       Circle: {scaffolder: scaffoldCircle, public: true, private: true}
     },
     hosts: {
@@ -23,6 +25,10 @@ export function javascript(options) {
       'App Engine Standard': {projectTypes: ['node'], scaffolder: scaffoldAppEngine}
     }
   });
+}
+
+export function shell(options) {
+  return scaffoldShell({...options, ciServices: {Travis: {scaffolder: scaffoldTravisForShell, public: true}}});
 }
 
 export function gitlabPrompt() {

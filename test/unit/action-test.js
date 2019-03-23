@@ -2,10 +2,9 @@ import sinon from 'sinon';
 import {assert} from 'chai';
 import any from '@travi/any';
 import * as projectScaffolder from '@travi/project-scaffolder';
-import {scaffold as scaffoldGithub, prompt as githubPrompt} from '@travi/github-scaffolder';
+import {prompt as githubPrompt, scaffold as scaffoldGithub} from '@travi/github-scaffolder';
 import {scaffold as scaffoldGitlab} from '@travi/gitlab-scaffolder';
-import {scaffold as scaffoldShell} from '@travi/shell-scaffolder';
-import {gitlabPrompt, javascript} from '../../src/enhanced-scaffolders';
+import {gitlabPrompt, javascript, shell} from '../../src/enhanced-scaffolders';
 import action from '../../src/action';
 
 suite('action', () => {
@@ -29,7 +28,7 @@ suite('action', () => {
     return action().then(() => assert.calledWith(
       projectScaffolder.scaffold,
       {
-        languages: {JavaScript: javascript, Shell: scaffoldShell},
+        languages: {JavaScript: javascript, Shell: shell},
         vcsHosts: {
           GitHub: {scaffolder: scaffoldGithub, prompt: githubPrompt, public: true, private: true},
           GitLab: {scaffolder: scaffoldGitlab, prompt: gitlabPrompt, private: true}
