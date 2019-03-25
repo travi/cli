@@ -4,7 +4,7 @@ import nock from 'nock';
 import {OK} from 'http-status-codes';
 
 let githubScope;
-export const githubToken = any.string();
+export const githubToken = any.word();
 const debug = require('debug')('test');
 
 Before(async () => {
