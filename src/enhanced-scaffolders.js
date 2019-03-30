@@ -6,6 +6,7 @@ import {scaffold as scaffoldCircle} from '@travi/circle-scaffolder-javascript';
 import {scaffold as scaffoldNetlify} from '@travi/netlify-scaffolder';
 import {scaffold as scaffoldAppEngine} from '@travi/node-app-engine-standard-scaffolder';
 import {prompt} from '@travi/gitlab-scaffolder';
+import {scaffold as scaffoldSpectacle} from '@travi/spectacle-scaffolder';
 
 export function javascript(options) {
   return scaffoldJavaScript({
@@ -23,7 +24,8 @@ export function javascript(options) {
     hosts: {
       Netlify: {projectTypes: ['static'], scaffolder: scaffoldNetlify},
       'App Engine Standard': {projectTypes: ['node'], scaffolder: scaffoldAppEngine}
-    }
+    },
+    applicationTypes: {Spectacle: scaffoldSpectacle}
   });
 }
 

@@ -6,6 +6,7 @@ import {scaffold as scaffoldTravisForShell} from '@travi/travis-scaffolder-shell
 import {scaffold as scaffoldCircle} from '@travi/circle-scaffolder-javascript';
 import {scaffold as scaffoldNetlify} from '@travi/netlify-scaffolder';
 import {scaffold as scaffoldAppEngine} from '@travi/node-app-engine-standard-scaffolder';
+import {scaffold as scaffoldSpectacle} from '@travi/spectacle-scaffolder';
 import any from '@travi/any';
 import {assert} from 'chai';
 import sinon from 'sinon';
@@ -43,7 +44,8 @@ suite('scaffolder factories', () => {
         hosts: {
           Netlify: {projectTypes: ['static'], scaffolder: scaffoldNetlify},
           'App Engine Standard': {projectTypes: ['node'], scaffolder: scaffoldAppEngine}
-        }
+        },
+        applicationTypes: {Spectacle: scaffoldSpectacle}
       })
       .resolves(output);
 
