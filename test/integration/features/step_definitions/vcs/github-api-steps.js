@@ -26,4 +26,8 @@ Given(/^the GitHub token is valid$/, async function () {
       ssh_url: any.url(),
       html_url: any.url()
     });
+  githubScope
+    .matchHeader('Authorization', `token ${githubToken}`)
+    .get('/user')
+    .reply(OK, {login: this.githubUser});
 });

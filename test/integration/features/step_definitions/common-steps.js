@@ -1,6 +1,7 @@
 import {readdir, readFile} from 'mz/fs';
 import {resolve} from 'path';
 import {After, Before, setWorldConstructor, When} from 'cucumber';
+import any from '@travi/any';
 
 import stubbedFs from 'mock-fs';
 import {World} from '../support/world';
@@ -23,15 +24,17 @@ function buildOctokitFileMap(octokitFiles) {
   });
 }
 
-Before(async () => {
+Before(async function () {
   // work around for overly aggressive mock-fs, see:
   // https://github.com/tschaub/mock-fs/issues/213#issuecomment-347002795
   require('mock-stdin'); // eslint-disable-line import/no-extraneous-dependencies
 
+  this.githubUser = any.word();
+
   const octokitFiles = await readdir(resolve(...pathToNodeModules, 'octokit-pagination-methods/lib/'));
   stubbedFs({
     [`${process.env.HOME}/.netrc`]: `machine github.com\n  login ${githubToken}`,
-    [`${process.env.HOME}/.gitconfig`]: '[github]\n\tuser = travi',
+    [`${process.env.HOME}/.gitconfig`]: `[github]\n\tuser = ${this.githubUser}`,
     node_modules: {
       'octokit-pagination-methods': {
         lib: (await Promise.all(loadOctokitFiles(octokitFiles))).reduce(buildOctokitFileMap(octokitFiles), {})
