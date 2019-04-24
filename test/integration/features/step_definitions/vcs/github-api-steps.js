@@ -28,6 +28,10 @@ Given(/^the GitHub token is valid$/, async function () {
     });
   githubScope
     .matchHeader('Authorization', `token ${githubToken}`)
+    .get(`/users/${this.githubUser}/repos`)
+    .reply(OK, []);
+  githubScope
+    .matchHeader('Authorization', `token ${githubToken}`)
     .get('/user')
     .reply(OK, {login: this.githubUser});
 });
