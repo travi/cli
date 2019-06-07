@@ -12,7 +12,7 @@ export function javascript(options) {
   return scaffoldJavaScript({
     ...options,
     configs: {
-      eslint: {prefix: '@travi', packageName: '@travi/eslint-config'},
+      eslint: {scope: '@travi'},
       commitlint: {name: 'travi', packageName: 'commitlint-config-travi'},
       babelPreset: {name: '@travi', packageName: '@travi/babel-preset'},
       remark: 'remark-preset-lint-travi'
@@ -25,7 +25,7 @@ export function javascript(options) {
       Netlify: {projectTypes: ['static'], scaffolder: scaffoldNetlify},
       'App Engine Standard': {projectTypes: ['node'], scaffolder: scaffoldAppEngine}
     },
-    applicationTypes: {Spectacle: scaffoldSpectacle}
+    applicationTypes: {Spectacle: {scaffolder: scaffoldSpectacle}}
   });
 }
 
