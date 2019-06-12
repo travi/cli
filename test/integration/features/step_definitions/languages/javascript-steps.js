@@ -4,24 +4,27 @@ import {readFile} from 'mz/fs';
 import bddStdIn from 'bdd-stdin';
 
 Given(/^the project language should be JavaScript$/, async function () {
-  this.setAnswerFor('projectType', '\n');
-  this.setAnswerFor('gitRepo', '\n');
+  this.setAnswerFor('projectType', ['\n']);
+  this.setAnswerFor('gitRepo', ['\n']);
 
   bddStdIn(
-    '\n',
     'project-name', '\n',
     'some project description', '\n',
     '\n',
-    this.getAnswerFor('gitRepo'), '\n',
-    this.getAnswerFor('projectType'), '\n',
+    '\n',
+    ...this.getAnswerFor('gitRepo'),
+    '\n',
     'travi', '\n',
+    ...this.getAnswerFor('projectType'),
     '\n',
     bddStdIn.keys.up, '\n',
     '\n',
     '\n',
     '\n',
     'n', '\n',
-    'n', '\n'
+    'n', '\n',
+    '\n',
+    '\n'
   );
 });
 

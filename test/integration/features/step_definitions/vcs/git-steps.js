@@ -23,8 +23,8 @@ Given(/^the project should not be versioned in git$/, async function () {
   this.setAnswerFor('gitRepo', 'n');
 
   bddStdIn(
-    'project-name',
-    'some project description',
+    'project-name', '\n',
+    'some project description', '\n',
     bddStdIn.keys.down, '\n', '\n',
     'y', '\n',
     'y', '\n',
