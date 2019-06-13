@@ -1,4 +1,4 @@
-import {readdir, readFile} from 'mz/fs';
+import {promises} from 'fs';
 import {resolve} from 'path';
 import {After, Before, setWorldConstructor, When} from 'cucumber';
 import any from '@travi/any';
@@ -14,7 +14,7 @@ setWorldConstructor(World);
 
 function loadOctokitFiles(octokitFiles) {
   return octokitFiles
-    .map(file => readFile(resolve(...pathToNodeModules, 'octokit-pagination-methods/lib/', file)));
+    .map(file => promises.readFile(resolve(...pathToNodeModules, 'octokit-pagination-methods/lib/', file)));
 }
 
 function buildOctokitFileMap(octokitFiles) {
@@ -31,7 +31,7 @@ Before(async function () {
 
   this.githubUser = any.word();
 
-  const octokitFiles = await readdir(resolve(...pathToNodeModules, 'octokit-pagination-methods/lib/'));
+  const octokitFiles = await promises.readdir(resolve(...pathToNodeModules, 'octokit-pagination-methods/lib/'));
   stubbedFs({
     [`${process.env.HOME}/.netrc`]: `machine github.com\n  login ${githubToken}`,
     [`${process.env.HOME}/.gitconfig`]: `[github]\n\tuser = ${this.githubUser}`,
@@ -42,11 +42,11 @@ Before(async function () {
       '@travi': {
         'project-scaffolder': {
           templates: {
-            'editorconfig.txt': await readFile(resolve(
+            'editorconfig.txt': await promises.readFile(resolve(
               ...pathToNodeModules,
               '@travi/project-scaffolder/templates/editorconfig.txt'
             )),
-            'README.mustache': await readFile(resolve(
+            'README.mustache': await promises.readFile(resolve(
               ...pathToNodeModules,
               '@travi/project-scaffolder/templates/README.mustache'
             ))
