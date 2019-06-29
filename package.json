@@ -62,7 +62,7 @@
     "rollup-plugin-babel": "4.3.3",
     "rollup-plugin-executable": "1.5.0",
     "rollup-plugin-json": "4.0.0",
-    "rollup-plugin-node-resolve": "5.1.1",
+    "rollup-plugin-node-resolve": "5.2.0",
     "sinon": "7.3.2"
   },
   "dependencies": {
