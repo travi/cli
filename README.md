@@ -13,6 +13,7 @@ cli for my various tools
   * [Installation](#installation)
 * [Contributing](#contributing)
   * [Dependencies](#dependencies)
+  * [Executing Locally Without Bundling](#executing-locally-without-bundling)
   * [Verification](#verification)
 * [Related Projects](#related-projects)
 
@@ -44,6 +45,12 @@ $ npm install @travi/cli -g
 ```sh
 $ nvm install
 $ npm install
+```
+
+### Executing Locally Without Bundling
+
+```sh
+$ npx babel-node src/index.js
 ```
 
 ### Verification
