@@ -67,7 +67,7 @@
   },
   "dependencies": {
     "@travi/scaffolder-sub-command": "1.17.13",
-    "commander": "2.20.0",
+    "commander": "3.0.0",
     "inquander": "1.1.1",
     "travis-token-updater": "1.6.0",
     "update-notifier": "3.0.1"
