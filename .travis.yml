@@ -11,7 +11,7 @@ branches:
   except:
   - /^v\d+\.\d+\.\d+(-(alpha|beta)\.\d+(@(alpha|beta))?)?$/
 before_script:
-  #- npm ls --production >/dev/null
+- npm ls >/dev/null
 - curl ifconfig.co
 after_success: npm run coverage:report
 deploy:
