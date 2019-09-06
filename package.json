@@ -38,7 +38,7 @@
     }
   },
   "devDependencies": {
-    "@babel/node": "7.5.5",
+    "@babel/node": "7.6.0",
     "@babel/register": "7.5.5",
     "@travi/any": "2.0.4",
     "@travi/babel-preset": "3.0.0",
