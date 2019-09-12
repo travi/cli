@@ -69,7 +69,7 @@
     "@travi/scaffolder-sub-command": "1.18.28",
     "commander": "3.0.1",
     "inquander": "1.1.1",
-    "travis-token-updater": "1.6.5",
+    "travis-token-updater": "1.6.6",
     "update-notifier": "3.0.1"
   }
 }
