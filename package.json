@@ -11,6 +11,7 @@
     "clean": "rimraf bin/",
     "lint:md": "globstar --node -- markdownlint **/*.md",
     "lint:js": "eslint . --cache",
+    "lint:travis": "travis-lint .travis.yml",
     "test:unit": "nyc run-s test:unit:base",
     "test:unit:base": "mocha --recursive test/unit",
     "test": "run-s lint:* test:* build",
@@ -63,7 +64,8 @@
     "rollup-plugin-executable": "1.5.1",
     "rollup-plugin-json": "4.0.0",
     "rollup-plugin-node-resolve": "5.2.0",
-    "sinon": "7.5.0"
+    "sinon": "7.5.0",
+    "travis-lint": "1.0.0"
   },
   "dependencies": {
     "@travi/scaffolder-sub-command": "1.18.33",
