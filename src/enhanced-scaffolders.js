@@ -9,27 +9,47 @@ import {prompt} from '@travi/gitlab-scaffolder';
 import {scaffold as scaffoldSpectacle} from '@travi/spectacle-scaffolder';
 import {scaffold as scaffoldHapi} from '@form8ion/hapi-scaffolder';
 
-export function javascript(options) {
-  return scaffoldJavaScript({
+export function javascriptScaffolderFactory(answers) {
+  return options => scaffoldJavaScript({
     ...options,
     configs: {
       eslint: {scope: '@travi'},
-      commitlint: {name: 'travi', packageName: 'commitlint-config-travi'},
-      babelPreset: {name: '@travi', packageName: '@travi/babel-preset'},
+      commitlint: {
+        name: 'travi',
+        packageName: 'commitlint-config-travi'
+      },
+      babelPreset: {
+        name: '@travi',
+        packageName: '@travi/babel-preset'
+      },
       remark: 'remark-preset-lint-travi'
     },
     ciServices: {
-      Travis: {scaffolder: scaffoldTravisForJavaScript, public: true},
-      Circle: {scaffolder: scaffoldCircle, public: true, private: true}
+      Travis: {
+        scaffolder: scaffoldTravisForJavaScript,
+        public: true
+      },
+      Circle: {
+        scaffolder: scaffoldCircle,
+        public: true,
+        private: true
+      }
     },
     hosts: {
-      Netlify: {projectTypes: ['static'], scaffolder: scaffoldNetlify},
-      'App Engine Standard': {projectTypes: ['node'], scaffolder: scaffoldAppEngine}
+      Netlify: {
+        projectTypes: ['static'],
+        scaffolder: scaffoldNetlify
+      },
+      'App Engine Standard': {
+        projectTypes: ['node'],
+        scaffolder: scaffoldAppEngine
+      }
     },
     applicationTypes: {
       Spectacle: {scaffolder: scaffoldSpectacle},
       Hapi: {scaffolder: scaffoldHapi}
-    }
+    },
+    answers
   });
 }
 

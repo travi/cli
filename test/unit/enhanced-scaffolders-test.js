@@ -11,7 +11,7 @@ import {scaffold as scaffoldHapi} from '@form8ion/hapi-scaffolder';
 import any from '@travi/any';
 import {assert} from 'chai';
 import sinon from 'sinon';
-import {gitlabPrompt, javascript, shell} from '../../src/enhanced-scaffolders';
+import {gitlabPrompt, javascriptScaffolderFactory, shell} from '../../src/enhanced-scaffolders';
 
 suite('scaffolder factories', () => {
   let sandbox;
@@ -28,7 +28,8 @@ suite('scaffolder factories', () => {
 
   teardown(() => sandbox.restore());
 
-  test('that the custom properties are passed along with the provided options to the js scaffolder', () => {
+  test('that the custom properties are passed along with the provided options to the js scaffolder', async () => {
+    const answers = any.simpleObject();
     javascriptScaffolder.scaffold
       .withArgs({
         ...options,
@@ -49,11 +50,12 @@ suite('scaffolder factories', () => {
         applicationTypes: {
           Spectacle: {scaffolder: scaffoldSpectacle},
           Hapi: {scaffolder: scaffoldHapi}
-        }
+        },
+        answers
       })
       .resolves(output);
 
-    return assert.becomes(javascript(options), output);
+    assert.equal(await javascriptScaffolderFactory(answers)(options), output);
   });
 
   test('that the custom properties are passed along with the provided options to the shell scaffolder', async () => {

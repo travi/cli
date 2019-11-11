@@ -5,7 +5,7 @@ import * as projectScaffolder from '@travi/project-scaffolder';
 import {prompt as githubPrompt, scaffold as scaffoldGithub} from '@travi/github-scaffolder';
 import {scaffold as scaffoldGitlab} from '@travi/gitlab-scaffolder';
 import {scaffold as scaffoldRuby} from '@form8ion/ruby-scaffolder';
-import {gitlabPrompt, javascript, shell} from '../../src/enhanced-scaffolders';
+import * as enhancedScaffolders from '../../src/enhanced-scaffolders';
 import action from '../../src/action';
 
 suite('action', () => {
@@ -16,6 +16,7 @@ suite('action', () => {
 
     sandbox.stub(projectScaffolder, 'scaffold');
     sandbox.stub(console, 'error');
+    sandbox.stub(enhancedScaffolders, 'javascriptScaffolderFactory');
   });
 
   teardown(() => {
@@ -23,20 +24,27 @@ suite('action', () => {
     sandbox.restore();
   });
 
-  test('that language and vcs-host scaffolders are provided to the project scaffolder', () => {
+  test('that language and vcs-host scaffolders are provided to the project scaffolder', async () => {
+    const javascriptScaffolder = () => undefined;
+    const answers = any.simpleObject();
+    enhancedScaffolders.javascriptScaffolderFactory.withArgs(answers).returns(javascriptScaffolder);
+
     projectScaffolder.scaffold.resolves();
 
-    return action().then(() => assert.calledWith(
+    await action(answers);
+
+    assert.calledWith(
       projectScaffolder.scaffold,
       {
-        languages: {JavaScript: javascript, Ruby: scaffoldRuby, Shell: shell},
+        languages: {JavaScript: javascriptScaffolder, Ruby: scaffoldRuby, Shell: enhancedScaffolders.shell},
         vcsHosts: {
           GitHub: {scaffolder: scaffoldGithub, prompt: githubPrompt, public: true, private: true},
-          GitLab: {scaffolder: scaffoldGitlab, prompt: gitlabPrompt, private: true}
+          GitLab: {scaffolder: scaffoldGitlab, prompt: enhancedScaffolders.gitlabPrompt, private: true}
         },
-        overrides: {copyrightHolder: 'Matt Travi'}
+        overrides: {copyrightHolder: 'Matt Travi'},
+        answers
       }
-    ));
+    );
   });
 
   test('that the exit-code is set to `1` upon failure when a code is not provided', () => {
