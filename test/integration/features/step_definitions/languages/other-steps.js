@@ -2,14 +2,15 @@ import {Given, Then} from 'cucumber';
 import {assert} from 'chai';
 import bddStdIn from 'bdd-stdin';
 import {exists} from 'mz/fs';
+import {projectDescriptionAnswer, projectNameAnswer} from '../common-steps';
 
 Given(/^the project language should be Other$/, async function () {
   this.setAnswerFor('projectType', bddStdIn.keys.down);
   this.setAnswerFor('gitRepo', '\n');
 
   bddStdIn(
-    'project-name', '\n',
-    'some project description', '\n',
+    projectNameAnswer, '\n',
+    projectDescriptionAnswer, '\n',
     '\n',
     '\n',
     this.getAnswerFor('gitRepo'),

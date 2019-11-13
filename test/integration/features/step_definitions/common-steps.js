@@ -1,5 +1,6 @@
 import {promises} from 'fs';
 import {resolve} from 'path';
+import {questionNames as projectQuestionNames} from '@travi/project-scaffolder';
 import {After, Before, setWorldConstructor, When} from 'cucumber';
 import any from '@travi/any';
 
@@ -9,6 +10,9 @@ import action from '../../../../src/action';
 import {githubToken} from './vcs/github-api-steps';
 
 const pathToNodeModules = [__dirname, '../../../../', 'node_modules/'];
+
+export const projectNameAnswer = 'project-name';
+export const projectDescriptionAnswer = 'some project description';
 
 setWorldConstructor(World);
 
@@ -60,5 +64,8 @@ Before(async function () {
 After(() => stubbedFs.restore());
 
 When(/^the project is scaffolded$/, async function () {
-  await action();
+  await action({
+    [projectQuestionNames.PROJECT_NAME]: projectNameAnswer,
+    [projectQuestionNames.DESCRIPTION]: projectDescriptionAnswer
+  });
 });
