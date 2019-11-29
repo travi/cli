@@ -68,7 +68,7 @@
     "travis-lint": "1.0.0"
   },
   "dependencies": {
-    "@travi/scaffolder-sub-command": "1.19.7",
+    "@travi/scaffolder-sub-command": "1.19.8",
     "commander": "4.0.1",
     "inquander": "1.1.1",
     "travis-token-updater": "1.6.9",
