@@ -8,6 +8,7 @@ import {scaffold as scaffoldNetlify} from '@travi/netlify-scaffolder';
 import {scaffold as scaffoldAppEngine} from '@travi/node-app-engine-standard-scaffolder';
 import {scaffold as scaffoldSpectacle} from '@travi/spectacle-scaffolder';
 import {scaffold as scaffoldHapi} from '@form8ion/hapi-scaffolder';
+import {scaffold as scaffoldReactComponents} from '@form8ion/react-components-scaffolder';
 import any from '@travi/any';
 import {assert} from 'chai';
 import sinon from 'sinon';
@@ -50,6 +51,9 @@ suite('scaffolder factories', () => {
         applicationTypes: {
           Spectacle: {scaffolder: scaffoldSpectacle},
           Hapi: {scaffolder: scaffoldHapi}
+        },
+        packageTypes: {
+          'React Component Library': {scaffolder: scaffoldReactComponents}
         },
         answers
       })

@@ -8,6 +8,7 @@ import {scaffold as scaffoldAppEngine} from '@travi/node-app-engine-standard-sca
 import {prompt} from '@travi/gitlab-scaffolder';
 import {scaffold as scaffoldSpectacle} from '@travi/spectacle-scaffolder';
 import {scaffold as scaffoldHapi} from '@form8ion/hapi-scaffolder';
+import {scaffold as scaffoldReactComponents} from '@form8ion/react-components-scaffolder';
 
 export function javascriptScaffolderFactory(answers) {
   return options => scaffoldJavaScript({
@@ -48,6 +49,9 @@ export function javascriptScaffolderFactory(answers) {
     applicationTypes: {
       Spectacle: {scaffolder: scaffoldSpectacle},
       Hapi: {scaffolder: scaffoldHapi}
+    },
+    packageTypes: {
+      'React Component Library': {scaffolder: scaffoldReactComponents}
     },
     answers
   });
