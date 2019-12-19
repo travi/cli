@@ -3,7 +3,7 @@
 cli for my various tools
 
 <!-- status badges -->
-[![Build Status](https://img.shields.io/travis/travi/cli.svg?branch=master)](https://travis-ci.org/travi/cli)
+[![Build Status](https://img.shields.io/travis/com/travi/cli.svg?branch=master)](https://travis-ci.com/travi/cli)
 [![Codecov](https://img.shields.io/codecov/c/github/travi/cli.svg)](https://codecov.io/github/travi/cli)
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
