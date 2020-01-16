@@ -10,7 +10,7 @@ import {scaffold as scaffoldSpectacle} from '@travi/spectacle-scaffolder';
 import {scaffold as scaffoldHapi} from '@form8ion/hapi-scaffolder';
 import {scaffold as scaffoldReactComponents} from '@form8ion/react-components-scaffolder';
 
-export function javascriptScaffolderFactory(answers) {
+export function javascriptScaffolderFactory(decisions) {
   return options => scaffoldJavaScript({
     ...options,
     configs: {
@@ -53,7 +53,7 @@ export function javascriptScaffolderFactory(answers) {
     packageTypes: {
       'React Component Library': {scaffolder: scaffoldReactComponents}
     },
-    answers
+    answers: decisions
   });
 }
 

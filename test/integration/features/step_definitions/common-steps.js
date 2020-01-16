@@ -29,10 +29,6 @@ function buildOctokitFileMap(octokitFiles) {
 }
 
 Before(async function () {
-  // work around for overly aggressive mock-fs, see:
-  // https://github.com/tschaub/mock-fs/issues/213#issuecomment-347002795
-  require('mock-stdin'); // eslint-disable-line import/no-extraneous-dependencies
-
   this.githubUser = any.word();
 
   const octokitFiles = await promises.readdir(resolve(...pathToNodeModules, 'octokit-pagination-methods/lib/'));
@@ -64,8 +60,21 @@ Before(async function () {
 After(() => stubbedFs.restore());
 
 When(/^the project is scaffolded$/, async function () {
+  const visibility = any.fromList(['Public', 'Private']);
+  const repoShouldBeCreated = this.getAnswerFor(projectQuestionNames.GIT_REPO);
+
   await action({
     [projectQuestionNames.PROJECT_NAME]: projectNameAnswer,
-    [projectQuestionNames.DESCRIPTION]: projectDescriptionAnswer
+    [projectQuestionNames.DESCRIPTION]: projectDescriptionAnswer,
+    [projectQuestionNames.VISIBILITY]: visibility,
+    ...'Public' === visibility && {
+      [projectQuestionNames.LICENSE]: 'MIT',
+      [projectQuestionNames.COPYRIGHT_HOLDER]: any.word(),
+      [projectQuestionNames.COPYRIGHT_YEAR]: 2000
+    },
+    ...'Private' === visibility && {[projectQuestionNames.UNLICENSED]: true},
+    [projectQuestionNames.GIT_REPO]: repoShouldBeCreated,
+    ...repoShouldBeCreated && {[projectQuestionNames.REPO_HOST]: 'Other'},
+    [projectQuestionNames.PROJECT_TYPE]: this.getAnswerFor(projectQuestionNames.PROJECT_TYPE)
   });
 });

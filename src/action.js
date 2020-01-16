@@ -4,15 +4,15 @@ import {scaffold as scaffoldGitlab} from '@travi/gitlab-scaffolder';
 import {scaffold as scaffoldRuby} from '@form8ion/ruby-scaffolder';
 import {gitlabPrompt, javascriptScaffolderFactory, shell} from './enhanced-scaffolders';
 
-export default function (answers) {
+export default function (decisions) {
   return scaffoldProject({
-    languages: {JavaScript: javascriptScaffolderFactory(answers), Ruby: scaffoldRuby, Shell: shell},
+    languages: {JavaScript: javascriptScaffolderFactory(decisions), Ruby: scaffoldRuby, Shell: shell},
     vcsHosts: {
       GitHub: {scaffolder: scaffoldGithub, prompt: githubPrompt, public: true, private: true},
       GitLab: {scaffolder: scaffoldGitlab, prompt: gitlabPrompt, private: true}
     },
     overrides: {copyrightHolder: 'Matt Travi'},
-    answers
+    decisions
   }).catch(err => {
     console.error(err);     // eslint-disable-line no-console
     process.exitCode = (err.data && err.data.code) || 1;

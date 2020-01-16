@@ -26,12 +26,12 @@ suite('action', () => {
 
   test('that language and vcs-host scaffolders are provided to the project scaffolder', async () => {
     const javascriptScaffolder = () => undefined;
-    const answers = any.simpleObject();
-    enhancedScaffolders.javascriptScaffolderFactory.withArgs(answers).returns(javascriptScaffolder);
+    const decisions = any.simpleObject();
+    enhancedScaffolders.javascriptScaffolderFactory.withArgs(decisions).returns(javascriptScaffolder);
 
     projectScaffolder.scaffold.resolves();
 
-    await action(answers);
+    await action(decisions);
 
     assert.calledWith(
       projectScaffolder.scaffold,
@@ -42,7 +42,7 @@ suite('action', () => {
           GitLab: {scaffolder: scaffoldGitlab, prompt: enhancedScaffolders.gitlabPrompt, private: true}
         },
         overrides: {copyrightHolder: 'Matt Travi'},
-        answers
+        decisions
       }
     );
   });

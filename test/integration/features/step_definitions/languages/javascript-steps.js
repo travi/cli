@@ -1,31 +1,10 @@
+import {questionNames} from '@travi/project-scaffolder';
 import {Given, Then} from 'cucumber';
 import {assert} from 'chai';
 import {promises} from 'fs';
-import bddStdIn from 'bdd-stdin';
 
 Given(/^the project language should be JavaScript$/, async function () {
-  this.setAnswerFor('projectType', ['\n']);
-  this.setAnswerFor('gitRepo', ['\n']);
-
-  bddStdIn(
-    'project-name', '\n',
-    'some project description', '\n',
-    '\n',
-    '\n',
-    ...this.getAnswerFor('gitRepo'),
-    '\n',
-    'travi', '\n',
-    ...this.getAnswerFor('projectType'),
-    '\n',
-    bddStdIn.keys.up, '\n',
-    '\n',
-    '\n',
-    '\n',
-    'n', '\n',
-    'n', '\n',
-    '\n',
-    '\n'
-  );
+  this.setAnswerFor(questionNames.PROJECT_TYPE, 'JavaScript');
 });
 
 Then(/^JavaScript ignores are defined$/, async function () {

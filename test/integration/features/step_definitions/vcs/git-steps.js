@@ -1,38 +1,16 @@
 import {exists} from 'mz/fs';
 import {promises} from 'fs';
+import {questionNames} from '@travi/project-scaffolder';
 import {Given, Then} from 'cucumber';
-import bddStdIn from 'bdd-stdin';
 import {assert} from 'chai';
 // import toml from '@iarna/toml';
 
 Given(/^the project should be versioned in git$/, async function () {
-  this.setAnswerFor('gitRepo', '\n');
-
-  // bddStdIn(
-  //   'project-name',
-  //   'some project description',
-  //   bddStdIn.keys.down, '\n', '\n',
-  //   'y', '\n',
-  //   'y', '\n',
-  //   this.getAnswerFor('gitRepo'), '\n',
-  //   bddStdIn.keys.down, '\n', '\n',
-  //   '\n'
-  // );
+  this.setAnswerFor(questionNames.GIT_REPO, true);
 });
 
 Given(/^the project should not be versioned in git$/, async function () {
-  this.setAnswerFor('gitRepo', 'n');
-
-  bddStdIn(
-    'project-name', '\n',
-    'some project description', '\n',
-    bddStdIn.keys.down, '\n', '\n',
-    'y', '\n',
-    'y', '\n',
-    this.getAnswerFor('gitRepo'), '\n',
-    bddStdIn.keys.down, '\n', '\n',
-    '\n'
-  );
+  this.setAnswerFor(questionNames.GIT_REPO, false);
 });
 
 Then(/^the base git files should be present$/, async function () {
