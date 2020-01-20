@@ -6,7 +6,7 @@ import {prompt as githubPrompt, scaffold as scaffoldGithub} from '@travi/github-
 import {scaffold as scaffoldGitlab} from '@travi/gitlab-scaffolder';
 import {scaffold as scaffoldRuby} from '@form8ion/ruby-scaffolder';
 import * as enhancedScaffolders from '../../src/enhanced-scaffolders';
-import action from '../../src/action';
+import getAction from '../../src/action';
 
 suite('action', () => {
   let sandbox;
@@ -31,7 +31,7 @@ suite('action', () => {
 
     projectScaffolder.scaffold.resolves();
 
-    await action(decisions);
+    await getAction(decisions)();
 
     assert.calledWith(
       projectScaffolder.scaffold,
@@ -47,22 +47,24 @@ suite('action', () => {
     );
   });
 
-  test('that the exit-code is set to `1` upon failure when a code is not provided', () => {
+  test('that the exit-code is set to `1` upon failure when a code is not provided', async () => {
     const error = new Error();
     projectScaffolder.scaffold.rejects(error);
 
-    return action().then(() => {
-      assert.equal(process.exitCode, 1);
-      assert.calledWith(console.error, error);      // eslint-disable-line no-console
-    });
+    await getAction()();
+
+    assert.equal(process.exitCode, 1);
+    assert.calledWith(console.error, error);      // eslint-disable-line no-console
   });
 
-  test('that the exit-code is set to the provided code upon failure when provided', () => {
+  test('that the exit-code is set to the provided code upon failure when provided', async () => {
     const code = any.integer();
     const error = new Error();
     error.data = {code};
     projectScaffolder.scaffold.rejects(error);
 
-    return action().then(() => assert.equal(process.exitCode, code));
+    await getAction()();
+
+    assert.equal(process.exitCode, code);
   });
 });

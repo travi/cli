@@ -76,5 +76,5 @@ When(/^the project is scaffolded$/, async function () {
     [projectQuestionNames.GIT_REPO]: repoShouldBeCreated,
     ...repoShouldBeCreated && {[projectQuestionNames.REPO_HOST]: 'Other'},
     [projectQuestionNames.PROJECT_TYPE]: this.getAnswerFor(projectQuestionNames.PROJECT_TYPE)
-  });
+  })();
 });

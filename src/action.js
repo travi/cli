@@ -5,7 +5,7 @@ import {scaffold as scaffoldRuby} from '@form8ion/ruby-scaffolder';
 import {gitlabPrompt, javascriptScaffolderFactory, shell} from './enhanced-scaffolders';
 
 export default function (decisions) {
-  return scaffoldProject({
+  return () => scaffoldProject({
     languages: {JavaScript: javascriptScaffolderFactory(decisions), Ruby: scaffoldRuby, Shell: shell},
     vcsHosts: {
       GitHub: {scaffolder: scaffoldGithub, prompt: githubPrompt, public: true, private: true},
