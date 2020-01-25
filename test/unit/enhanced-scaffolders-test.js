@@ -30,7 +30,7 @@ suite('scaffolder factories', () => {
   teardown(() => sandbox.restore());
 
   test('that the custom properties are passed along with the provided options to the js scaffolder', async () => {
-    const answers = any.simpleObject();
+    const decisions = any.simpleObject();
     javascriptScaffolder.scaffold
       .withArgs({
         ...options,
@@ -55,11 +55,11 @@ suite('scaffolder factories', () => {
         packageTypes: {
           'React Component Library': {scaffolder: scaffoldReactComponents}
         },
-        answers
+        decisions
       })
       .resolves(output);
 
-    assert.equal(await javascriptScaffolderFactory(answers)(options), output);
+    assert.equal(await javascriptScaffolderFactory(decisions)(options), output);
   });
 
   test('that the custom properties are passed along with the provided options to the shell scaffolder', async () => {

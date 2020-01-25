@@ -53,7 +53,7 @@ export function javascriptScaffolderFactory(decisions) {
     packageTypes: {
       'React Component Library': {scaffolder: scaffoldReactComponents}
     },
-    answers: decisions
+    decisions
   });
 }
 
