@@ -3,7 +3,10 @@ Feature: JavaScript Project
   @wip
   Scenario: simple
     Given the project should be versioned in git
+    And the GitHub token is valid
     And the project language should be JavaScript
     When the project is scaffolded
-    Then core ignores are defined
-    And JavaScript ignores are defined
+    Then the core JavaScript files are present
+    And core ignores are defined
+    And the base git files should be present
+#    And JavaScript ignores are defined
