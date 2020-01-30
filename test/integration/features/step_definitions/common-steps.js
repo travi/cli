@@ -1,15 +1,18 @@
 import {promises} from 'fs';
 import {resolve} from 'path';
-import {questionNames as projectQuestionNames} from '@travi/project-scaffolder';
-import {questionNames as javascriptQuestionNames} from '@travi/javascript-scaffolder';
 import {questionNames as commonQuestionNames} from '@travi/language-scaffolder-prompts';
 import {After, Before, setWorldConstructor, When} from 'cucumber';
 import any from '@travi/any';
+import sinon from 'sinon';
 
 import stubbedFs from 'mock-fs';
+import quibble from 'quibble';
 import {World} from '../support/world';
-import action from '../../../../src/action';
 import {githubToken} from './vcs/github-api-steps';
+
+let action,
+  javascriptQuestionNames,
+  projectQuestionNames;
 
 const pathToNodeModules = [__dirname, '../../../../', 'node_modules/'];
 
@@ -32,6 +35,18 @@ function buildOctokitFileMap(octokitFiles) {
 
 Before(async function () {
   this.githubUser = any.word();
+
+  // work around for overly aggressive mock-fs, see:
+  // https://github.com/tschaub/mock-fs/issues/213#issuecomment-347002795
+  require('validate-npm-package-name'); // eslint-disable-line import/no-extraneous-dependencies
+
+  this.shell = quibble('shelljs');
+  quibble('execa', () => Promise.resolve({stdout: any.word()}));
+  projectQuestionNames = require('@travi/project-scaffolder').questionNames;
+  javascriptQuestionNames = require('@travi/javascript-scaffolder').questionNames;
+  action = require('../../../../src/action').default;
+
+  this.sinonSandbox = sinon.createSandbox();
 
   const octokitFiles = await promises.readdir(resolve(...pathToNodeModules, 'octokit-pagination-methods/lib/'));
   stubbedFs({
@@ -75,7 +90,11 @@ Before(async function () {
   });
 });
 
-After(() => stubbedFs.restore());
+After(function () {
+  stubbedFs.restore();
+  quibble.reset();
+  this.sinonSandbox.restore();
+});
 
 When(/^the project is scaffolded$/, async function () {
   const visibility = any.fromList(['Public', 'Private']);
@@ -108,7 +127,8 @@ When(/^the project is scaffolded$/, async function () {
       [commonQuestionNames.INTEGRATION_TESTS]: true,
       [commonQuestionNames.CI_SERVICE]: 'Travis',
       [javascriptQuestionNames.TRANSPILE_LINT]: true,
-      [javascriptQuestionNames.PROJECT_TYPE_CHOICE]: 'Other'
+      [javascriptQuestionNames.PROJECT_TYPE_CHOICE]: 'Other',
+      [javascriptQuestionNames.SCOPE]: any.word()
     }
   })();
 });

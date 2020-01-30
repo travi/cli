@@ -1,9 +1,14 @@
 import {exists} from 'mz/fs';
 import {promises} from 'fs';
-import {questionNames} from '@travi/project-scaffolder';
-import {Given, Then} from 'cucumber';
+import {Before, Given, Then} from 'cucumber';
 import {assert} from 'chai';
 // import toml from '@iarna/toml';
+
+let questionNames;
+
+Before(() => {
+  questionNames = require('@travi/project-scaffolder').questionNames;
+});
 
 Given(/^the project should be versioned in git$/, async function () {
   this.setAnswerFor(questionNames.GIT_REPO, true);
