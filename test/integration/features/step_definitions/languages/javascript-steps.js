@@ -27,6 +27,7 @@ Given(/^the project language should be JavaScript$/, async function () {
   this.setAnswerFor(questionNames.PROJECT_TYPE, 'JavaScript');
 
   td.when(this.shell.exec('npm test', {silent: false})).thenCallback(0);
+  td.when(this.execa('npm', ['whoami'])).thenResolve(any.word());
 });
 
 Given(/^nvm is properly configured$/, function () {
