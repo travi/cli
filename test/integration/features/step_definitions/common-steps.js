@@ -3,10 +3,9 @@ import {resolve} from 'path';
 import {questionNames as commonQuestionNames} from '@travi/language-scaffolder-prompts';
 import {After, Before, setWorldConstructor, When} from 'cucumber';
 import any from '@travi/any';
-import sinon from 'sinon';
 
 import stubbedFs from 'mock-fs';
-import quibble from 'quibble';
+import td from 'testdouble';
 import {World} from '../support/world';
 import {githubToken} from './vcs/github-api-steps';
 
@@ -40,13 +39,11 @@ Before(async function () {
   // https://github.com/tschaub/mock-fs/issues/213#issuecomment-347002795
   require('validate-npm-package-name'); // eslint-disable-line import/no-extraneous-dependencies
 
-  this.shell = quibble('shelljs');
-  quibble('execa', () => Promise.resolve({stdout: any.word()}));
+  this.shell = td.replace('shelljs');
+  td.replace('execa', () => Promise.resolve({stdout: any.word()}));
   projectQuestionNames = require('@travi/project-scaffolder').questionNames;
   javascriptQuestionNames = require('@travi/javascript-scaffolder').questionNames;
   action = require('../../../../src/action').default;
-
-  this.sinonSandbox = sinon.createSandbox();
 
   const octokitFiles = await promises.readdir(resolve(...pathToNodeModules, 'octokit-pagination-methods/lib/'));
   stubbedFs({
@@ -92,8 +89,7 @@ Before(async function () {
 
 After(function () {
   stubbedFs.restore();
-  quibble.reset();
-  this.sinonSandbox.restore();
+  td.reset();
 });
 
 When(/^the project is scaffolded$/, async function () {

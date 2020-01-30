@@ -3,6 +3,7 @@ import {exists} from 'mz/fs';
 import {Before, Given, Then} from 'cucumber';
 import {assert} from 'chai';
 import any from '@travi/any';
+import td from 'testdouble';
 
 function versionSegment() {
   return any.integer({max: 20});
@@ -19,24 +20,21 @@ let questionNames;
 Before(function () {
   questionNames = require('@travi/project-scaffolder').questionNames;
 
-  this.shell.exec = () => undefined;
-
-  this.sinonSandbox.stub(this.shell, 'exec');
+  this.shell.exec = td.func();
 });
 
 Given(/^the project language should be JavaScript$/, async function () {
   this.setAnswerFor(questionNames.PROJECT_TYPE, 'JavaScript');
 
-  this.shell.exec.withArgs('npm test').yields(0);
+  td.when(this.shell.exec('npm test', {silent: false})).thenCallback(0);
 });
 
 Given(/^nvm is properly configured$/, function () {
   const latestLtsVersion = semverStringFactory();
 
-  this.shell.exec
-    .withArgs('. ~/.nvm/nvm.sh && nvm ls-remote --lts')
-    .yields(0, [...any.listOf(semverStringFactory), latestLtsVersion, ''].join('\n'));
-  this.shell.exec.withArgs('. ~/.nvm/nvm.sh && nvm install').yields(0);
+  td.when(this.shell.exec('. ~/.nvm/nvm.sh && nvm ls-remote --lts', {silent: true}))
+    .thenCallback(0, [...any.listOf(semverStringFactory), latestLtsVersion, ''].join('\n'));
+  td.when(this.shell.exec('. ~/.nvm/nvm.sh && nvm install', {silent: false})).thenCallback(0);
 });
 
 Then(/^JavaScript ignores are defined$/, async function () {
