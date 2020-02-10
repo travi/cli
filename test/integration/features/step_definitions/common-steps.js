@@ -20,18 +20,6 @@ export const projectDescriptionAnswer = 'some project description';
 
 setWorldConstructor(World);
 
-function loadOctokitFiles(octokitFiles) {
-  return octokitFiles
-    .map(file => promises.readFile(resolve(...pathToNodeModules, 'octokit-pagination-methods/lib/', file)));
-}
-
-function buildOctokitFileMap(octokitFiles) {
-  return (acc, fileContents, index) => ({
-    ...acc,
-    [octokitFiles[index]]: fileContents
-  });
-}
-
 Before(async function () {
   this.githubUser = any.word();
 
@@ -46,14 +34,10 @@ Before(async function () {
   javascriptQuestionNames = require('@travi/javascript-scaffolder').questionNames;
   action = require('../../../../src/action').default;
 
-  const octokitFiles = await promises.readdir(resolve(...pathToNodeModules, 'octokit-pagination-methods/lib/'));
   stubbedFs({
     [`${process.env.HOME}/.netrc`]: `machine github.com\n  login ${githubToken}`,
     [`${process.env.HOME}/.gitconfig`]: `[github]\n\tuser = ${this.githubUser}`,
     node_modules: {
-      'octokit-pagination-methods': {
-        lib: (await Promise.all(loadOctokitFiles(octokitFiles))).reduce(buildOctokitFileMap(octokitFiles), {})
-      },
       '@travi': {
         'project-scaffolder': {
           templates: {
