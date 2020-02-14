@@ -77,6 +77,6 @@
     "commander": "4.1.1",
     "inquander": "1.1.1",
     "travis-token-updater": "1.6.10",
-    "update-notifier": "4.0.0"
+    "update-notifier": "4.1.0"
   }
 }
