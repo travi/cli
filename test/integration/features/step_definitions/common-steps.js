@@ -64,6 +64,10 @@ Before(async function () {
             'mocha-setup.txt': await promises.readFile(resolve(
               ...pathToNodeModules,
               '@travi/javascript-scaffolder/templates/mocha-setup.txt'
+            )),
+            'example.mustache': await promises.readFile(resolve(
+              ...pathToNodeModules,
+              '@travi/javascript-scaffolder/templates/mocha-setup.txt'
             ))
           }
         }
