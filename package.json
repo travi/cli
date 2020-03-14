@@ -13,6 +13,7 @@
     "lint:js": "eslint . --cache",
     "lint:travis": "travis-lint .travis.yml",
     "lint:engines": "check-engine",
+    "lint:peer": "npm ls >/dev/null",
     "test:unit": "nyc run-s test:unit:base",
     "test:unit:base": "mocha --recursive test/unit",
     "test": "run-s lint:* test:* build",
@@ -43,7 +44,6 @@
     }
   },
   "devDependencies": {
-    "@babel/node": "7.8.7",
     "@babel/register": "7.8.6",
     "@travi/any": "2.0.7",
     "@travi/babel-preset": "3.0.14",
