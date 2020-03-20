@@ -5,6 +5,8 @@ import * as projectScaffolder from '@travi/project-scaffolder';
 import {prompt as githubPrompt, scaffold as scaffoldGithub} from '@travi/github-scaffolder';
 import {scaffold as scaffoldGitlab} from '@travi/gitlab-scaffolder';
 import {scaffold as scaffoldRuby} from '@form8ion/ruby-scaffolder';
+import {scaffold as scaffoldDependabot} from '@form8ion/dependabot-scaffolder';
+import {scaffold as scaffoldRenovate} from '@form8ion/renovate-scaffolder';
 import * as enhancedScaffolders from '../../src/enhanced-scaffolders';
 import getAction from '../../src/action';
 
@@ -40,6 +42,10 @@ suite('action', () => {
         vcsHosts: {
           GitHub: {scaffolder: scaffoldGithub, prompt: githubPrompt, public: true, private: true},
           GitLab: {scaffolder: scaffoldGitlab, prompt: enhancedScaffolders.gitlabPrompt, private: true}
+        },
+        dependencyUpdaters: {
+          Dependabot: {scaffolder: scaffoldDependabot},
+          Renovate: {scaffolder: scaffoldRenovate}
         },
         overrides: {copyrightHolder: 'Matt Travi'},
         decisions
