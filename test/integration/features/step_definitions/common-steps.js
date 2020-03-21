@@ -90,6 +90,7 @@ When(/^the project is scaffolded$/, async function () {
     [projectQuestionNames.PROJECT_NAME]: projectNameAnswer,
     [projectQuestionNames.DESCRIPTION]: projectDescriptionAnswer,
     [projectQuestionNames.VISIBILITY]: visibility,
+    [projectQuestionNames.DEPENDENCY_UPDATER]: any.word(),
     ...'Public' === visibility && {
       [projectQuestionNames.LICENSE]: 'MIT',
       [projectQuestionNames.COPYRIGHT_HOLDER]: any.word(),
