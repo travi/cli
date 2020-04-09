@@ -1,7 +1,7 @@
 import sinon from 'sinon';
 import {assert} from 'chai';
-import rollTokenAction from '../../../src/travis-tokens/action';
-import rollTokenCommand from '../../../src/travis-tokens/sub-command';
+import rollTokenAction from './action';
+import rollTokenCommand from './sub-command';
 
 suite('Travis-CI token roller sub-command', () => {
   test('that the token rolling is initiated', () => {

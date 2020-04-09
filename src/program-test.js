@@ -2,8 +2,8 @@ import * as scaffoldSubCommand from '@travi/scaffolder-sub-command';
 import sinon from 'sinon';
 import {assert} from 'chai';
 import any from '@travi/any';
-import configureProgram from '../../src/program';
-import * as travisTokens from '../../src/travis-tokens/sub-command';
+import configureProgram from './program';
+import * as travisTokens from './travis-tokens/sub-command';
 
 suite('cli', () => {
   let sandbox;

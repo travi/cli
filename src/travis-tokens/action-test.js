@@ -1,7 +1,7 @@
 import * as tokenUpdater from 'travis-token-updater';
 import sinon from 'sinon';
 import {assert} from 'chai';
-import rollTokenAction from '../../../src/travis-tokens/action';
+import rollTokenAction from './action';
 
 suite('Travis-CI token roller action', () => {
   let sandbox;
