@@ -74,6 +74,8 @@
     "travis-lint": "1.0.0"
   },
   "dependencies": {
+    "@form8ion/lift": "1.1.4",
+    "@form8ion/renovate-scaffolder": "1.1.0",
     "@travi/scaffolder-sub-command": "1.22.16",
     "commander": "5.0.0",
     "inquander": "1.1.1",

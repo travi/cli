@@ -2,8 +2,9 @@ import * as scaffoldSubCommand from '@travi/scaffolder-sub-command';
 import sinon from 'sinon';
 import {assert} from 'chai';
 import any from '@travi/any';
-import configureProgram from './program';
 import * as travisTokens from './travis-tokens/sub-command';
+import * as lift from './lift/sub-command';
+import configureProgram from './program';
 
 suite('cli', () => {
   let sandbox;
@@ -13,6 +14,7 @@ suite('cli', () => {
 
     sandbox.stub(scaffoldSubCommand, 'addSubCommand');
     sandbox.stub(travisTokens, 'default');
+    sandbox.stub(lift, 'default');
   });
 
   teardown(() => sandbox.restore());
@@ -27,5 +29,6 @@ suite('cli', () => {
     assert.calledWith(versionStub, version);
     assert.calledWith(scaffoldSubCommand.addSubCommand, program);
     assert.calledWith(travisTokens.default, program);
+    assert.calledWith(lift.default, program);
   });
 });
