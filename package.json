@@ -76,7 +76,7 @@
   "dependencies": {
     "@form8ion/lift": "1.3.0",
     "@form8ion/renovate-scaffolder": "1.1.0",
-    "@travi/scaffolder-sub-command": "1.22.21",
+    "@travi/scaffolder-sub-command": "1.22.22",
     "commander": "5.0.0",
     "inquander": "1.1.1",
     "travis-token-updater": "1.6.12",
