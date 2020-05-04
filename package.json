@@ -78,7 +78,7 @@
   "dependencies": {
     "@form8ion/lift": "1.8.0",
     "@form8ion/remove-greenkeeper": "1.1.4",
-    "@form8ion/renovate-scaffolder": "1.2.0",
+    "@form8ion/renovate-scaffolder": "1.3.0",
     "@travi/scaffolder-sub-command": "1.22.28",
     "commander": "5.1.0",
     "inquander": "1.1.1",
