@@ -95,7 +95,7 @@
     "@travi/scaffolder-sub-command": "1.22.28",
     "commander": "5.1.0",
     "inquander": "1.1.1",
-    "snyk": "^1.316.2",
+    "snyk": "1.316.2",
     "travis-token-updater": "1.6.12",
     "update-notifier": "4.1.0"
   },
