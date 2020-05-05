@@ -1,6 +1,7 @@
 import * as lifter from '@form8ion/lift';
 import {scaffold as scaffoldRenovate} from '@form8ion/renovate-scaffolder';
 import {removeGreenkeeper} from '@form8ion/remove-greenkeeper';
+import {scaffold as scaffoldCucumber} from '@form8ion/cucumber-scaffolder';
 import sinon from 'sinon';
 import {assert} from 'chai';
 import any from '@travi/any';
@@ -23,7 +24,8 @@ suite('lift action', () => {
       .withArgs({
         scaffolders: {
           Renovate: scaffoldRenovate,
-          'Remove Greenkeeper': removeGreenkeeper
+          'Remove Greenkeeper': removeGreenkeeper,
+          Cucumber: scaffoldCucumber
         }
       })
       .resolves(liftingResults);
