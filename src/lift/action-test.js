@@ -2,9 +2,11 @@ import * as lifter from '@form8ion/lift';
 import {scaffold as scaffoldRenovate} from '@form8ion/renovate-scaffolder';
 import {removeGreenkeeper} from '@form8ion/remove-greenkeeper';
 import {scaffold as scaffoldCucumber} from '@form8ion/cucumber-scaffolder';
+import {test as jsApplicabilityTest} from '@form8ion/lift-javascript';
 import sinon from 'sinon';
 import {assert} from 'chai';
 import any from '@travi/any';
+import {javascript as liftJavascript} from './enhanced-lifters';
 import liftAction from './action';
 
 suite('lift action', () => {
@@ -26,7 +28,8 @@ suite('lift action', () => {
           Renovate: scaffoldRenovate,
           'Remove Greenkeeper': removeGreenkeeper,
           Cucumber: scaffoldCucumber
-        }
+        },
+        enhancers: {JavaScript: {test: jsApplicabilityTest, lift: liftJavascript}}
       })
       .resolves(liftingResults);
 
