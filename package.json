@@ -19,8 +19,6 @@
     "test": "run-s lint:* test:* build",
     "coverage:report": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "generate:readme": "doctoc README.md --entryprefix '*'",
-    "commitmsg": "commitlint -e",
-    "precommit": "npm test",
     "build:js": "rollup -c",
     "build": "run-s clean build:*",
     "watch": "run-s 'build:js -- --watch'",
