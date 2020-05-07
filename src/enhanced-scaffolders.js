@@ -9,6 +9,7 @@ import {prompt} from '@travi/gitlab-scaffolder';
 import {scaffold as scaffoldSpectacle} from '@travi/spectacle-scaffolder';
 import {scaffold as scaffoldHapi} from '@form8ion/hapi-scaffolder';
 import {scaffold as scaffoldReactComponents} from '@form8ion/react-components-scaffolder';
+import {scaffold as scaffoldGithubActionsCI} from '@form8ion/github-actions-node-ci';
 
 export function javascriptScaffolderFactory(decisions) {
   return options => scaffoldJavaScript({
@@ -26,15 +27,9 @@ export function javascriptScaffolderFactory(decisions) {
       remark: 'remark-preset-lint-travi'
     },
     ciServices: {
-      Travis: {
-        scaffolder: scaffoldTravisForJavaScript,
-        public: true
-      },
-      Circle: {
-        scaffolder: scaffoldCircle,
-        public: true,
-        private: true
-      }
+      Travis: {scaffolder: scaffoldTravisForJavaScript, public: true, private: false},
+      Circle: {scaffolder: scaffoldCircle, public: true, private: true},
+      'GitHub Actions': {scaffolder: scaffoldGithubActionsCI, public: true, private: true}
     },
     hosts: {
       Netlify: {

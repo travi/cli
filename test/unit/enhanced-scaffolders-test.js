@@ -7,6 +7,7 @@ import {scaffold as scaffoldCircle} from '@travi/circle-scaffolder-javascript';
 import {scaffold as scaffoldNetlify} from '@travi/netlify-scaffolder';
 import {scaffold as scaffoldAppEngine} from '@travi/node-app-engine-standard-scaffolder';
 import {scaffold as scaffoldSpectacle} from '@travi/spectacle-scaffolder';
+import {scaffold as scaffoldGithubActionsCI} from '@form8ion/github-actions-node-ci';
 import {scaffold as scaffoldHapi} from '@form8ion/hapi-scaffolder';
 import {scaffold as scaffoldReactComponents} from '@form8ion/react-components-scaffolder';
 import any from '@travi/any';
@@ -41,8 +42,9 @@ suite('scaffolder factories', () => {
           remark: 'remark-preset-lint-travi'
         },
         ciServices: {
-          Travis: {scaffolder: scaffoldTravisForJavaScript, public: true},
-          Circle: {scaffolder: scaffoldCircle, public: true, private: true}
+          Travis: {scaffolder: scaffoldTravisForJavaScript, public: true, private: false},
+          Circle: {scaffolder: scaffoldCircle, public: true, private: true},
+          'GitHub Actions': {scaffolder: scaffoldGithubActionsCI, public: true, private: true}
         },
         hosts: {
           Netlify: {projectTypes: ['static'], scaffolder: scaffoldNetlify},
