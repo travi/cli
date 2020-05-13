@@ -4,6 +4,7 @@ import {assert} from 'chai';
 import any from '@travi/any';
 import * as travisTokens from './travis-tokens/sub-command';
 import * as lift from './lift/sub-command';
+import * as skiPatrol from './ski-patrol/sub-command';
 import configureProgram from './program';
 
 suite('cli', () => {
@@ -15,6 +16,7 @@ suite('cli', () => {
     sandbox.stub(scaffoldSubCommand, 'addSubCommand');
     sandbox.stub(travisTokens, 'default');
     sandbox.stub(lift, 'default');
+    sandbox.stub(skiPatrol, 'default');
   });
 
   teardown(() => sandbox.restore());
@@ -30,5 +32,6 @@ suite('cli', () => {
     assert.calledWith(scaffoldSubCommand.addSubCommand, program);
     assert.calledWith(travisTokens.default, program);
     assert.calledWith(lift.default, program);
+    assert.calledWith(skiPatrol.default, program);
   });
 });
