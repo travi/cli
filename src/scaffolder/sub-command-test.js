@@ -1,6 +1,6 @@
 import sinon from 'sinon';
 import {assert} from 'chai';
-import {addSubCommand} from './sub-command';
+import scaffolderCommand from './sub-command';
 import * as scaffolderActionFactory from './action';
 
 suite('scaffold-project sub-command', () => {
@@ -28,7 +28,7 @@ suite('scaffold-project sub-command', () => {
     const scaffolderAction = () => undefined;
     scaffolderActionFactory.default.returns(scaffolderAction);
 
-    addSubCommand({command});
+    scaffolderCommand({command});
 
     assert.calledWith(action, scaffolderAction);
   });

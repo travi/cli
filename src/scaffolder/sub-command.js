@@ -1,6 +1,6 @@
 import getAction from './action';
 
-export function addSubCommand(program) {
+export default function addSubCommand(program) {
   program
     .command('scaffold')
     .description('scaffold a new project')

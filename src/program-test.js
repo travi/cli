@@ -14,7 +14,7 @@ suite('cli', () => {
   setup(() => {
     sandbox = sinon.createSandbox();
 
-    sandbox.stub(scaffoldSubCommand, 'addSubCommand');
+    sandbox.stub(scaffoldSubCommand, 'default');
     sandbox.stub(travisTokens, 'default');
     sandbox.stub(lift, 'default');
     sandbox.stub(skiPatrol, 'default');
@@ -31,7 +31,7 @@ suite('cli', () => {
     configureProgram(program, {version});
 
     assert.calledWith(versionStub, version);
-    assert.calledWith(scaffoldSubCommand.addSubCommand, program);
+    assert.calledWith(scaffoldSubCommand.default, program);
     assert.calledWith(travisTokens.default, program);
     assert.calledWith(lift.default, program);
     assert.calledWith(skiPatrol.default, program);
