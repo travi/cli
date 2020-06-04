@@ -1,4 +1,4 @@
-import {addSubCommand} from '@travi/scaffolder-sub-command';
+import {addSubCommand} from './scaffolder';
 import travisTokensSubCommand from './travis-tokens';
 import liftCommand from './lift';
 import skiPatrolCommand from './ski-patrol';

@@ -1,7 +1,7 @@
-import * as scaffoldSubCommand from '@travi/scaffolder-sub-command';
 import sinon from 'sinon';
 import {assert} from 'chai';
 import any from '@travi/any';
+import * as scaffoldSubCommand from './scaffolder/sub-command';
 import * as travisTokens from './travis-tokens/sub-command';
 import * as lift from './lift/sub-command';
 import * as skiPatrol from './ski-patrol/sub-command';
