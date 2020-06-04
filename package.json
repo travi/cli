@@ -114,7 +114,7 @@
     "@travi/travis-scaffolder-shell": "1.0.0-alpha.4",
     "commander": "5.1.0",
     "inquander": "1.1.1",
-    "snyk": "1.336.0",
+    "snyk": "^1.336.0",
     "travis-token-updater": "1.6.12",
     "update-notifier": "4.1.0"
   },
