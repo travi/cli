@@ -22,3 +22,5 @@ patch:
         patched: '2020-05-03T02:59:34.269Z'
     - '@form8ion/lift > nodegit > request-promise-native > request-promise-core > lodash':
         patched: '2020-05-03T02:59:34.269Z'
+    - '@travi/shell-scaffolder > inquirer > lodash':
+        patched: '2020-06-04T16:10:58.511Z'
