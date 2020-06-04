@@ -13,7 +13,7 @@ import {scaffold as scaffoldReactComponents} from '@form8ion/react-components-sc
 import any from '@travi/any';
 import {assert} from 'chai';
 import sinon from 'sinon';
-import {gitlabPrompt, javascriptScaffolderFactory, shell} from '../../src/enhanced-scaffolders';
+import {gitlabPrompt, javascriptScaffolderFactory, shell} from './enhanced-scaffolders';
 
 suite('scaffolder factories', () => {
   let sandbox;

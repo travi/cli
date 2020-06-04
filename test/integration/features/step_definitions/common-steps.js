@@ -32,7 +32,7 @@ Before(async function () {
   this.execa = td.replace('execa');
   projectQuestionNames = require('@travi/project-scaffolder').questionNames;
   javascriptQuestionNames = require('@travi/javascript-scaffolder').questionNames;
-  action = require('../../../../src/action').default;
+  action = require('../../../../src/scaffolder/action').default;
 
   stubbedFs({
     [`${process.env.HOME}/.netrc`]: `machine github.com\n  login ${githubToken}`,

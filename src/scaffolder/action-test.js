@@ -7,8 +7,8 @@ import {scaffold as scaffoldGitlab} from '@travi/gitlab-scaffolder';
 import {scaffold as scaffoldRuby} from '@form8ion/ruby-scaffolder';
 import {scaffold as scaffoldDependabot} from '@form8ion/dependabot-scaffolder';
 import {scaffold as scaffoldRenovate} from '@form8ion/renovate-scaffolder';
-import * as enhancedScaffolders from '../../src/enhanced-scaffolders';
-import getAction from '../../src/action';
+import * as enhancedScaffolders from './enhanced-scaffolders';
+import getAction from './action';
 
 suite('action', () => {
   let sandbox;

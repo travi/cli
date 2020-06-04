@@ -1,7 +1,7 @@
 import sinon from 'sinon';
 import {assert} from 'chai';
-import {addSubCommand} from '../../src/sub-command';
-import * as scaffolderActionFactory from '../../src/action';
+import {addSubCommand} from './sub-command';
+import * as scaffolderActionFactory from './action';
 
 suite('scaffold-project sub-command', () => {
   let sandbox, command, description, action;
