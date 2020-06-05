@@ -57,17 +57,23 @@ Before(async function () {
               ...pathToNodeModules,
               '@travi/javascript-scaffolder/templates/rollup.config.js'
             )),
+            'example.mustache': await promises.readFile(resolve(
+              ...pathToNodeModules,
+              '@travi/javascript-scaffolder/templates/example.mustache'
+            ))
+          }
+        }
+      },
+      '@form8ion': {
+        'mocha-scaffolder': {
+          templates: {
             'canary-test.txt': await promises.readFile(resolve(
               ...pathToNodeModules,
-              '@travi/javascript-scaffolder/templates/canary-test.txt'
+              '@form8ion/mocha-scaffolder/templates/canary-test.txt'
             )),
             'mocha-setup.txt': await promises.readFile(resolve(
               ...pathToNodeModules,
-              '@travi/javascript-scaffolder/templates/mocha-setup.txt'
-            )),
-            'example.mustache': await promises.readFile(resolve(
-              ...pathToNodeModules,
-              '@travi/javascript-scaffolder/templates/mocha-setup.txt'
+              '@form8ion/mocha-scaffolder/templates/mocha-setup.txt'
             ))
           }
         }
