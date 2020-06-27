@@ -120,7 +120,8 @@ When(/^the project is scaffolded$/, async function () {
       [commonQuestionNames.CI_SERVICE]: 'Travis',
       [javascriptQuestionNames.TRANSPILE_LINT]: true,
       [javascriptQuestionNames.PROJECT_TYPE_CHOICE]: 'Other',
-      [javascriptQuestionNames.SCOPE]: any.word()
+      [javascriptQuestionNames.SCOPE]: any.word(),
+      unitTestFramework: 'mocha'
     }
   })();
 });
