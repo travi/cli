@@ -16,7 +16,7 @@
     "lint:peer": "npm ls >/dev/null",
     "test:unit": "nyc run-s test:unit:base",
     "test:unit:base": "mocha 'src/**/*-test.js'",
-    "test": "run-s lint:* test:* build",
+    "test": "npm-run-all --print-label build --parallel lint:* --parallel test:*",
     "coverage:report": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "generate:readme": "doctoc README.md --entryprefix '*'",
     "build:js": "rollup -c",
