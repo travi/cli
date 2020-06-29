@@ -1,6 +1,5 @@
 import {promises} from 'fs';
 import {resolve} from 'path';
-import {questionNames as commonQuestionNames} from '@travi/language-scaffolder-prompts';
 import {After, Before, setWorldConstructor, When} from 'cucumber';
 import any from '@travi/any';
 
@@ -115,13 +114,13 @@ When(/^the project is scaffolded$/, async function () {
       [javascriptQuestionNames.AUTHOR_EMAIL]: any.email(),
       [javascriptQuestionNames.AUTHOR_URL]: any.url(),
       [javascriptQuestionNames.PROJECT_TYPE]: 'Package',
-      [commonQuestionNames.UNIT_TESTS]: true,
-      [commonQuestionNames.INTEGRATION_TESTS]: true,
-      [commonQuestionNames.CI_SERVICE]: 'Travis',
+      [javascriptQuestionNames.UNIT_TESTS]: true,
+      [javascriptQuestionNames.INTEGRATION_TESTS]: true,
+      [javascriptQuestionNames.CI_SERVICE]: 'Travis',
       [javascriptQuestionNames.TRANSPILE_LINT]: true,
       [javascriptQuestionNames.PROJECT_TYPE_CHOICE]: 'Other',
       [javascriptQuestionNames.SCOPE]: any.word(),
-      unitTestFramework: 'mocha'
+      [javascriptQuestionNames.UNIT_TEST_FRAMEWORK]: 'mocha'
     }
   })();
 });
