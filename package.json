@@ -28,7 +28,7 @@
     "lint:gherkin": "gherkin-lint",
     "test:integration": "run-s 'test:integration:base -- --profile noWip'",
     "test:integration:base": "DEBUG=any cucumber-js test/integration --profile base",
-    "test:integration:debug": "DEBUG=test run-s test:integration",
+    "test:integration:debug": "DEBUG=nock.* run-s test:integration",
     "test:integration:wip": "run-s 'test:integration:base -- --profile wip'",
     "test:integration:focus": "run-s 'test:integration:base -- --profile focus'"
   },
@@ -64,7 +64,6 @@
     "commitlint-config-travi": "1.3.7",
     "cucumber": "6.0.5",
     "cz-conventional-changelog": "3.2.0",
-    "debug": "4.1.1",
     "doctoc": "1.4.0",
     "gherkin-lint": "4.0.1",
     "globstar": "1.0.0",
