@@ -5,12 +5,11 @@ import {OK} from 'http-status-codes';
 
 let githubScope;
 export const githubToken = any.word();
-const debug = require('debug')('test');
 
 Before(async () => {
   nock.disableNetConnect();
 
-  githubScope = nock('https://api.github.com/').log(debug);
+  githubScope = nock('https://api.github.com/');
 });
 
 After(() => {
