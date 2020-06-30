@@ -69,7 +69,7 @@
     "globstar": "1.0.0",
     "http-status-codes": "1.4.0",
     "husky": "4.2.5",
-    "markdownlint-cli": "0.23.1",
+    "markdownlint-cli": "0.23.2",
     "mocha": "8.0.1",
     "mock-fs": "4.12.0",
     "mz": "2.7.0",
