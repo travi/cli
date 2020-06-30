@@ -1,7 +1,7 @@
 {
   "extends":["github>form8ion/renovate-config"],
-  "packageRules": {
+  "packageRules": [{
     "packageNames": ["snyk"],
     "rangeStrategy": "update-lockfile"
-  }
+  }]
 }
