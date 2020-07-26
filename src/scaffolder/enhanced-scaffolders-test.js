@@ -9,6 +9,7 @@ import {scaffold as scaffoldAppEngine} from '@travi/node-app-engine-standard-sca
 import {scaffold as scaffoldSpectacle} from '@travi/spectacle-scaffolder';
 import {scaffold as scaffoldGithubActionsCI} from '@form8ion/github-actions-node-ci';
 import {scaffold as scaffoldHapi} from '@form8ion/hapi-scaffolder';
+import {scaffold as scaffoldNuxt} from '@form8ion/nuxt';
 import {scaffold as scaffoldReactComponents} from '@form8ion/react-components-scaffolder';
 import any from '@travi/any';
 import {assert} from 'chai';
@@ -53,7 +54,8 @@ suite('scaffolder factories', () => {
         },
         applicationTypes: {
           Spectacle: {scaffolder: scaffoldSpectacle},
-          Hapi: {scaffolder: scaffoldHapi}
+          Hapi: {scaffolder: scaffoldHapi},
+          Nuxt: {scaffolder: scaffoldNuxt}
         },
         packageTypes: {
           'React Component Library': {scaffolder: scaffoldReactComponents}
