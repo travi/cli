@@ -6,6 +6,7 @@ import * as travisTokens from './travis-tokens/sub-command';
 import * as lift from './lift/sub-command';
 import * as skiPatrol from './ski-patrol/sub-command';
 import * as shuttle from './shuttle/sub-command';
+import * as snoCat from './sno-cat/sub-command';
 import configureProgram from './program';
 
 suite('cli', () => {
@@ -19,6 +20,7 @@ suite('cli', () => {
     sandbox.stub(lift, 'default');
     sandbox.stub(skiPatrol, 'default');
     sandbox.stub(shuttle, 'default');
+    sandbox.stub(snoCat, 'default');
   });
 
   teardown(() => sandbox.restore());
@@ -36,5 +38,6 @@ suite('cli', () => {
     assert.calledWith(lift.default, program);
     assert.calledWith(skiPatrol.default, program);
     assert.calledWith(shuttle.default, program);
+    assert.calledWith(snoCat.default, program);
   });
 });
