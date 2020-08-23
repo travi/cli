@@ -67,7 +67,7 @@
     "doctoc": "1.4.0",
     "gherkin-lint": "4.1.2",
     "globstar": "1.0.0",
-    "http-status-codes": "2.1.0",
+    "http-status-codes": "2.1.1",
     "husky": "4.2.5",
     "markdownlint-cli": "0.23.2",
     "mocha": "8.1.1",
