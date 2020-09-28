@@ -109,7 +109,7 @@
     "@travi/circle-scaffolder-javascript": "1.2.1",
     "@travi/github-scaffolder": "5.2.0",
     "@travi/gitlab-scaffolder": "1.0.4",
-    "@travi/javascript-scaffolder": "11.8.0",
+    "@travi/javascript-scaffolder": "11.9.0",
     "@travi/netlify-scaffolder": "1.4.0",
     "@travi/node-app-engine-standard-scaffolder": "1.2.5",
     "@travi/project-scaffolder": "8.10.7",
