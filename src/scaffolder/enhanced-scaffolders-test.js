@@ -7,6 +7,7 @@ import {scaffold as scaffoldCircle} from '@travi/circle-scaffolder-javascript';
 import {scaffold as scaffoldNetlify} from '@travi/netlify-scaffolder';
 import {scaffold as scaffoldAppEngine} from '@travi/node-app-engine-standard-scaffolder';
 import {scaffold as scaffoldSpectacle} from '@travi/spectacle-scaffolder';
+import {scaffold as scaffoldMdxDeck} from '@form8ion/mdx-deck';
 import {scaffold as scaffoldGithubActionsCI} from '@form8ion/github-actions-node-ci';
 import {scaffold as scaffoldHapi} from '@form8ion/hapi-scaffolder';
 import {scaffold as scaffoldNuxt} from '@form8ion/nuxt';
@@ -54,6 +55,7 @@ suite('scaffolder factories', () => {
           'App Engine Standard': {projectTypes: ['node'], scaffolder: scaffoldAppEngine}
         },
         applicationTypes: {
+          'MDX Deck': {scaffolder: scaffoldMdxDeck},
           Spectacle: {scaffolder: scaffoldSpectacle},
           Hapi: {scaffolder: scaffoldHapi},
           Nuxt: {scaffolder: scaffoldNuxt},

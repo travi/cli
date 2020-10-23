@@ -7,6 +7,7 @@ import {scaffold as scaffoldNetlify} from '@travi/netlify-scaffolder';
 import {scaffold as scaffoldAppEngine} from '@travi/node-app-engine-standard-scaffolder';
 import {prompt} from '@travi/gitlab-scaffolder';
 import {scaffold as scaffoldSpectacle} from '@travi/spectacle-scaffolder';
+import {scaffold as scaffoldMdxDeck} from '@form8ion/mdx-deck';
 import {scaffold as scaffoldHapi} from '@form8ion/hapi-scaffolder';
 import {scaffold as scaffoldNuxt} from '@form8ion/nuxt';
 import {scaffold as scaffoldProbot} from '@form8ion/probot-scaffolder';
@@ -45,6 +46,7 @@ export function javascriptScaffolderFactory(decisions) {
       }
     },
     applicationTypes: {
+      'MDX Deck': {scaffolder: scaffoldMdxDeck},
       Spectacle: {scaffolder: scaffoldSpectacle},
       Hapi: {scaffolder: scaffoldHapi},
       Nuxt: {scaffolder: scaffoldNuxt},
