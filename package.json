@@ -123,7 +123,7 @@
     "inquander": "1.1.1",
     "snyk": "^1.355.0",
     "travis-token-updater": "1.6.12",
-    "update-notifier": "5.0.0"
+    "update-notifier": "5.0.1"
   },
   "snyk": true
 }
