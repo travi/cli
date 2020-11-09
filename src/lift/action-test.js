@@ -5,6 +5,7 @@ import {scaffold as scaffoldCucumber} from '@form8ion/cucumber-scaffolder';
 import {scaffold as scaffoldCypress} from '@form8ion/cypress-scaffolder';
 import {test as jsApplicabilityTest} from '@form8ion/lift-javascript';
 import {scaffold as scaffoldGithubActions} from '@form8ion/github-actions-node-ci';
+import {replace as replaceTravisCiWithGithubActions} from '@form8ion/replace-travis-ci-with-github-actions';
 import sinon from 'sinon';
 import {assert} from 'chai';
 import any from '@travi/any';
@@ -33,7 +34,8 @@ suite('lift action', () => {
           'Unit Testing': unitTesting,
           Cucumber: scaffoldCucumber,
           Cypress: scaffoldCypress,
-          'GitHub Actions CI': scaffoldGithubActions
+          'GitHub Actions CI': scaffoldGithubActions,
+          'Replace Travis CI with GitHub Actions': replaceTravisCiWithGithubActions
         },
         enhancers: {JavaScript: {test: jsApplicabilityTest, lift: liftJavascript}}
       })
