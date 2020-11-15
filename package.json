@@ -11,7 +11,6 @@
     "clean": "rimraf bin/",
     "lint:md": "globstar --node -- markdownlint **/*.md",
     "lint:js": "eslint . --cache",
-    "lint:travis": "travis-lint .travis.yml",
     "lint:engines": "check-engine",
     "lint:peer": "npm ls >/dev/null",
     "test:unit": "nyc run-s test:unit:base",
@@ -84,8 +83,7 @@
     "rollup-plugin-json": "4.0.0",
     "rollup-plugin-node-resolve": "5.2.0",
     "sinon": "9.2.1",
-    "testdouble": "3.16.1",
-    "travis-lint": "1.0.0"
+    "testdouble": "3.16.1"
   },
   "dependencies": {
     "@form8ion/cucumber-scaffolder": "1.4.0",
