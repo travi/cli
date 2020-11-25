@@ -2,7 +2,7 @@ import * as jsCore from '@form8ion/javascript-core';
 import sinon from 'sinon';
 import {assert} from 'chai';
 import any from '@travi/any';
-import {unitTestFrameworks} from '../common-config';
+import {unitTestFrameworks} from '../common/options';
 import {unitTesting} from './enhanced-scaffolders';
 
 suite('enhanced lift scaffolders', () => {

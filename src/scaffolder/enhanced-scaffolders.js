@@ -13,7 +13,7 @@ import {scaffold as scaffoldNuxt} from '@form8ion/nuxt';
 import {scaffold as scaffoldProbot} from '@form8ion/probot-scaffolder';
 import {scaffold as scaffoldReactComponents} from '@form8ion/react-components-scaffolder';
 import {scaffold as scaffoldGithubActionsCI} from '@form8ion/github-actions-node-ci';
-import {unitTestFrameworks} from '../common-config';
+import {unitTestFrameworks} from '../common/options';
 
 export function javascriptScaffolderFactory(decisions) {
   return options => scaffoldJavaScript({
