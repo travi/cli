@@ -3,7 +3,7 @@ import {prompt as githubPrompt, scaffold as scaffoldGithub} from '@travi/github-
 import {scaffold as scaffoldGitlab} from '@travi/gitlab-scaffolder';
 import {scaffold as scaffoldDependabot} from '@form8ion/dependabot-scaffolder';
 import {scaffold as scaffoldRenovate} from '@form8ion/renovate-scaffolder';
-import {gitlabPrompt, javascriptScaffolderFactory, shell} from '../scaffolder/enhanced-scaffolders';
+import {gitlabPrompt, javascriptScaffolderFactory, shell} from './enhanced-scaffolders';
 
 const traviName = 'Matt Travi';
 

@@ -17,7 +17,7 @@ import any from '@travi/any';
 import {assert} from 'chai';
 import sinon from 'sinon';
 import {gitlabPrompt, javascriptScaffolderFactory, shell} from './enhanced-scaffolders';
-import {unitTestFrameworks} from '../common/test-frameworks';
+import {unitTestFrameworks} from './test-frameworks';
 
 suite('scaffolder factories', () => {
   let sandbox;

@@ -6,7 +6,7 @@ import {scaffold as scaffoldRenovate} from '@form8ion/renovate-scaffolder';
 import {assert} from 'chai';
 import sinon from 'sinon';
 import any from '@travi/any';
-import * as enhancedScaffolders from '../scaffolder/enhanced-scaffolders';
+import * as enhancedScaffolders from './enhanced-scaffolders';
 import {defineScaffoldOptions} from './options';
 
 suite('common config', () => {
