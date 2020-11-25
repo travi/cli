@@ -16,8 +16,8 @@ import {scaffold as scaffoldReactComponents} from '@form8ion/react-components-sc
 import any from '@travi/any';
 import {assert} from 'chai';
 import sinon from 'sinon';
-import {unitTestFrameworks} from '../common/options';
 import {gitlabPrompt, javascriptScaffolderFactory, shell} from './enhanced-scaffolders';
+import {unitTestFrameworks} from '../common/test-frameworks';
 
 suite('scaffolder factories', () => {
   let sandbox;
