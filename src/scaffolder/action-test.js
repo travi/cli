@@ -2,12 +2,7 @@ import sinon from 'sinon';
 import {assert} from 'chai';
 import any from '@travi/any';
 import * as projectScaffolder from '@travi/project-scaffolder';
-import {prompt as githubPrompt, scaffold as scaffoldGithub} from '@travi/github-scaffolder';
-import {scaffold as scaffoldGitlab} from '@travi/gitlab-scaffolder';
-import {scaffold as scaffoldRuby} from '@form8ion/ruby-scaffolder';
-import {scaffold as scaffoldDependabot} from '@form8ion/dependabot-scaffolder';
-import {scaffold as scaffoldRenovate} from '@form8ion/renovate-scaffolder';
-import * as enhancedScaffolders from './enhanced-scaffolders';
+import * as commonOptions from '../common/options';
 import getAction from './action';
 
 suite('action', () => {
@@ -18,7 +13,7 @@ suite('action', () => {
 
     sandbox.stub(projectScaffolder, 'scaffold');
     sandbox.stub(console, 'error');
-    sandbox.stub(enhancedScaffolders, 'javascriptScaffolderFactory');
+    sandbox.stub(commonOptions, 'defineScaffoldOptions');
   });
 
   teardown(() => {
@@ -27,30 +22,13 @@ suite('action', () => {
   });
 
   test('that language and vcs-host scaffolders are provided to the project scaffolder', async () => {
-    const javascriptScaffolder = () => undefined;
     const decisions = any.simpleObject();
-    enhancedScaffolders.javascriptScaffolderFactory.withArgs(decisions).returns(javascriptScaffolder);
+    const scaffoldOptions = any.simpleObject();
+    const scaffoldResults = any.simpleObject();
+    commonOptions.defineScaffoldOptions.withArgs(decisions).returns(scaffoldOptions);
+    projectScaffolder.scaffold.withArgs(scaffoldOptions).resolves(scaffoldResults);
 
-    projectScaffolder.scaffold.resolves();
-
-    await getAction(decisions)();
-
-    assert.calledWith(
-      projectScaffolder.scaffold,
-      {
-        languages: {JavaScript: javascriptScaffolder, Ruby: scaffoldRuby, Shell: enhancedScaffolders.shell},
-        vcsHosts: {
-          GitHub: {scaffolder: scaffoldGithub, prompt: githubPrompt, public: true, private: true},
-          GitLab: {scaffolder: scaffoldGitlab, prompt: enhancedScaffolders.gitlabPrompt, private: true}
-        },
-        dependencyUpdaters: {
-          Dependabot: {scaffolder: scaffoldDependabot},
-          Renovate: {scaffolder: scaffoldRenovate}
-        },
-        overrides: {copyrightHolder: 'Matt Travi'},
-        decisions
-      }
-    );
+    assert.equal(await getAction(decisions)(), scaffoldResults);
   });
 
   test('that the exit-code is set to `1` upon failure when a code is not provided', async () => {

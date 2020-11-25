@@ -1,9 +1,9 @@
-import {assert} from 'chai';
 import {scaffold as scaffoldMocha} from '@form8ion/mocha-scaffolder';
 import {scaffold as scaffoldJest} from '@form8ion/jest-scaffolder';
-import {unitTestFrameworks} from './common-config';
+import {assert} from 'chai';
+import {unitTestFrameworks} from './test-frameworks';
 
-suite('common config', () => {
+suite('common test frameworks', () => {
   test('that the unit test frameworks are defined', () => {
     assert.deepEqual(
       unitTestFrameworks,
