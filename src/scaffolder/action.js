@@ -1,5 +1,5 @@
 import {scaffold as scaffoldProject} from '@travi/project-scaffolder';
-import {defineScaffoldProjectOptions} from '../common/options';
+import {defineScaffoldProjectOptions} from '../common/project-options';
 
 export default function (decisions) {
   return () => scaffoldProject(defineScaffoldProjectOptions(decisions))

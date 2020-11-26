@@ -4,7 +4,7 @@ import {assert} from 'chai';
 import any from '@travi/any';
 import extendAction from './action';
 import {javascriptScaffolderFactory} from '../common/enhanced-scaffolders';
-import * as commonOptions from '../common/options';
+import * as commonOptions from '../common/project-options';
 
 suite('extend-eslint-config action', () => {
   let sandbox;

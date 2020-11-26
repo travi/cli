@@ -2,7 +2,7 @@ import sinon from 'sinon';
 import {assert} from 'chai';
 import any from '@travi/any';
 import * as projectScaffolder from '@travi/project-scaffolder';
-import * as commonOptions from '../common/options';
+import * as commonOptions from '../common/project-options';
 import getAction from './action';
 
 suite('action', () => {
