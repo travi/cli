@@ -7,10 +7,11 @@ import {assert} from 'chai';
 import sinon from 'sinon';
 import any from '@travi/any';
 import * as enhancedScaffolders from './enhanced-scaffolders';
-import {defineScaffoldOptions} from './options';
+import {defineScaffoldProjectOptions} from './project-options';
 
 suite('common config', () => {
   let sandbox;
+  const decisions = any.simpleObject();
 
   setup(() => {
     sandbox = sinon.createSandbox();
@@ -20,13 +21,12 @@ suite('common config', () => {
 
   teardown(() => sandbox.restore());
 
-  test('that scaffold options are defined', () => {
-    const decisions = any.simpleObject();
+  test('that scaffold-project options are defined', () => {
     const jsScaffolder = () => undefined;
     enhancedScaffolders.javascriptScaffolderFactory.withArgs(decisions).returns(jsScaffolder);
 
     assert.deepEqual(
-      defineScaffoldOptions(decisions),
+      defineScaffoldProjectOptions(decisions),
       {
         languages: {JavaScript: jsScaffolder, Ruby: scaffoldRuby, Shell: enhancedScaffolders.shell},
         vcsHosts: {

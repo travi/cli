@@ -2,7 +2,7 @@ import sinon from 'sinon';
 import {assert} from 'chai';
 import any from '@travi/any';
 import * as projectScaffolder from '@travi/project-scaffolder';
-import * as commonOptions from '../common/options';
+import * as commonOptions from '../common/project-options';
 import getAction from './action';
 
 suite('action', () => {
@@ -13,7 +13,7 @@ suite('action', () => {
 
     sandbox.stub(projectScaffolder, 'scaffold');
     sandbox.stub(console, 'error');
-    sandbox.stub(commonOptions, 'defineScaffoldOptions');
+    sandbox.stub(commonOptions, 'defineScaffoldProjectOptions');
   });
 
   teardown(() => {
@@ -25,7 +25,7 @@ suite('action', () => {
     const decisions = any.simpleObject();
     const scaffoldOptions = any.simpleObject();
     const scaffoldResults = any.simpleObject();
-    commonOptions.defineScaffoldOptions.withArgs(decisions).returns(scaffoldOptions);
+    commonOptions.defineScaffoldProjectOptions.withArgs(decisions).returns(scaffoldOptions);
     projectScaffolder.scaffold.withArgs(scaffoldOptions).resolves(scaffoldResults);
 
     assert.equal(await getAction(decisions)(), scaffoldResults);

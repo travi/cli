@@ -4,7 +4,7 @@ import {assert} from 'chai';
 import any from '@travi/any';
 import extendAction from './action';
 import {javascriptScaffolderFactory} from '../common/enhanced-scaffolders';
-import * as commonOptions from '../common/options';
+import * as commonOptions from '../common/project-options';
 
 suite('extend-eslint-config action', () => {
   let sandbox;
@@ -13,7 +13,7 @@ suite('extend-eslint-config action', () => {
     sandbox = sinon.createSandbox();
 
     sandbox.stub(eslintConfigExtender, 'extendEslintConfig');
-    sandbox.stub(commonOptions, 'defineScaffoldOptions');
+    sandbox.stub(commonOptions, 'defineScaffoldProjectOptions');
   });
 
   teardown(() => sandbox.restore());
@@ -22,7 +22,7 @@ suite('extend-eslint-config action', () => {
     const decisions = any.simpleObject();
     const scaffoldOptions = any.simpleObject();
     const extendResults = any.simpleObject();
-    commonOptions.defineScaffoldOptions.withArgs(decisions).returns(scaffoldOptions);
+    commonOptions.defineScaffoldProjectOptions.withArgs(decisions).returns(scaffoldOptions);
     eslintConfigExtender.extendEslintConfig
       .withArgs(scaffoldOptions, javascriptScaffolderFactory)
       .resolves(extendResults);
