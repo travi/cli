@@ -13,7 +13,7 @@ suite('extend-eslint-config action', () => {
     sandbox = sinon.createSandbox();
 
     sandbox.stub(eslintConfigExtender, 'extendEslintConfig');
-    sandbox.stub(commonOptions, 'defineScaffoldOptions');
+    sandbox.stub(commonOptions, 'defineScaffoldProjectOptions');
   });
 
   teardown(() => sandbox.restore());
@@ -22,7 +22,7 @@ suite('extend-eslint-config action', () => {
     const decisions = any.simpleObject();
     const scaffoldOptions = any.simpleObject();
     const extendResults = any.simpleObject();
-    commonOptions.defineScaffoldOptions.withArgs(decisions).returns(scaffoldOptions);
+    commonOptions.defineScaffoldProjectOptions.withArgs(decisions).returns(scaffoldOptions);
     eslintConfigExtender.extendEslintConfig
       .withArgs(scaffoldOptions, javascriptScaffolderFactory)
       .resolves(extendResults);

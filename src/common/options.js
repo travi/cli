@@ -7,7 +7,7 @@ import {gitlabPrompt, javascriptScaffolderFactory, shell} from './enhanced-scaff
 
 const traviName = 'Matt Travi';
 
-export function defineScaffoldOptions(decisions) {
+export function defineScaffoldProjectOptions(decisions) {
   return {
     languages: {JavaScript: javascriptScaffolderFactory(decisions), Ruby: scaffoldRuby, Shell: shell},
     vcsHosts: {

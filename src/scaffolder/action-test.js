@@ -13,7 +13,7 @@ suite('action', () => {
 
     sandbox.stub(projectScaffolder, 'scaffold');
     sandbox.stub(console, 'error');
-    sandbox.stub(commonOptions, 'defineScaffoldOptions');
+    sandbox.stub(commonOptions, 'defineScaffoldProjectOptions');
   });
 
   teardown(() => {
@@ -25,7 +25,7 @@ suite('action', () => {
     const decisions = any.simpleObject();
     const scaffoldOptions = any.simpleObject();
     const scaffoldResults = any.simpleObject();
-    commonOptions.defineScaffoldOptions.withArgs(decisions).returns(scaffoldOptions);
+    commonOptions.defineScaffoldProjectOptions.withArgs(decisions).returns(scaffoldOptions);
     projectScaffolder.scaffold.withArgs(scaffoldOptions).resolves(scaffoldResults);
 
     assert.equal(await getAction(decisions)(), scaffoldResults);
