@@ -17,9 +17,9 @@ suite('enhanced lifters', () => {
 
   test('that the custom properties are passed along with the provided options to the js lifter', async () => {
     const options = any.simpleObject();
+    const results = any.simpleObject();
+    jsLifter.lift.withArgs({...options, configs: {eslint: {scope: '@travi'}}}).resolves(results);
 
-    await javascript(options);
-
-    assert.calledWith(jsLifter.lift, {...options, configs: {eslint: {scope: '@travi'}}});
+    assert.equal(await javascript(options), results);
   });
 });
