@@ -91,7 +91,7 @@
     "@form8ion/cypress-scaffolder": "2.2.0",
     "@form8ion/dependabot-scaffolder": "1.2.0",
     "@form8ion/eslint-config-extender": "1.1.0",
-    "@form8ion/github-actions-node-ci": "1.11.0",
+    "@form8ion/github-actions-node-ci": "1.11.1",
     "@form8ion/hapi-scaffolder": "2.0.2",
     "@form8ion/javascript-core": "2.7.2",
     "@form8ion/jest-scaffolder": "1.0.0",
