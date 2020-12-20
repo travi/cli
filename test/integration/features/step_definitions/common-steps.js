@@ -90,6 +90,8 @@ When(/^the project is scaffolded$/, async function () {
   const visibility = any.fromList(['Public', 'Private']);
   const repoShouldBeCreated = this.getAnswerFor(projectQuestionNames.GIT_REPO);
   const projectType = this.getAnswerFor(projectQuestionNames.PROJECT_TYPE);
+  const shouldBeScoped = any.boolean();
+  const scope = shouldBeScoped || 'Private' === visibility ? any.word() : undefined;
 
   await action({
     [projectQuestionNames.PROJECT_NAME]: projectNameAnswer,
@@ -119,7 +121,8 @@ When(/^the project is scaffolded$/, async function () {
       [javascriptQuestionNames.CI_SERVICE]: 'Travis',
       [javascriptQuestionNames.TRANSPILE_LINT]: true,
       [javascriptQuestionNames.PROJECT_TYPE_CHOICE]: 'Other',
-      [javascriptQuestionNames.SCOPE]: any.word(),
+      [javascriptQuestionNames.SHOULD_BE_SCOPED]: shouldBeScoped,
+      [javascriptQuestionNames.SCOPE]: scope,
       [javascriptQuestionNames.UNIT_TEST_FRAMEWORK]: 'mocha'
     }
   })();
