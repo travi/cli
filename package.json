@@ -118,7 +118,7 @@
     "@travi/project-scaffolder": "8.11.1",
     "@travi/shell-scaffolder": "1.1.2",
     "@travi/spectacle-scaffolder": "2.5.4",
-    "@travi/travis-scaffolder-javascript": "4.0.0",
+    "@travi/travis-scaffolder-javascript": "4.0.1",
     "@travi/travis-scaffolder-shell": "1.0.0-alpha.4",
     "commander": "6.2.1",
     "inquander": "1.1.1",
