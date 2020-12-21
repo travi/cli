@@ -89,7 +89,7 @@ After(function () {
 When(/^the project is scaffolded$/, async function () {
   const visibility = any.fromList(['Public', 'Private']);
   const repoShouldBeCreated = this.getAnswerFor(projectQuestionNames.GIT_REPO);
-  const projectType = this.getAnswerFor(projectQuestionNames.PROJECT_TYPE);
+  const projectLanguage = this.getAnswerFor(projectQuestionNames.PROJECT_LANGUAGE);
   const shouldBeScoped = any.boolean();
   const scope = shouldBeScoped || 'Private' === visibility ? any.word() : undefined;
 
@@ -109,8 +109,8 @@ When(/^the project is scaffolded$/, async function () {
       [projectQuestionNames.REPO_HOST]: 'GitHub',
       [projectQuestionNames.REPO_OWNER]: this.githubUser
     },
-    [projectQuestionNames.PROJECT_TYPE]: projectType,
-    ...'JavaScript' === projectType && {
+    [projectQuestionNames.PROJECT_LANGUAGE]: projectLanguage,
+    ...'JavaScript' === projectLanguage && {
       [javascriptQuestionNames.NODE_VERSION_CATEGORY]: 'LTS',
       [javascriptQuestionNames.AUTHOR_NAME]: any.word(),
       [javascriptQuestionNames.AUTHOR_EMAIL]: any.email(),
