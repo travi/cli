@@ -1,4 +1,3 @@
-import {promises} from 'fs';
 import {resolve} from 'path';
 import {After, Before, setWorldConstructor, When} from 'cucumber';
 import any from '@travi/any';
@@ -8,11 +7,12 @@ import td from 'testdouble';
 import {World} from '../support/world';
 import {githubToken} from './vcs/github-api-steps';
 
-let action,
+let scaffoldProject,
   javascriptQuestionNames,
   projectQuestionNames;
 
 const pathToNodeModules = [__dirname, '../../../../', 'node_modules/'];
+const stubbedNodeModules = stubbedFs.load(resolve(...pathToNodeModules));
 
 export const projectNameAnswer = 'project-name';
 export const projectDescriptionAnswer = 'some project description';
@@ -29,55 +29,13 @@ Before(async function () {
 
   this.shell = td.replace('shelljs');
   this.execa = td.replace('execa');
-  projectQuestionNames = require('@travi/project-scaffolder').questionNames;
-  javascriptQuestionNames = require('@travi/javascript-scaffolder').questionNames;
-  action = require('../../../../src/scaffolder/action').default;
+
+  scaffoldProject = require('../../../../src/scaffolder/action').default;
 
   stubbedFs({
     [`${process.env.HOME}/.netrc`]: `machine github.com\n  login ${githubToken}`,
     [`${process.env.HOME}/.gitconfig`]: `[github]\n\tuser = ${this.githubUser}`,
-    node_modules: {
-      '@travi': {
-        'project-scaffolder': {
-          templates: {
-            'editorconfig.txt': await promises.readFile(resolve(
-              ...pathToNodeModules,
-              '@travi/project-scaffolder/templates/editorconfig.txt'
-            )),
-            'README.mustache': await promises.readFile(resolve(
-              ...pathToNodeModules,
-              '@travi/project-scaffolder/templates/README.mustache'
-            ))
-          }
-        },
-        'javascript-scaffolder': {
-          templates: {
-            'rollup.config.js': await promises.readFile(resolve(
-              ...pathToNodeModules,
-              '@travi/javascript-scaffolder/templates/rollup.config.js'
-            )),
-            'example.mustache': await promises.readFile(resolve(
-              ...pathToNodeModules,
-              '@travi/javascript-scaffolder/templates/example.mustache'
-            ))
-          }
-        }
-      },
-      '@form8ion': {
-        'mocha-scaffolder': {
-          templates: {
-            'canary-test.txt': await promises.readFile(resolve(
-              ...pathToNodeModules,
-              '@form8ion/mocha-scaffolder/templates/canary-test.txt'
-            )),
-            'mocha-setup.txt': await promises.readFile(resolve(
-              ...pathToNodeModules,
-              '@form8ion/mocha-scaffolder/templates/mocha-setup.txt'
-            ))
-          }
-        }
-      }
-    }
+    node_modules: stubbedNodeModules
   });
 });
 
@@ -87,13 +45,16 @@ After(function () {
 });
 
 When(/^the project is scaffolded$/, async function () {
+  projectQuestionNames = require('@travi/project-scaffolder').questionNames;
+  javascriptQuestionNames = require('@travi/javascript-scaffolder').questionNames;
+
   const visibility = any.fromList(['Public', 'Private']);
   const repoShouldBeCreated = this.getAnswerFor(projectQuestionNames.GIT_REPO);
   const projectLanguage = this.getAnswerFor(projectQuestionNames.PROJECT_LANGUAGE);
   const shouldBeScoped = any.boolean();
   const scope = shouldBeScoped || 'Private' === visibility ? any.word() : undefined;
 
-  await action({
+  await scaffoldProject({
     [projectQuestionNames.PROJECT_NAME]: projectNameAnswer,
     [projectQuestionNames.DESCRIPTION]: projectDescriptionAnswer,
     [projectQuestionNames.VISIBILITY]: visibility,
