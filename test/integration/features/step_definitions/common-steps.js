@@ -7,15 +7,10 @@ import td from 'testdouble';
 import {World} from '../support/world';
 import {githubToken} from './vcs/github-api-steps';
 
-let scaffoldProject,
-  javascriptQuestionNames,
-  projectQuestionNames;
+let scaffoldProject;
 
-const pathToNodeModules = [__dirname, '../../../../', 'node_modules/'];
+const pathToNodeModules = [__dirname, '..', '..', '..', '..', 'node_modules'];
 const stubbedNodeModules = stubbedFs.load(resolve(...pathToNodeModules));
-
-export const projectNameAnswer = 'project-name';
-export const projectDescriptionAnswer = 'some project description';
 
 setWorldConstructor(World);
 
@@ -45,9 +40,8 @@ After(function () {
 });
 
 When(/^the project is scaffolded$/, async function () {
-  projectQuestionNames = require('@travi/project-scaffolder').questionNames;
-  javascriptQuestionNames = require('@travi/javascript-scaffolder').questionNames;
-
+  const projectQuestionNames = require('@travi/project-scaffolder').questionNames;
+  const javascriptQuestionNames = require('@travi/javascript-scaffolder').questionNames;
   const visibility = any.fromList(['Public', 'Private']);
   const repoShouldBeCreated = this.getAnswerFor(projectQuestionNames.GIT_REPO);
   const projectLanguage = this.getAnswerFor(projectQuestionNames.PROJECT_LANGUAGE);
@@ -55,8 +49,8 @@ When(/^the project is scaffolded$/, async function () {
   const scope = shouldBeScoped || 'Private' === visibility ? any.word() : undefined;
 
   await scaffoldProject({
-    [projectQuestionNames.PROJECT_NAME]: projectNameAnswer,
-    [projectQuestionNames.DESCRIPTION]: projectDescriptionAnswer,
+    [projectQuestionNames.PROJECT_NAME]: 'project-name',
+    [projectQuestionNames.DESCRIPTION]: 'some project description',
     [projectQuestionNames.VISIBILITY]: visibility,
     [projectQuestionNames.DEPENDENCY_UPDATER]: any.word(),
     ...'Public' === visibility && {
