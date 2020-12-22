@@ -20,9 +20,10 @@ suite('add-package action', () => {
   test('that a package is added to the monorepo', async () => {
     const additionResults = any.simpleObject();
     const options = any.simpleObject();
-    jsOptions.defineScaffoldJavascriptOptions.withArgs({}).returns(options);
+    const decisions = any.simpleObject();
+    jsOptions.defineScaffoldJavascriptOptions.withArgs(decisions).returns(options);
     adder.scaffold.withArgs(options).resolves(additionResults);
 
-    assert.equal(await addPackageAction(), additionResults);
+    assert.equal(await addPackageAction(decisions), additionResults);
   });
 });
