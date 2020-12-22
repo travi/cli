@@ -9,4 +9,5 @@ Feature: JavaScript Project
     Then the core JavaScript files are present
     And core ignores are defined
     And the base git files should be present
+    And the project will have repository details defined
 #    And JavaScript ignores are defined

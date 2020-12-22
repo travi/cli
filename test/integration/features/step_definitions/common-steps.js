@@ -47,9 +47,10 @@ When(/^the project is scaffolded$/, async function () {
   const projectLanguage = this.getAnswerFor(projectQuestionNames.PROJECT_LANGUAGE);
   const shouldBeScoped = any.boolean();
   const scope = shouldBeScoped || 'Private' === visibility ? any.word() : undefined;
+  this.projectName = 'project-name';
 
   await scaffoldProject({
-    [projectQuestionNames.PROJECT_NAME]: 'project-name',
+    [projectQuestionNames.PROJECT_NAME]: this.projectName,
     [projectQuestionNames.DESCRIPTION]: 'some project description',
     [projectQuestionNames.VISIBILITY]: visibility,
     [projectQuestionNames.DEPENDENCY_UPDATER]: any.word(),

@@ -1,4 +1,4 @@
-import {promises} from 'fs';
+import {promises as fs} from 'fs';
 import {exists} from 'mz/fs';
 import {Before, Given, Then} from 'cucumber';
 import {assert} from 'chai';
@@ -40,7 +40,7 @@ Given(/^nvm is properly configured$/, function () {
 });
 
 Then(/^JavaScript ignores are defined$/, async function () {
-  const gitIgnore = await promises.readFile(`${process.cwd()}/.gitignore`);
+  const gitIgnore = await fs.readFile(`${process.cwd()}/.gitignore`);
 
   assert.equal(gitIgnore.toString(), `/node_modules/
 /lib/
@@ -52,4 +52,11 @@ Then(/^JavaScript ignores are defined$/, async function () {
 
 Then(/^the core JavaScript files are present$/, async function () {
   assert.isTrue(await exists(`${process.cwd()}/package.json`));
+});
+
+Then('the project will have repository details defined', async function () {
+  assert.deepEqual(
+    JSON.parse(await fs.readFile(`${process.cwd()}/package.json`)).repository,
+    `${this.githubUser}/${this.projectName}`
+  );
 });
