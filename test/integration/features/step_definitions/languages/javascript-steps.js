@@ -19,14 +19,12 @@ let questionNames;
 
 Before(function () {
   questionNames = require('@travi/project-scaffolder').questionNames;
-
-  this.shell.exec = td.func();
 });
 
 Given(/^the project language should be JavaScript$/, async function () {
   this.setAnswerFor(questionNames.PROJECT_LANGUAGE, 'JavaScript');
 
-  td.when(this.shell.exec('npm run generate:md && npm test', {silent: false})).thenCallback(0);
+  td.when(this.execa('npm run generate:md && npm test', {shell: true})).thenReturn({stdout: {pipe: () => undefined}});
   td.when(this.execa('npm', ['whoami'])).thenResolve(any.word());
   td.when(this.execa('npm', ['ls', 'husky', '--json'])).thenResolve({stdout: JSON.stringify({})});
 });
