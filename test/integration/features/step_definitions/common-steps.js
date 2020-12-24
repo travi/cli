@@ -1,7 +1,7 @@
 import {resolve} from 'path';
 import {After, Before, setWorldConstructor, When} from 'cucumber';
 import any from '@travi/any';
-
+import importFresh from 'import-fresh';
 import stubbedFs from 'mock-fs';
 import td from 'testdouble';
 import {World} from '../support/world';
@@ -29,6 +29,8 @@ Before(async function () {
   require('color-convert'); // eslint-disable-line import/no-extraneous-dependencies
 
   this.execa = td.replace('execa');
+
+  importFresh('@travi/javascript-scaffolder')
 
   scaffoldProject = require('../../../../src/scaffolder/action').default;
   addPackageToMonorepo = require('../../../../src/add-package/action').default;
@@ -93,6 +95,7 @@ When('a package is added to the monorepo', async function () {
     [addPackageQuestionNames.PROJECT_NAME]: this.projectName,
     [addPackageQuestionNames.DESCRIPTION]: projectDescription,
     [addPackageQuestionNames.VISIBILITY]: visibility,
+    [addPackageQuestionNames.NODE_VERSION_CATEGORY]: 'LTS',
     ...'Public' === visibility && {
       [addPackageQuestionNames.LICENSE]: 'MIT',
       [addPackageQuestionNames.COPYRIGHT_HOLDER]: any.word(),
