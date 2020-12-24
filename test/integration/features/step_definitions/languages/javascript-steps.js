@@ -34,9 +34,9 @@ Given(/^the project language should be JavaScript$/, async function () {
 Given(/^nvm is properly configured$/, function () {
   const latestLtsVersion = semverStringFactory();
 
-  td.when(this.execa('. ~/.nvm/nvm.sh && nvm ls-remote --lts'))
+  td.when(this.execa('. ~/.nvm/nvm.sh && nvm ls-remote --lts', {shell: true}))
     .thenResolve({stdout: [...any.listOf(semverStringFactory), latestLtsVersion, ''].join('\n')});
-  td.when(this.execa('. ~/.nvm/nvm.sh && nvm install')).thenReturn({stdout: {pipe: () => undefined}});
+  td.when(this.execa('. ~/.nvm/nvm.sh && nvm install', {shell: true})).thenReturn({stdout: {pipe: () => undefined}});
 });
 
 Then(/^JavaScript ignores are defined$/, async function () {
