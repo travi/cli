@@ -1,5 +1,9 @@
 import * as lifter from '@form8ion/lift';
-import {scaffold as scaffoldRenovate} from '@form8ion/renovate-scaffolder';
+import {
+  lift as liftRenovate,
+  predicate as renovatePredicate,
+  scaffold as scaffoldRenovate
+} from '@form8ion/renovate-scaffolder';
 import {removeGreenkeeper} from '@form8ion/remove-greenkeeper';
 import {scaffold as scaffoldCucumber} from '@form8ion/cucumber-scaffolder';
 import {scaffold as scaffoldCypress} from '@form8ion/cypress-scaffolder';
@@ -43,6 +47,7 @@ suite('lift action', () => {
         },
         enhancers: {
           JavaScript: {test: jsApplicabilityTest, lift: liftJavascript},
+          Renovate: {test: renovatePredicate, lift: liftRenovate},
           'GitHub Actions CI': {test: githubActionsCiApplicabilityTest, lift: liftGithubActionsCI}
         }
       })
