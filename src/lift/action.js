@@ -4,6 +4,7 @@ import {
   predicate as renovatePredicate,
   scaffold as scaffoldRenovate
 } from '@form8ion/renovate-scaffolder';
+import {lift as liftDependabot, predicate as dependabotPredicate} from '@form8ion/dependabot-scaffolder';
 import {removeGreenkeeper} from '@form8ion/remove-greenkeeper';
 import {scaffold as scaffoldCucumber} from '@form8ion/cucumber-scaffolder';
 import {scaffold as scaffoldCypress} from '@form8ion/cypress-scaffolder';
@@ -31,6 +32,7 @@ export default function () {
     enhancers: {
       JavaScript: {test: jsApplicabilityTest, lift: liftJavascript},
       Renovate: {test: renovatePredicate, lift: liftRenovate},
+      Dependabot: {test: dependabotPredicate, lift: liftDependabot},
       'GitHub Actions CI': {test: githubActionsCiApplicabilityTest, lift: liftGithubActionsCI}
     }
   });
