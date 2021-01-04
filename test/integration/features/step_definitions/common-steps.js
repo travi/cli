@@ -2,12 +2,11 @@ import {resolve} from 'path';
 import {After, Before, setWorldConstructor, When} from 'cucumber';
 import any from '@travi/any';
 import importFresh from 'import-fresh';
+import clearModule from 'clear-module';
 import stubbedFs from 'mock-fs';
 import td from 'testdouble';
 import {World} from '../support/world';
 import {githubToken} from './vcs/github-api-steps';
-
-let scaffoldProject, addPackageToMonorepo;
 
 const projectDescription = any.sentence();
 const visibility = any.fromList(['Public', 'Private']);
@@ -29,29 +28,31 @@ Before(async function () {
   require('color-convert'); // eslint-disable-line import/no-extraneous-dependencies
 
   this.execa = td.replace('execa');
+});
 
-  importFresh('@travi/javascript-scaffolder')
+After(function () {
+  stubbedFs.restore();
+  td.reset();
+  clearModule('@travi/javascript-scaffolder');
+  clearModule('@form8ion/javascript-core');
+  clearModule('@form8ion/lift-javascript');
+  clearModule('@form8ion/add-package-to-monorepo');
+  clearModule('execa');
+});
 
-  scaffoldProject = require('../../../../src/scaffolder/action').default;
-  addPackageToMonorepo = require('../../../../src/add-package/action').default;
+When(/^the project is scaffolded$/, async function () {
+  const projectQuestionNames = importFresh('@travi/project-scaffolder').questionNames;
+  const javascriptQuestionNames = importFresh('@travi/javascript-scaffolder').questionNames;
+  const repoShouldBeCreated = this.getAnswerFor(projectQuestionNames.GIT_REPO);
+  const projectLanguage = this.getAnswerFor(projectQuestionNames.PROJECT_LANGUAGE);
+
+  const scaffoldProject = importFresh('../../../../src/scaffolder/action').default;
 
   stubbedFs({
     [`${process.env.HOME}/.netrc`]: `machine github.com\n  login ${githubToken}`,
     [`${process.env.HOME}/.gitconfig`]: `[github]\n\tuser = ${this.githubUser}`,
     node_modules: stubbedNodeModules
   });
-});
-
-After(function () {
-  stubbedFs.restore();
-  td.reset();
-});
-
-When(/^the project is scaffolded$/, async function () {
-  const projectQuestionNames = require('@travi/project-scaffolder').questionNames;
-  const javascriptQuestionNames = require('@travi/javascript-scaffolder').questionNames;
-  const repoShouldBeCreated = this.getAnswerFor(projectQuestionNames.GIT_REPO);
-  const projectLanguage = this.getAnswerFor(projectQuestionNames.PROJECT_LANGUAGE);
 
   await scaffoldProject({
     [projectQuestionNames.PROJECT_NAME]: this.projectName,
@@ -89,7 +90,19 @@ When(/^the project is scaffolded$/, async function () {
 });
 
 When('a package is added to the monorepo', async function () {
-  const addPackageQuestionNames = require('@form8ion/add-package-to-monorepo').questionNames;
+  const addPackageQuestionNames = importFresh('@form8ion/add-package-to-monorepo').questionNames;
+
+  const addPackageToMonorepo = importFresh('../../../../src/add-package/action').default;
+
+  stubbedFs({
+    ...'lerna' === this.monorepoType && {
+      'lerna.json': JSON.stringify({}),
+      'package.json': JSON.stringify({repository: `${this.githubUser}/${this.projectName}`})
+    },
+    [`${process.env.HOME}/.netrc`]: `machine github.com\n  login ${githubToken}`,
+    [`${process.env.HOME}/.gitconfig`]: `[github]\n\tuser = ${this.githubUser}`,
+    node_modules: stubbedNodeModules
+  });
 
   await addPackageToMonorepo({
     [addPackageQuestionNames.PROJECT_NAME]: this.projectName,

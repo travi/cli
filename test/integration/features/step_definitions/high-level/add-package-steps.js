@@ -4,11 +4,7 @@ import td from 'testdouble';
 import {assert} from 'chai';
 
 Given('a lerna monorepo exists', async function () {
-  await fs.writeFile(
-    `${process.cwd()}/package.json`,
-    JSON.stringify({repository: `${this.githubUser}/${this.projectName}`})
-  );
-  await fs.writeFile(`${process.cwd()}/lerna.json`, JSON.stringify({}));
+  this.monorepoType = 'lerna';
   td.when(this.execa('npm', ['ls', 'husky', '--json'])).thenResolve({stdout: JSON.stringify({})});
 });
 
