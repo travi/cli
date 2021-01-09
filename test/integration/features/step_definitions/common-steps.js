@@ -97,7 +97,8 @@ When('a package is added to the monorepo', async function () {
   stubbedFs({
     ...'lerna' === this.monorepoType && {
       'lerna.json': JSON.stringify({}),
-      'package.json': JSON.stringify({repository: `${this.githubUser}/${this.projectName}`})
+      'package.json': JSON.stringify({repository: `${this.githubUser}/${this.projectName}`}),
+      'package-lock.json': JSON.stringify(any.simpleObject())
     },
     [`${process.env.HOME}/.netrc`]: `machine github.com\n  login ${githubToken}`,
     [`${process.env.HOME}/.gitconfig`]: `[github]\n\tuser = ${this.githubUser}`,
