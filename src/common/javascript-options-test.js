@@ -1,3 +1,5 @@
+import {packageManagers} from '@form8ion/javascript-core';
+import {questionNames as jsQuestionNames} from '@travi/javascript-scaffolder';
 import {scaffold as scaffoldTravisForJavaScript} from '@travi/travis-scaffolder-javascript';
 import {scaffold as scaffoldCircle} from '@travi/circle-scaffolder-javascript';
 import {scaffold as scaffoldGithubActionsCI} from '@form8ion/github-actions-node-ci';
@@ -49,7 +51,10 @@ suite('common javascript config', () => {
           'React Component Library': {scaffolder: scaffoldReactComponents}
         },
         unitTestFrameworks,
-        decisions
+        decisions: {
+          ...decisions,
+          [jsQuestionNames.PACKAGE_MANAGER]: packageManagers.NPM
+        }
       }
     );
   });
