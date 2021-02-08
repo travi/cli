@@ -88,7 +88,7 @@
     "testdouble": "3.16.1"
   },
   "dependencies": {
-    "@form8ion/add-package-to-monorepo": "1.9.0",
+    "@form8ion/add-package-to-monorepo": "1.9.1",
     "@form8ion/cucumber-scaffolder": "1.4.0",
     "@form8ion/cypress-scaffolder": "2.2.0",
     "@form8ion/dependabot-scaffolder": "1.4.0",
