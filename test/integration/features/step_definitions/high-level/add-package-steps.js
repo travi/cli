@@ -5,7 +5,12 @@ import {assert} from 'chai';
 
 Given('a lerna monorepo exists', async function () {
   this.monorepoType = 'lerna';
-  td.when(this.execa('npm', ['ls', 'husky', '--json'])).thenResolve({stdout: JSON.stringify({})});
+  const huskyVersionError = new Error();
+  huskyVersionError.stdout = JSON.stringify({});
+  huskyVersionError.command = 'npm ls husky --json';
+  huskyVersionError.exitCode = 1;
+
+  td.when(this.execa('npm', ['ls', 'husky', '--json'])).thenReject(huskyVersionError);
 });
 
 Then('the package will have repository details defined', async function () {
