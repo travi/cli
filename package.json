@@ -98,7 +98,7 @@
     "@form8ion/javascript-core": "2.9.2",
     "@form8ion/jest-scaffolder": "1.0.0",
     "@form8ion/lift": "1.12.3",
-    "@form8ion/lift-javascript": "1.9.2",
+    "@form8ion/lift-javascript": "1.10.0",
     "@form8ion/mdx-deck": "1.1.0",
     "@form8ion/mocha-scaffolder": "1.0.0",
     "@form8ion/nuxt": "1.0.0",
