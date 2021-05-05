@@ -23,7 +23,7 @@
     "watch": "run-s 'build:js -- --watch'",
     "prepublishOnly": "run-s build",
     "snyk-protect": "snyk protect",
-    "prepare": "npm run snyk-protect",
+    "prepare": "husky install",
     "lint:gherkin": "gherkin-lint",
     "test:integration": "run-s 'test:integration:base -- --profile noWip'",
     "test:integration:base": "DEBUG=any cucumber-js test/integration --profile base",
