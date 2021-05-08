@@ -1,6 +1,5 @@
 import {packageManagers} from '@form8ion/javascript-core';
 import {questionNames as jsQuestionNames} from '@travi/javascript-scaffolder';
-import {scaffold as scaffoldTravisForJavaScript} from '@travi/travis-scaffolder-javascript';
 import {scaffold as scaffoldCircle} from '@travi/circle-scaffolder-javascript';
 import {scaffold as scaffoldGithubActionsCI} from '@form8ion/github-actions-node-ci';
 import {scaffold as scaffoldNetlify} from '@travi/netlify-scaffolder';
@@ -32,7 +31,6 @@ suite('common javascript config', () => {
           remark: 'remark-preset-lint-travi'
         },
         ciServices: {
-          Travis: {scaffolder: scaffoldTravisForJavaScript, public: true, private: false},
           Circle: {scaffolder: scaffoldCircle, public: true, private: true},
           'GitHub Actions': {scaffolder: scaffoldGithubActionsCI, public: true, private: true}
         },
