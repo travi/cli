@@ -5,6 +5,7 @@ import {scaffold as scaffoldGithubActionsCI} from '@form8ion/github-actions-node
 import {scaffold as scaffoldNetlify} from '@travi/netlify-scaffolder';
 import {scaffold as scaffoldAppEngine} from '@travi/node-app-engine-standard-scaffolder';
 import {scaffold as scaffoldMdxDeck} from '@form8ion/mdx-deck';
+import {scaffold as scaffoldSlidev} from '@form8ion/slidev';
 import {scaffold as scaffoldSpectacle} from '@travi/spectacle-scaffolder';
 import {scaffold as scaffoldHapi} from '@form8ion/hapi-scaffolder';
 import {scaffold as scaffoldNuxt} from '@form8ion/nuxt';
@@ -40,6 +41,7 @@ suite('common javascript config', () => {
         },
         applicationTypes: {
           'MDX Deck': {scaffolder: scaffoldMdxDeck},
+          Slidev: {scaffolder: scaffoldSlidev},
           Spectacle: {scaffolder: scaffoldSpectacle},
           Hapi: {scaffolder: scaffoldHapi},
           Nuxt: {scaffolder: scaffoldNuxt},
