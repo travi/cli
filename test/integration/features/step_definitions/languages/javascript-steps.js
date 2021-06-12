@@ -16,10 +16,12 @@ function semverStringFactory() {
   return `v${majorVersion}.${versionSegment()}.${versionSegment()}`;
 }
 
-let questionNames;
+let questionNames, jsQuestionNames, projectTypes;
 
 Before(function () {
-  questionNames = require('@travi/project-scaffolder').questionNames;
+  ({questionNames} = require('@travi/project-scaffolder'));
+  ({questionNames: jsQuestionNames} = require('@travi/javascript-scaffolder'));
+  ({projectTypes} = require('@form8ion/javascript-core'));
 });
 
 Given(/^the project language should be JavaScript$/, async function () {
@@ -32,6 +34,11 @@ Given(/^the project language should be JavaScript$/, async function () {
   td.when(this.execa('npm run generate:md && npm test', {shell: true})).thenReturn({stdout: {pipe: () => undefined}});
   td.when(this.execa('npm', ['whoami'])).thenResolve(any.word());
   td.when(this.execa('npm', ['ls', 'husky', '--json'])).thenReject(huskyVersionError);
+});
+
+Given('the project is a presentation', async function () {
+  this.setAnswerFor(jsQuestionNames.PROJECT_TYPE, projectTypes.APPLICATION);
+  this.setAnswerFor(jsQuestionNames.PROJECT_TYPE_CHOICE, 'Slidev');
 });
 
 Given(/^nvm is properly configured$/, function () {
@@ -57,7 +64,14 @@ Then(/^the core JavaScript files are present$/, async function () {
   const config = load(await fs.readFile(`${process.cwd()}/.eslintrc.yml`));
 
   assert.isTrue(await fileExists(`${process.cwd()}/package.json`));
-  assert.deepEqual(config.extends, ['@travi', '@travi/mocha']);
+  assert.deepEqual(
+    config.extends,
+    [
+      '@travi',
+      this.getAnswerFor(jsQuestionNames.PROJECT_TYPE_CHOICE) ? '@travi/cypress' : undefined,
+      '@travi/mocha'
+    ].filter(Boolean)
+  );
 });
 
 Then('the project will have repository details defined', async function () {

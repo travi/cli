@@ -28,23 +28,33 @@ Before(async function () {
   require('color-convert'); // eslint-disable-line import/no-extraneous-dependencies
 
   this.execa = td.replace('execa');
+  this.nodegit = td.replace('nodegit');
 });
 
 After(function () {
   stubbedFs.restore();
   td.reset();
-  clearModule('@travi/javascript-scaffolder');
-  clearModule('@form8ion/javascript-core');
-  clearModule('@form8ion/lift-javascript');
   clearModule('@form8ion/add-package-to-monorepo');
+  clearModule('@form8ion/eslint-config-extender');
+  clearModule('@form8ion/replace-travis-ci-with-github-action');
+  clearModule('@form8ion/ruby-scaffolder');
+  clearModule('@travi/javascript-scaffolder');
+  clearModule('@travi/project-scaffolder');
+  clearModule('@form8ion/lift-javascript');
+  clearModule('@form8ion/javascript-core');
+  clearModule('@form8ion/husky');
+  clearModule('travis-token-updater');
   clearModule('execa');
+  clearModule('../../../../src/scaffolder/action');
 });
 
 When(/^the project is scaffolded$/, async function () {
-  const projectQuestionNames = importFresh('@travi/project-scaffolder').questionNames;
-  const javascriptQuestionNames = importFresh('@travi/javascript-scaffolder').questionNames;
+  const {questionNames: projectQuestionNames} = importFresh('@travi/project-scaffolder');
+  const {questionNames: javascriptQuestionNames} = importFresh('@travi/javascript-scaffolder');
+  const {projectTypes} = require('@form8ion/javascript-core');
   const repoShouldBeCreated = this.getAnswerFor(projectQuestionNames.GIT_REPO);
   const projectLanguage = this.getAnswerFor(projectQuestionNames.PROJECT_LANGUAGE);
+  const jsProjectType = this.getAnswerFor(javascriptQuestionNames.PROJECT_TYPE);
 
   const scaffoldProject = importFresh('../../../../src/scaffolder/action').default;
 
@@ -76,12 +86,16 @@ When(/^the project is scaffolded$/, async function () {
       [javascriptQuestionNames.AUTHOR_NAME]: any.word(),
       [javascriptQuestionNames.AUTHOR_EMAIL]: any.email(),
       [javascriptQuestionNames.AUTHOR_URL]: any.url(),
-      [javascriptQuestionNames.PROJECT_TYPE]: 'Package',
+      [javascriptQuestionNames.PROJECT_TYPE]: jsProjectType || 'Package',
+      ...projectTypes.APPLICATION === jsProjectType && {
+        [javascriptQuestionNames.HOST]: 'Other'
+      },
       [javascriptQuestionNames.UNIT_TESTS]: true,
       [javascriptQuestionNames.INTEGRATION_TESTS]: true,
       [javascriptQuestionNames.CI_SERVICE]: 'Travis',
       [javascriptQuestionNames.TRANSPILE_LINT]: true,
-      [javascriptQuestionNames.PROJECT_TYPE_CHOICE]: 'Other',
+      [javascriptQuestionNames.PROJECT_TYPE_CHOICE]: this.getAnswerFor(javascriptQuestionNames.PROJECT_TYPE_CHOICE)
+        || 'Other',
       [javascriptQuestionNames.SHOULD_BE_SCOPED]: shouldBeScoped,
       [javascriptQuestionNames.SCOPE]: scope,
       [javascriptQuestionNames.UNIT_TEST_FRAMEWORK]: 'mocha'
