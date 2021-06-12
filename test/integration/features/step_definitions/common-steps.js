@@ -1,5 +1,5 @@
 import {resolve} from 'path';
-import {After, Before, setWorldConstructor, When} from 'cucumber';
+import {After, Before, setWorldConstructor, When} from '@cucumber/cucumber';
 import any from '@travi/any';
 import importFresh from 'import-fresh';
 import clearModule from 'clear-module';
