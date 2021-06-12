@@ -1,6 +1,7 @@
 import {promises as fs} from 'fs';
-import {exists} from 'mz/fs';
 import {Before, Given, Then} from 'cucumber';
+import {load} from 'js-yaml';
+import {fileExists} from '@form8ion/core';
 import {assert} from 'chai';
 import any from '@travi/any';
 import td from 'testdouble';
@@ -53,7 +54,10 @@ Then(/^JavaScript ignores are defined$/, async function () {
 });
 
 Then(/^the core JavaScript files are present$/, async function () {
-  assert.isTrue(await exists(`${process.cwd()}/package.json`));
+  const config = load(await fs.readFile(`${process.cwd()}/.eslintrc.yml`));
+
+  assert.isTrue(await fileExists(`${process.cwd()}/package.json`));
+  assert.deepEqual(config.extends, ['@travi', '@travi/mocha']);
 });
 
 Then('the project will have repository details defined', async function () {
