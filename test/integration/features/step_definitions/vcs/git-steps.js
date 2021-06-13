@@ -4,7 +4,6 @@ import {fileExists} from '@form8ion/core';
 import {Before, Given, Then} from '@cucumber/cucumber';
 import {assert} from 'chai';
 import any from '@travi/any';
-// import toml from '@iarna/toml';
 
 let questionNames;
 const nodegitRepository = any.simpleObject();
@@ -28,8 +27,8 @@ Then(/^the base git files should be present$/, async function () {
   const gitAttributes = await promises.readFile(`${process.cwd()}/.gitattributes`);
 
   assert.equal(gitAttributes, '* text=auto');
-  // console.log(toml.parse(await readFile(`${process.cwd()}/.git/config`)))
-  // assert.isTrue(gitDirectoryStats.isDirectory());
+
+  td.verify(this.nodegit.Remote.create(nodegitRepository, 'origin', this.repoSshUrl));
 });
 
 Then('the base git files should not be present', async function () {

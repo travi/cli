@@ -18,17 +18,27 @@ After(() => {
 });
 
 Given(/^the GitHub token is valid$/, async function () {
+  this.repoSshUrl = any.url();
+
   githubScope
     .matchHeader('Authorization', `token ${githubToken}`)
-    .post('/user/repos')
+    .post('/user/repos', {name: this.projectName, private: 'Private' === this.projectVisibility})
     .reply(OK, {
-      ssh_url: any.url(),
+      ssh_url: this.repoSshUrl,
       html_url: any.url()
     });
   githubScope
     .matchHeader('Authorization', `token ${githubToken}`)
     .get(`/users/${this.githubUser}/repos`)
     .reply(OK, []);
+  githubScope
+    .persist()    // really only want to persist POST calls to this endpoint, but this persists all calls to the scope
+    .matchHeader('Authorization', `token ${githubToken}`)
+    .post(`/repos/${this.githubUser}/${this.projectName}/issues`)
+    .reply(OK, {
+      ssh_url: any.url(),
+      html_url: any.url()
+    });
   githubScope
     .matchHeader('Authorization', `token ${githubToken}`)
     .get('/user')

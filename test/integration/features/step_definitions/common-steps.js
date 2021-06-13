@@ -21,6 +21,7 @@ setWorldConstructor(World);
 Before(async function () {
   this.githubUser = any.word();
   this.projectName = any.word();
+  this.projectVisibility = visibility;
 
   // work around for overly aggressive mock-fs, see:
   // https://github.com/tschaub/mock-fs/issues/213#issuecomment-347002795
@@ -59,7 +60,7 @@ When(/^the project is scaffolded$/, async function () {
   const scaffoldProject = importFresh('../../../../src/scaffolder/action').default;
 
   stubbedFs({
-    [`${process.env.HOME}/.netrc`]: `machine github.com\n  login ${githubToken}`,
+    [`${process.env.HOME}/.netrc`]: `machine api.github.com\n  login ${githubToken}`,
     [`${process.env.HOME}/.gitconfig`]: `[github]\n\tuser = ${this.githubUser}`,
     node_modules: stubbedNodeModules
   });
