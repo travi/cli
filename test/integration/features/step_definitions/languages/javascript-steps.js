@@ -64,14 +64,12 @@ Then(/^the core JavaScript files are present$/, async function () {
   const config = load(await fs.readFile(`${process.cwd()}/.eslintrc.yml`));
 
   assert.isTrue(await fileExists(`${process.cwd()}/package.json`));
-  assert.deepEqual(
-    config.extends,
-    [
-      '@travi',
-      this.getAnswerFor(jsQuestionNames.PROJECT_TYPE_CHOICE) ? '@travi/cypress' : undefined,
-      '@travi/mocha'
-    ].filter(Boolean)
-  );
+  assert.deepEqual(config.extends, ['@travi', '@travi/mocha']);
+  if ('Slidev' === this.getAnswerFor(jsQuestionNames.PROJECT_TYPE_CHOICE)) {
+    assert.deepEqual(config.overrides, [{files: 'test/smoke/**/*-spec.js', extends: '@travi/cypress'}]);
+  } else {
+    assert.isUndefined(config.overrides);
+  }
 });
 
 Then('the project will have repository details defined', async function () {
