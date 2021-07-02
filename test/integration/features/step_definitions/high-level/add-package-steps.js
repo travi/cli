@@ -24,7 +24,8 @@ Given('a lerna monorepo exists', async function () {
   huskyVersionError.exitCode = 1;
 
   td.when(this.execa('npm', ['ls', 'husky', '--json'])).thenReject(huskyVersionError);
-  td.when(this.execa('npm run generate:md && npm test', {shell: true})).thenReturn({stdout: {pipe: () => undefined}});
+  td.when(this.execa('npm run generate:md && npm test', {shell: true, cwd: `packages/${this.projectName}`}))
+    .thenReturn({stdout: {pipe: () => undefined}});
 });
 
 Then('the package will have repository details defined', async function () {
