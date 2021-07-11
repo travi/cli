@@ -19,7 +19,7 @@ function semverStringFactory() {
 let questionNames, jsQuestionNames, projectTypes;
 
 Before(function () {
-  ({questionNames} = require('@travi/project-scaffolder'));
+  ({questionNames} = require('@form8ion/project'));
   ({questionNames: jsQuestionNames} = require('@travi/javascript-scaffolder'));
   ({projectTypes} = require('@form8ion/javascript-core'));
 });

@@ -71,7 +71,7 @@ $ npm test
 
 ## Related Projects
 
-* [project-scaffolder](https://npm.im/@travi/project-scaffolder)
+* [@form8ion/project](https://npm.im/@form8ion/project)
 * [javascript-scaffolder](https://npm.im/@travi/javascript-scaffolder)
 
 [renovate-link]: https://renovatebot.com

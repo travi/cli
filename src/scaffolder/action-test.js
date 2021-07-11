@@ -1,7 +1,7 @@
 import sinon from 'sinon';
 import {assert} from 'chai';
 import any from '@travi/any';
-import * as projectScaffolder from '@travi/project-scaffolder';
+import * as projectScaffolder from '@form8ion/project';
 import * as commonOptions from '../common/project-options';
 import getAction from './action';
 

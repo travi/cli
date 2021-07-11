@@ -1,4 +1,4 @@
-import {scaffold as scaffoldProject} from '@travi/project-scaffolder';
+import {scaffold as scaffoldProject} from '@form8ion/project';
 import {defineScaffoldProjectOptions} from '../common/project-options';
 
 export default function (decisions) {

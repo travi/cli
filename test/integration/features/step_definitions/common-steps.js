@@ -40,7 +40,7 @@ After(function () {
   clearModule('@form8ion/replace-travis-ci-with-github-action');
   clearModule('@form8ion/ruby-scaffolder');
   clearModule('@travi/javascript-scaffolder');
-  clearModule('@travi/project-scaffolder');
+  clearModule('@form8ion/project');
   clearModule('@form8ion/lift-javascript');
   clearModule('@form8ion/javascript-core');
   clearModule('@form8ion/husky');
@@ -50,7 +50,7 @@ After(function () {
 });
 
 When(/^the project is scaffolded$/, async function () {
-  const {questionNames: projectQuestionNames} = importFresh('@travi/project-scaffolder');
+  const {questionNames: projectQuestionNames} = importFresh('@form8ion/project');
   const {questionNames: javascriptQuestionNames} = importFresh('@travi/javascript-scaffolder');
   const {projectTypes} = require('@form8ion/javascript-core');
   const repoShouldBeCreated = this.getAnswerFor(projectQuestionNames.GIT_REPO);
