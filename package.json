@@ -51,7 +51,7 @@
   "devDependencies": {
     "@babel/node": "7.14.7",
     "@babel/register": "7.14.5",
-    "@cucumber/cucumber": "7.3.0",
+    "@cucumber/cucumber": "7.3.1",
     "@form8ion/core": "1.4.2",
     "@travi/any": "2.0.17",
     "@travi/babel-preset": "3.0.60",
