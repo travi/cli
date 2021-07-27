@@ -121,7 +121,7 @@
     "@travi/gitlab-scaffolder": "1.0.5",
     "@travi/javascript-scaffolder": "13.7.0",
     "@travi/netlify-scaffolder": "1.6.0",
-    "@travi/node-app-engine-standard-scaffolder": "1.2.7",
+    "@travi/node-app-engine-standard-scaffolder": "1.2.8",
     "@travi/shell-scaffolder": "1.1.4",
     "@travi/spectacle-scaffolder": "3.0.0",
     "@travi/travis-scaffolder-shell": "1.0.0-alpha.4",
