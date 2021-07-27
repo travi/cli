@@ -123,7 +123,7 @@
     "@travi/netlify-scaffolder": "1.6.0",
     "@travi/node-app-engine-standard-scaffolder": "1.2.8",
     "@travi/shell-scaffolder": "1.1.4",
-    "@travi/spectacle-scaffolder": "3.0.0",
+    "@travi/spectacle-scaffolder": "3.0.1",
     "@travi/travis-scaffolder-shell": "1.0.0-alpha.4",
     "commander": "8.1.0",
     "inquander": "1.1.1",
