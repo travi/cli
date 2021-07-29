@@ -52,7 +52,7 @@ After(function () {
 When(/^the project is scaffolded$/, async function () {
   const {questionNames: projectQuestionNames} = importFresh('@form8ion/project');
   const {questionNames: javascriptQuestionNames} = importFresh('@travi/javascript-scaffolder');
-  const {projectTypes} = require('@form8ion/javascript-core');
+  const {dialects, projectTypes} = require('@form8ion/javascript-core');
   const repoShouldBeCreated = this.getAnswerFor(projectQuestionNames.GIT_REPO);
   const projectLanguage = this.getAnswerFor(projectQuestionNames.PROJECT_LANGUAGE);
   const jsProjectType = this.getAnswerFor(javascriptQuestionNames.PROJECT_TYPE);
@@ -94,18 +94,20 @@ When(/^the project is scaffolded$/, async function () {
       [javascriptQuestionNames.UNIT_TESTS]: true,
       [javascriptQuestionNames.INTEGRATION_TESTS]: true,
       [javascriptQuestionNames.CI_SERVICE]: 'Travis',
-      [javascriptQuestionNames.TRANSPILE_LINT]: true,
+      [javascriptQuestionNames.CONFIGURE_LINTING]: true,
       [javascriptQuestionNames.PROJECT_TYPE_CHOICE]: this.getAnswerFor(javascriptQuestionNames.PROJECT_TYPE_CHOICE)
         || 'Other',
       [javascriptQuestionNames.SHOULD_BE_SCOPED]: shouldBeScoped,
       [javascriptQuestionNames.SCOPE]: scope,
-      [javascriptQuestionNames.UNIT_TEST_FRAMEWORK]: 'mocha'
+      [javascriptQuestionNames.UNIT_TEST_FRAMEWORK]: 'mocha',
+      [javascriptQuestionNames.DIALECT]: dialects.BABEL
     }
   })();
 });
 
 When('a package is added to the monorepo', async function () {
   const addPackageQuestionNames = importFresh('@form8ion/add-package-to-monorepo').questionNames;
+  const {dialects} = require('@form8ion/javascript-core');
 
   const addPackageToMonorepo = importFresh('../../../../src/add-package/action').default;
 
@@ -133,13 +135,14 @@ When('a package is added to the monorepo', async function () {
     ...'Private' === visibility && {[addPackageQuestionNames.UNLICENSED]: true},
     [addPackageQuestionNames.UNIT_TESTS]: true,
     [addPackageQuestionNames.INTEGRATION_TESTS]: true,
-    [addPackageQuestionNames.TRANSPILE_LINT]: true,
+    [addPackageQuestionNames.CONFIGURE_LINTING]: true,
     [addPackageQuestionNames.SHOULD_BE_SCOPED]: shouldBeScoped,
     [addPackageQuestionNames.SCOPE]: scope,
     [addPackageQuestionNames.AUTHOR_NAME]: any.word(),
     [addPackageQuestionNames.AUTHOR_EMAIL]: any.email(),
     [addPackageQuestionNames.AUTHOR_URL]: any.url(),
     [addPackageQuestionNames.PROJECT_TYPE_CHOICE]: 'Other',
-    [addPackageQuestionNames.UNIT_TEST_FRAMEWORK]: 'mocha'
+    [addPackageQuestionNames.UNIT_TEST_FRAMEWORK]: 'mocha',
+    [addPackageQuestionNames.DIALECT]: dialects.BABEL
   });
 });
