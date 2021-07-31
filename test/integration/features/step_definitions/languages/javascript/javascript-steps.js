@@ -36,6 +36,10 @@ Given(/^the project language should be JavaScript$/, async function () {
   td.when(this.execa('npm', ['ls', 'husky', '--json'])).thenReject(huskyVersionError);
 });
 
+Given('the project will use the {string} dialect', async function (dialect) {
+  this.dialect = dialect;
+});
+
 Given('the project is a presentation', async function () {
   this.setAnswerFor(jsQuestionNames.PROJECT_TYPE, projectTypes.APPLICATION);
   this.setAnswerFor(jsQuestionNames.PROJECT_TYPE_CHOICE, 'Slidev');

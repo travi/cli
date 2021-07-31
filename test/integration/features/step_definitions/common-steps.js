@@ -52,7 +52,7 @@ After(function () {
 When(/^the project is scaffolded$/, async function () {
   const {questionNames: projectQuestionNames} = importFresh('@form8ion/project');
   const {questionNames: javascriptQuestionNames} = importFresh('@travi/javascript-scaffolder');
-  const {dialects, projectTypes} = require('@form8ion/javascript-core');
+  const {projectTypes} = require('@form8ion/javascript-core');
   const repoShouldBeCreated = this.getAnswerFor(projectQuestionNames.GIT_REPO);
   const projectLanguage = this.getAnswerFor(projectQuestionNames.PROJECT_LANGUAGE);
   const jsProjectType = this.getAnswerFor(javascriptQuestionNames.PROJECT_TYPE);
@@ -100,7 +100,7 @@ When(/^the project is scaffolded$/, async function () {
       [javascriptQuestionNames.SHOULD_BE_SCOPED]: shouldBeScoped,
       [javascriptQuestionNames.SCOPE]: scope,
       [javascriptQuestionNames.UNIT_TEST_FRAMEWORK]: 'mocha',
-      [javascriptQuestionNames.DIALECT]: dialects.BABEL
+      [javascriptQuestionNames.DIALECT]: this.dialect
     }
   })();
 });

@@ -11,6 +11,7 @@ import {scaffold as scaffoldHapi} from '@form8ion/hapi-scaffolder';
 import {scaffold as scaffoldNuxt} from '@form8ion/nuxt';
 import {scaffold as scaffoldProbot} from '@form8ion/probot-scaffolder';
 import {scaffold as scaffoldReactComponents} from '@form8ion/react-components-scaffolder';
+import {scaffold as scaffoldLerna} from '@form8ion/lerna';
 import {assert} from 'chai';
 import any from '@travi/any';
 import {unitTestFrameworks} from './test-frameworks';
@@ -50,6 +51,7 @@ suite('common javascript config', () => {
         packageTypes: {
           'React Component Library': {scaffolder: scaffoldReactComponents}
         },
+        monorepoTypes: {Lerna: {scaffolder: scaffoldLerna}},
         unitTestFrameworks,
         decisions: {
           ...decisions,
