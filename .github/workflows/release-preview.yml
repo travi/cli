@@ -11,6 +11,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: npm install --save-dev semantic-release semantic-release-github-pr
-      - run: DEBUG=semantic-release:* npx semantic-release-github-pr
+      - run: DEBUG=semantic-release:* GITHUB_REF=${GITHUB_HEAD_REF} npx semantic-release-github-pr
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
