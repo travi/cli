@@ -1,4 +1,4 @@
-import * as jsCore from '@form8ion/javascript-core';
+import * as js from '@form8ion/javascript';
 import sinon from 'sinon';
 import {assert} from 'chai';
 import any from '@travi/any';
@@ -11,7 +11,7 @@ suite('enhanced lift scaffolders', () => {
   setup(() => {
     sandbox = sinon.createSandbox();
 
-    sandbox.stub(jsCore, 'scaffoldUnitTesting');
+    sandbox.stub(js, 'scaffoldUnitTesting');
   });
 
   teardown(() => sandbox.restore());
@@ -19,7 +19,7 @@ suite('enhanced lift scaffolders', () => {
   test('that the frameworks are provided to the unit test framework scaffolder', async () => {
     const results = any.simpleObject();
     const options = any.simpleObject();
-    jsCore.scaffoldUnitTesting.withArgs({...options, frameworks: unitTestFrameworks}).resolves(results);
+    js.scaffoldUnitTesting.withArgs({...options, frameworks: unitTestFrameworks}).resolves(results);
 
     assert.equal(await unitTesting(options), results);
   });
