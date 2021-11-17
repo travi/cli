@@ -91,7 +91,7 @@
     "unist-util-find": "1.0.2"
   },
   "dependencies": {
-    "@form8ion/add-package-to-monorepo": "3.0.13",
+    "@form8ion/add-package-to-monorepo": "3.0.14",
     "@form8ion/cucumber-scaffolder": "1.5.0",
     "@form8ion/cypress-scaffolder": "2.2.0",
     "@form8ion/dependabot-scaffolder": "1.4.0",
