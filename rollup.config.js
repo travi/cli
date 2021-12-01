@@ -1,7 +1,7 @@
 /* eslint import/no-extraneous-dependencies: ['error', {'devDependencies': true}] */
 import babel from 'rollup-plugin-babel';
 import json from 'rollup-plugin-json';
-import nodeResolve from 'rollup-plugin-node-resolve';
+import nodeResolve from '@rollup/plugin-node-resolve';
 import executable from 'rollup-plugin-executable';
 import autoExternal from 'rollup-plugin-auto-external';
 
