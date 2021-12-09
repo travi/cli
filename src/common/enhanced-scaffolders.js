@@ -1,4 +1,4 @@
-import {scaffold as scaffoldJavaScript} from '@travi/javascript-scaffolder';
+import {scaffold as scaffoldJavaScript} from '@form8ion/javascript';
 import {scaffold as scaffoldShell} from '@travi/shell-scaffolder';
 import {scaffold as scaffoldTravisForShell} from '@travi/travis-scaffolder-shell';
 import {prompt} from '@travi/gitlab-scaffolder';

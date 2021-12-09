@@ -1,4 +1,4 @@
-import * as javascriptScaffolder from '@travi/javascript-scaffolder';
+import * as javascriptPlugin from '@form8ion/javascript';
 import * as shellScaffolder from '@travi/shell-scaffolder';
 import * as gitlabScaffolder from '@travi/gitlab-scaffolder';
 import {scaffold as scaffoldTravisForShell} from '@travi/travis-scaffolder-shell';
@@ -16,7 +16,7 @@ suite('scaffolder factories', () => {
   setup(() => {
     sandbox = sinon.createSandbox();
 
-    sandbox.stub(javascriptScaffolder, 'scaffold');
+    sandbox.stub(javascriptPlugin, 'scaffold');
     sandbox.stub(shellScaffolder, 'scaffold');
     sandbox.stub(gitlabScaffolder, 'prompt');
     sandbox.stub(commonJavascriptOptions, 'defineScaffoldJavascriptOptions');
@@ -30,7 +30,7 @@ suite('scaffolder factories', () => {
     commonJavascriptOptions.defineScaffoldJavascriptOptions
       .withArgs(decisions, options)
       .returns(scaffoldJavascriptOptions);
-    javascriptScaffolder.scaffold.withArgs(scaffoldJavascriptOptions).resolves(output);
+    javascriptPlugin.scaffold.withArgs(scaffoldJavascriptOptions).resolves(output);
 
     assert.equal(await javascriptScaffolderFactory(decisions)(options), output);
   });
