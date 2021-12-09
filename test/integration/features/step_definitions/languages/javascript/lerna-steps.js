@@ -5,7 +5,7 @@ import {assert} from 'chai';
 let jsQuestionNames, projectTypes;
 
 Before(function () {
-  ({questionNames: jsQuestionNames} = require('@travi/javascript-scaffolder'));
+  ({questionNames: jsQuestionNames} = require('@form8ion/javascript'));
   ({projectTypes} = require('@form8ion/javascript-core'));
 });
 

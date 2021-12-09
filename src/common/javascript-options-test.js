@@ -1,5 +1,5 @@
 import {packageManagers} from '@form8ion/javascript-core';
-import {questionNames as jsQuestionNames} from '@travi/javascript-scaffolder';
+import {questionNames as jsQuestionNames} from '@form8ion/javascript';
 import {scaffold as scaffoldCircle} from '@travi/circle-scaffolder-javascript';
 import {scaffold as scaffoldGithubActionsCI} from '@form8ion/github-actions-node-ci';
 import {scaffold as scaffoldNetlify} from '@travi/netlify-scaffolder';
