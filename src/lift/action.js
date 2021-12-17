@@ -8,7 +8,7 @@ import {lift as liftDependabot, predicate as dependabotPredicate} from '@form8io
 import {removeGreenkeeper} from '@form8ion/remove-greenkeeper';
 import {scaffold as scaffoldCucumber} from '@form8ion/cucumber-scaffolder';
 import {scaffold as scaffoldCypress} from '@form8ion/cypress-scaffolder';
-import {test as jsApplicabilityTest} from '@form8ion/lift-javascript';
+import {test as jsApplicabilityTest} from '@form8ion/javascript';
 import {
   scaffold as scaffoldGithubActions,
   lift as liftGithubActionsCI,

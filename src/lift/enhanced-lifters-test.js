@@ -1,4 +1,4 @@
-import * as jsLifter from '@form8ion/lift-javascript';
+import * as jsLifter from '@form8ion/javascript';
 import sinon from 'sinon';
 import any from '@travi/any';
 import {assert} from 'chai';
