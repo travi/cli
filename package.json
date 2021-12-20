@@ -35,7 +35,7 @@
     "travi": "bin/travi.js"
   },
   "engines": {
-    "node": ">=12"
+    "node": ">=12.20"
   },
   "files": [
     "bin/"
