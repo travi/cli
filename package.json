@@ -11,7 +11,7 @@
     "clean": "rimraf bin/",
     "lint:md": "globstar --node -- markdownlint **/*.md",
     "lint:js": "eslint . --cache",
-    "lint:engines": "check-engine",
+    "lint:engines": "ls-engines",
     "disabled:lint:peer": "npm ls >/dev/null",
     "test:unit": "nyc run-s test:unit:base",
     "test:unit:base": "mocha 'src/**/*-test.js'",
@@ -35,7 +35,7 @@
     "travi": "bin/travi.js"
   },
   "engines": {
-    "node": ">=12"
+    "node": ">=12.20"
   },
   "files": [
     "bin/"
@@ -53,6 +53,7 @@
     "@babel/register": "7.16.5",
     "@cucumber/cucumber": "7.3.1",
     "@form8ion/core": "1.4.2",
+    "@rollup/plugin-node-resolve": "13.1.1",
     "@travi/any": "2.0.19",
     "@travi/babel-preset": "3.0.70",
     "@travi/eslint-config": "1.0.93",
@@ -60,7 +61,6 @@
     "@travi/eslint-config-mocha": "1.0.16",
     "chai": "4.3.4",
     "chai-as-promised": "7.1.1",
-    "check-engine": "1.10.1",
     "clear-module": "4.1.2",
     "codecov": "3.8.3",
     "commitlint-config-travi": "1.4.3",
@@ -72,6 +72,7 @@
     "husky": "7.0.4",
     "import-fresh": "3.3.0",
     "js-yaml": "4.1.0",
+    "ls-engines": "0.5.1",
     "markdownlint-cli": "0.30.0",
     "mdast-util-from-markdown": "0.8.5",
     "mocha": "9.1.3",
@@ -85,7 +86,6 @@
     "rollup-plugin-babel": "4.4.0",
     "rollup-plugin-executable": "1.6.3",
     "rollup-plugin-json": "4.0.0",
-    "@rollup/plugin-node-resolve": "13.1.1",
     "sinon": "12.0.1",
     "testdouble": "3.16.3",
     "unist-util-find": "1.0.2"
