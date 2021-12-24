@@ -30,6 +30,7 @@ cli for my various tools
 [![npm](https://img.shields.io/npm/v/@travi/cli.svg)](https://www.npmjs.com/package/@travi/cli)
 [![license](https://img.shields.io/github/license/travi/cli.svg)](LICENSE)
 ![node][node-badge]
+![node][node-badge]
 
 <!--consumer-badges end -->
 
@@ -82,5 +83,7 @@ $ npm test
 [github-actions-ci-link]: https://github.com/travi/cli/actions?query=workflow%3A%22Node.js+CI%22+branch%3Amaster
 
 [github-actions-ci-badge]: https://github.com/travi/cli/workflows/Node.js%20CI/badge.svg
+
+[node-badge]: https://img.shields.io/node/v/@travi/cli?logo=node.js
 
 [node-badge]: https://img.shields.io/node/v/@travi/cli?logo=node.js
