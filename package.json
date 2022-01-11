@@ -26,7 +26,7 @@
   },
   "devDependencies": {
     "@babel/node": "7.16.8",
-    "@babel/register": "7.16.8",
+    "@babel/register": "7.16.9",
     "@cucumber/cucumber": "7.3.2",
     "@form8ion/core": "1.4.2",
     "@rollup/plugin-node-resolve": "13.1.3",
