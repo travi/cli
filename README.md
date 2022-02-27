@@ -85,5 +85,3 @@ $ npm test
 [github-actions-ci-badge]: https://github.com/travi/cli/workflows/Node.js%20CI/badge.svg
 
 [node-badge]: https://img.shields.io/node/v/@travi/cli?logo=node.js
-
-[node-badge]: https://img.shields.io/node/v/@travi/cli?logo=node.js
