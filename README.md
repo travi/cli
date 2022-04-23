@@ -30,7 +30,6 @@ cli for my various tools
 [![npm](https://img.shields.io/npm/v/@travi/cli.svg)](https://www.npmjs.com/package/@travi/cli)
 [![license](https://img.shields.io/github/license/travi/cli.svg)](LICENSE)
 ![node][node-badge]
-![node][node-badge]
 
 <!--consumer-badges end -->
 
