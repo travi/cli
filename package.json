@@ -95,7 +95,7 @@
     "@form8ion/slidev": "1.0.0-alpha.3",
     "@form8ion/sno-cat-ink": "1.0.0-alpha.3",
     "@travi/circle-scaffolder-javascript": "1.2.1",
-    "@travi/github-scaffolder": "7.0.0",
+    "@travi/github-scaffolder": "8.0.0",
     "@travi/gitlab-scaffolder": "1.0.5",
     "@travi/netlify-scaffolder": "1.6.0",
     "@travi/node-app-engine-standard-scaffolder": "2.0.0",
