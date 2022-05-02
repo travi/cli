@@ -72,7 +72,7 @@
     "@form8ion/cucumber-scaffolder": "1.5.0",
     "@form8ion/cypress-scaffolder": "2.2.0",
     "@form8ion/dependabot-scaffolder": "1.4.0",
-    "@form8ion/eslint-config-extender": "1.1.18",
+    "@form8ion/eslint-config-extender": "1.1.19",
     "@form8ion/github-actions-node-ci": "3.6.1",
     "@form8ion/hapi-scaffolder": "4.0.0",
     "@form8ion/javascript": "4.1.3",
