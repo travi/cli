@@ -12,6 +12,8 @@ import {scaffold as scaffoldNuxt} from '@form8ion/nuxt';
 import {scaffold as scaffoldProbot} from '@form8ion/probot-scaffolder';
 import {scaffold as scaffoldReactComponents} from '@form8ion/react-components-scaffolder';
 import {scaffold as scaffoldLerna} from '@form8ion/lerna';
+import {scaffold as scaffoldRollup} from '@form8ion/rollup';
+import {scaffold as scaffoldVite} from '@form8ion/vite';
 import {assert} from 'chai';
 import any from '@travi/any';
 import {unitTestFrameworks} from './test-frameworks';
@@ -53,6 +55,10 @@ suite('common javascript config', () => {
         },
         monorepoTypes: {Lerna: {scaffolder: scaffoldLerna}},
         unitTestFrameworks,
+        packageBundlers: {
+          Rollup: {scaffolder: scaffoldRollup},
+          Vite: {scaffolder: scaffoldVite}
+        },
         decisions: {
           ...decisions,
           [jsQuestionNames.PACKAGE_MANAGER]: packageManagers.NPM

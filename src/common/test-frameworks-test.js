@@ -1,5 +1,6 @@
 import {scaffold as scaffoldMocha} from '@form8ion/mocha-scaffolder';
 import {scaffold as scaffoldJest} from '@form8ion/jest-scaffolder';
+import {scaffold as scaffoldVitest} from '@form8ion/vitest';
 import {assert} from 'chai';
 import {unitTestFrameworks} from './test-frameworks';
 
@@ -9,7 +10,8 @@ suite('common test frameworks', () => {
       unitTestFrameworks,
       {
         mocha: {scaffolder: scaffoldMocha},
-        jest: {scaffolder: scaffoldJest}
+        jest: {scaffolder: scaffoldJest},
+        vitest: {scaffolder: scaffoldVitest}
       }
     );
   });

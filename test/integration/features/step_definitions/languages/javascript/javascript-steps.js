@@ -26,6 +26,7 @@ Before(function () {
 
 Given(/^the project language should be JavaScript$/, async function () {
   this.setAnswerFor(questionNames.PROJECT_LANGUAGE, 'JavaScript');
+  this.setAnswerFor(jsQuestionNames.PACKAGE_BUNDLER, 'Rollup');
   const huskyVersionError = new Error();
   huskyVersionError.stdout = JSON.stringify({});
   huskyVersionError.command = 'npm ls husky --json';

@@ -1,10 +1,12 @@
 import {resolve} from 'path';
+
 import {After, Before, setWorldConstructor, When} from '@cucumber/cucumber';
 import any from '@travi/any';
 import importFresh from 'import-fresh';
 import clearModule from 'clear-module';
 import stubbedFs from 'mock-fs';
 import td from 'testdouble';
+
 import {World} from '../support/world';
 import {githubToken} from './vcs/github-api-steps';
 
@@ -54,7 +56,7 @@ When(/^the project is scaffolded$/, async function () {
   const {projectTypes} = require('@form8ion/javascript-core');
   const repoShouldBeCreated = this.getAnswerFor(projectQuestionNames.GIT_REPO);
   const projectLanguage = this.getAnswerFor(projectQuestionNames.PROJECT_LANGUAGE);
-  const jsProjectType = this.getAnswerFor(javascriptQuestionNames.PROJECT_TYPE);
+  const jsProjectType = this.getAnswerFor(javascriptQuestionNames.PROJECT_TYPE) || projectTypes.PACKAGE;
 
   const scaffoldProject = importFresh('../../../../src/scaffolder/action').default;
 
@@ -86,9 +88,12 @@ When(/^the project is scaffolded$/, async function () {
       [javascriptQuestionNames.AUTHOR_NAME]: any.word(),
       [javascriptQuestionNames.AUTHOR_EMAIL]: any.email(),
       [javascriptQuestionNames.AUTHOR_URL]: any.url(),
-      [javascriptQuestionNames.PROJECT_TYPE]: jsProjectType || 'Package',
+      [javascriptQuestionNames.PROJECT_TYPE]: jsProjectType,
       ...projectTypes.APPLICATION === jsProjectType && {
         [javascriptQuestionNames.HOST]: 'Other'
+      },
+      ...projectTypes.PACKAGE === jsProjectType && {
+        [javascriptQuestionNames.PACKAGE_BUNDLER]: this.getAnswerFor(javascriptQuestionNames.PACKAGE_BUNDLER)
       },
       [javascriptQuestionNames.UNIT_TESTS]: true,
       [javascriptQuestionNames.INTEGRATION_TESTS]: true,
@@ -142,6 +147,7 @@ When('a package is added to the monorepo', async function () {
     [addPackageQuestionNames.AUTHOR_URL]: any.url(),
     [addPackageQuestionNames.PROJECT_TYPE_CHOICE]: 'Other',
     [addPackageQuestionNames.UNIT_TEST_FRAMEWORK]: 'mocha',
+    [addPackageQuestionNames.PACKAGE_BUNDLER]: 'Rollup',
     [addPackageQuestionNames.DIALECT]: dialects.BABEL
   });
 });
