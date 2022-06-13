@@ -25,7 +25,7 @@
     }
   },
   "devDependencies": {
-    "@babel/node": "7.17.10",
+    "@babel/node": "7.18.5",
     "@babel/register": "7.17.7",
     "@cucumber/cucumber": "8.3.0",
     "@form8ion/core": "1.8.0",
