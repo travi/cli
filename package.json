@@ -93,7 +93,7 @@
     "@form8ion/ruby-scaffolder": "1.0.4",
     "@form8ion/shuttle": "1.0.0-alpha.5",
     "@form8ion/ski-patrol": "1.0.0-alpha.5",
-    "@form8ion/slidev": "1.0.0-alpha.3",
+    "@form8ion/slidev": "1.0.1",
     "@form8ion/sno-cat-ink": "1.0.0-alpha.3",
     "@form8ion/vite": "1.0.3",
     "@form8ion/vitest": "1.1.0",
