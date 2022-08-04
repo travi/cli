@@ -80,7 +80,7 @@
     "@form8ion/jest-scaffolder": "1.2.1",
     "@form8ion/lerna": "2.1.1",
     "@form8ion/lift": "4.1.0",
-    "@form8ion/mdx-deck": "1.1.0",
+    "@form8ion/mdx-deck": "1.1.1",
     "@form8ion/mocha-scaffolder": "2.0.2",
     "@form8ion/nuxt": "1.0.0",
     "@form8ion/probot-scaffolder": "1.0.0-alpha.5",
