@@ -2,7 +2,6 @@ import sinon from 'sinon';
 import {assert} from 'chai';
 import any from '@travi/any';
 import * as scaffoldSubCommand from './scaffolder/sub-command';
-import * as travisTokens from './travis-tokens/sub-command';
 import * as lift from './lift/sub-command';
 import * as skiPatrol from './ski-patrol/sub-command';
 import * as shuttle from './shuttle/sub-command';
@@ -17,7 +16,6 @@ suite('cli', () => {
     sandbox = sinon.createSandbox();
 
     sandbox.stub(scaffoldSubCommand, 'default');
-    sandbox.stub(travisTokens, 'default');
     sandbox.stub(lift, 'default');
     sandbox.stub(skiPatrol, 'default');
     sandbox.stub(shuttle, 'default');
@@ -36,7 +34,6 @@ suite('cli', () => {
 
     assert.calledWith(versionStub, version);
     assert.calledWith(scaffoldSubCommand.default, program);
-    assert.calledWith(travisTokens.default, program);
     assert.calledWith(lift.default, program);
     assert.calledWith(skiPatrol.default, program);
     assert.calledWith(shuttle.default, program);
