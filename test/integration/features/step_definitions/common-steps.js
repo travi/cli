@@ -93,7 +93,8 @@ When(/^the project is scaffolded$/, async function () {
         [javascriptQuestionNames.HOST]: 'Other'
       },
       ...projectTypes.PACKAGE === jsProjectType && {
-        [javascriptQuestionNames.PACKAGE_BUNDLER]: this.getAnswerFor(javascriptQuestionNames.PACKAGE_BUNDLER)
+        [javascriptQuestionNames.PACKAGE_BUNDLER]: this.getAnswerFor(javascriptQuestionNames.PACKAGE_BUNDLER),
+        [javascriptQuestionNames.PROVIDE_EXAMPLE]: true
       },
       [javascriptQuestionNames.UNIT_TESTS]: true,
       [javascriptQuestionNames.INTEGRATION_TESTS]: true,
@@ -131,6 +132,7 @@ When('a package is added to the monorepo', async function () {
     [addPackageQuestionNames.DESCRIPTION]: projectDescription,
     [addPackageQuestionNames.VISIBILITY]: visibility,
     [addPackageQuestionNames.NODE_VERSION_CATEGORY]: 'LTS',
+    [addPackageQuestionNames.PROVIDE_EXAMPLE]: true,
     ...'Public' === visibility && {
       [addPackageQuestionNames.LICENSE]: 'MIT',
       [addPackageQuestionNames.COPYRIGHT_HOLDER]: any.word(),
