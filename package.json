@@ -13,12 +13,6 @@
   "bin": {
     "travi": "bin/travi.js"
   },
-  "files": [
-    "bin/"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
   "scripts": {
     "clean": "rimraf bin/",
     "lint:md": "remark . --frail",
@@ -41,6 +35,12 @@
     "test:integration:debug": "DEBUG=nock.* run-s test:integration",
     "test:integration:wip": "run-s 'test:integration:base -- --profile wip'",
     "test:integration:focus": "run-s 'test:integration:base -- --profile focus'"
+  },
+  "files": [
+    "bin/"
+  ],
+  "publishConfig": {
+    "access": "public"
   },
   "config": {
     "commitizen": {
