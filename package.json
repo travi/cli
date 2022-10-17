@@ -98,7 +98,7 @@
     "@form8ion/core": "2.0.0",
     "@rollup/plugin-babel": "6.0.0",
     "@rollup/plugin-node-resolve": "15.0.0",
-    "@travi/any": "2.1.5",
+    "@travi/any": "2.1.6",
     "@travi/babel-preset": "3.0.96",
     "@travi/eslint-config": "3.0.10",
     "@travi/eslint-config-cucumber": "1.0.6",
