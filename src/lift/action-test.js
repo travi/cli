@@ -1,4 +1,4 @@
-import * as lifter from '@form8ion/lift';
+import lifter from '@form8ion/lift';
 import {
   lift as liftRenovate,
   predicate as renovatePredicate,

@@ -4,7 +4,7 @@
   "license": "MIT",
   "version": "0.0.0-semantically-released",
   "engines": {
-    "node": "^16.0.0"
+    "node": "^16.13.0"
   },
   "author": "Matt Travi <npm@travi.org> (https://matt.travi.org/)",
   "repository": "travi/cli",
@@ -12,12 +12,6 @@
   "homepage": "https://npm.im/@travi/cli",
   "bin": {
     "travi": "bin/travi.js"
-  },
-  "files": [
-    "bin/"
-  ],
-  "publishConfig": {
-    "access": "public"
   },
   "scripts": {
     "clean": "rimraf bin/",
@@ -42,6 +36,12 @@
     "test:integration:wip": "run-s 'test:integration:base -- --profile wip'",
     "test:integration:focus": "run-s 'test:integration:base -- --profile focus'"
   },
+  "files": [
+    "bin/"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
@@ -59,7 +59,7 @@
     "@form8ion/javascript-core": "8.1.1",
     "@form8ion/jest-scaffolder": "1.2.1",
     "@form8ion/lerna": "2.1.1",
-    "@form8ion/lift": "5.0.1",
+    "@form8ion/lift": "6.0.0",
     "@form8ion/mdx-deck": "1.1.1",
     "@form8ion/mocha-scaffolder": "3.0.1",
     "@form8ion/nuxt": "1.0.0",
