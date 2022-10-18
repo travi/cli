@@ -126,7 +126,7 @@
     "remark-preset-lint-travi": "4.0.2",
     "remark-toc": "8.0.1",
     "rimraf": "3.0.2",
-    "rollup": "3.2.2",
+    "rollup": "3.2.3",
     "rollup-plugin-auto-external": "2.0.0",
     "rollup-plugin-executable": "1.6.3",
     "rollup-plugin-json": "4.0.0",
