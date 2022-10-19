@@ -1,4 +1,4 @@
-import * as adder from '@form8ion/add-package-to-monorepo';
+import adder from '@form8ion/add-package-to-monorepo';
 import sinon from 'sinon';
 import {assert} from 'chai';
 import any from '@travi/any';
