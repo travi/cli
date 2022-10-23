@@ -1,4 +1,4 @@
-import * as eslintConfigExtender from '@form8ion/eslint-config-extender';
+import eslintConfigExtender from '@form8ion/eslint-config-extender';
 import sinon from 'sinon';
 import {assert} from 'chai';
 import any from '@travi/any';
