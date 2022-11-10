@@ -1,5 +1,5 @@
 import * as javascriptPlugin from '@form8ion/javascript';
-import * as shellScaffolder from '@travi/shell-scaffolder';
+import shellScaffolder from '@travi/shell-scaffolder';
 import * as gitlabScaffolder from '@travi/gitlab-scaffolder';
 import {scaffold as scaffoldTravisForShell} from '@travi/travis-scaffolder-shell';
 import any from '@travi/any';
