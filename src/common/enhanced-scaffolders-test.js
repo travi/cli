@@ -1,6 +1,6 @@
 import * as javascriptPlugin from '@form8ion/javascript';
 import shellScaffolder from '@travi/shell-scaffolder';
-import * as gitlabScaffolder from '@travi/gitlab-scaffolder';
+import gitlabScaffolder from '@travi/gitlab-scaffolder';
 import {scaffold as scaffoldTravisForShell} from '@travi/travis-scaffolder-shell';
 import any from '@travi/any';
 import {assert} from 'chai';

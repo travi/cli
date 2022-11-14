@@ -79,7 +79,7 @@
     "@form8ion/vitest": "2.0.0",
     "@travi/circle-scaffolder-javascript": "1.2.1",
     "@travi/github-scaffolder": "8.0.2",
-    "@travi/gitlab-scaffolder": "1.0.5",
+    "@travi/gitlab-scaffolder": "1.1.0",
     "@travi/netlify-scaffolder": "1.6.0",
     "@travi/node-app-engine-standard-scaffolder": "2.0.0",
     "@travi/shell-scaffolder": "1.2.0",
