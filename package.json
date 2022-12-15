@@ -130,7 +130,7 @@
     "rollup-plugin-auto-external": "2.0.0",
     "rollup-plugin-executable": "1.6.3",
     "rollup-plugin-json": "4.0.0",
-    "sinon": "15.0.0",
+    "sinon": "15.0.1",
     "testdouble": "3.16.8",
     "unist-util-find": "1.0.2"
   },
