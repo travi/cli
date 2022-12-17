@@ -89,7 +89,7 @@
     "inquander": "1.1.1",
     "snyk": "^1.355.0",
     "travis-token-updater": "1.6.14",
-    "update-notifier": "5.1.0"
+    "update-notifier": "6.0.2"
   },
   "devDependencies": {
     "@babel/node": "7.20.5",
