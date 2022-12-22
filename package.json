@@ -64,7 +64,7 @@
     "@form8ion/mocha-scaffolder": "3.0.1",
     "@form8ion/nuxt": "1.0.0",
     "@form8ion/probot-scaffolder": "1.0.0-alpha.5",
-    "@form8ion/project": "15.0.1",
+    "@form8ion/project": "15.0.2",
     "@form8ion/react-components-scaffolder": "3.0.1",
     "@form8ion/remove-greenkeeper": "1.1.10",
     "@form8ion/renovate-scaffolder": "1.8.0",
