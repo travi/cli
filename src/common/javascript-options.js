@@ -14,6 +14,7 @@ import {scaffold as scaffoldReactComponents} from '@form8ion/react-components-sc
 import {scaffold as scaffoldLerna} from '@form8ion/lerna';
 import {scaffold as scaffoldRollup} from '@form8ion/rollup';
 import {scaffold as scaffoldVite} from '@form8ion/vite';
+import {scaffold as scaffoldOctoherdScript} from '@form8ion/octoherd-script';
 
 import {unitTestFrameworks} from './test-frameworks';
 
@@ -55,7 +56,8 @@ export function defineScaffoldJavascriptOptions(decisions, options) {
       Probot: {scaffolder: scaffoldProbot}
     },
     packageTypes: {
-      'React Component Library': {scaffolder: scaffoldReactComponents}
+      'React Component Library': {scaffolder: scaffoldReactComponents},
+      'Octoherd Script': {scaffolder: scaffoldOctoherdScript}
     },
     monorepoTypes: {Lerna: {scaffolder: scaffoldLerna}},
     unitTestFrameworks,

@@ -14,8 +14,11 @@ import {scaffold as scaffoldReactComponents} from '@form8ion/react-components-sc
 import {scaffold as scaffoldLerna} from '@form8ion/lerna';
 import {scaffold as scaffoldRollup} from '@form8ion/rollup';
 import {scaffold as scaffoldVite} from '@form8ion/vite';
+import {scaffold as scaffoldOctoherdScript} from '@form8ion/octoherd-script';
+
 import {assert} from 'chai';
 import any from '@travi/any';
+
 import {unitTestFrameworks} from './test-frameworks';
 import {defineScaffoldJavascriptOptions} from './javascript-options';
 
@@ -51,7 +54,8 @@ suite('common javascript config', () => {
           Probot: {scaffolder: scaffoldProbot}
         },
         packageTypes: {
-          'React Component Library': {scaffolder: scaffoldReactComponents}
+          'React Component Library': {scaffolder: scaffoldReactComponents},
+          'Octoherd Script': {scaffolder: scaffoldOctoherdScript}
         },
         monorepoTypes: {Lerna: {scaffolder: scaffoldLerna}},
         unitTestFrameworks,
