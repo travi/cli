@@ -86,7 +86,7 @@
     "@travi/shell-scaffolder": "1.2.0",
     "@travi/spectacle-scaffolder": "4.0.1",
     "@travi/travis-scaffolder-shell": "1.0.0-alpha.4",
-    "commander": "9.5.0",
+    "commander": "10.0.0",
     "inquander": "1.1.1",
     "snyk": "^1.355.0",
     "travis-token-updater": "1.6.14",
