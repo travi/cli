@@ -67,7 +67,7 @@ $ npx babel-node src/index.js
 ### Verification
 
 ```sh
-$ npm test
+$ NODE_OPTIONS=--no-experimental-fetch npm test
 ```
 
 ## Related Projects
