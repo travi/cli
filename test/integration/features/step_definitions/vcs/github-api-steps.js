@@ -1,7 +1,7 @@
 import {After, Before, Given} from '@cucumber/cucumber';
 import any from '@travi/any';
 import nock from 'nock';
-import {OK, NOT_FOUND} from 'http-status-codes';
+import {StatusCodes} from 'http-status-codes';
 
 let githubScope;
 export const githubToken = any.word();
@@ -23,11 +23,11 @@ Given(/^the GitHub token is valid$/, async function () {
   githubScope
     .matchHeader('Authorization', `token ${githubToken}`)
     .get(`/repos/${this.githubUser}/${this.projectName}`)
-    .reply(NOT_FOUND);
+    .reply(StatusCodes.NOT_FOUND);
   githubScope
     .matchHeader('Authorization', `token ${githubToken}`)
     .post('/user/repos', {name: this.projectName, private: 'Private' === this.projectVisibility})
-    .reply(OK, {
+    .reply(StatusCodes.OK, {
       ssh_url: this.repoSshUrl,
       html_url: any.url()
     });
@@ -35,12 +35,12 @@ Given(/^the GitHub token is valid$/, async function () {
     .persist()    // really only want to persist POST calls to this endpoint, but this persists all calls to the scope
     .matchHeader('Authorization', `token ${githubToken}`)
     .post(`/repos/${this.githubUser}/${this.projectName}/issues`)
-    .reply(OK, {
+    .reply(StatusCodes.OK, {
       ssh_url: any.url(),
       html_url: any.url()
     });
   githubScope
     .matchHeader('Authorization', `token ${githubToken}`)
     .get('/user')
-    .reply(OK, {login: this.githubUser});
+    .reply(StatusCodes.OK, {login: this.githubUser});
 });
