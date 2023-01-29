@@ -6,7 +6,7 @@ import {assert} from 'chai';
 import any from '@travi/any';
 
 let questionNames;
-const nodegitRepository = any.simpleObject();
+const simpleGitInstance = td.object(['checkIsRepo', 'listRemote', 'remote', 'addRemote', 'init']);
 
 Before(() => {
   questionNames = require('@form8ion/project').questionNames;
@@ -15,8 +15,9 @@ Before(() => {
 Given(/^the project should be versioned in git$/, async function () {
   this.setAnswerFor(questionNames.GIT_REPO, true);
 
-  td.when(this.nodegit.Repository.open(process.cwd())).thenResolve(nodegitRepository);
-  td.when(this.nodegit.Remote.list(nodegitRepository)).thenResolve([]);
+  td.when(this.git.simpleGit(process.cwd())).thenReturn(simpleGitInstance);
+  td.when(simpleGitInstance.checkIsRepo('root')).thenResolve(false);
+  td.when(simpleGitInstance.listRemote()).thenResolve([]);
 });
 
 Given(/^the project should not be versioned in git$/, async function () {
@@ -28,7 +29,8 @@ Then(/^the base git files should be present$/, async function () {
 
   assert.equal(gitAttributes, '* text=auto');
 
-  td.verify(this.nodegit.Remote.create(nodegitRepository, 'origin', this.repoSshUrl));
+  td.verify(simpleGitInstance.init());
+  td.verify(simpleGitInstance.addRemote('origin', this.repoSshUrl));
 });
 
 Then('the base git files should not be present', async function () {
@@ -40,13 +42,10 @@ Then('the base git files should not be present', async function () {
 Given('the repository is already initialized', async function () {
   this.repoName = any.word();
   this.repoOwner = any.word();
-  this.repoExists = true;
-  const nodegitRemote = {
-    ...any.simpleObject(),
-    url: () => `git@github.com:${this.repoOwner}/${this.repoName}.git`
-  };
 
-  td.when(this.nodegit.Repository.open(process.cwd())).thenResolve(nodegitRepository);
-  td.when(this.nodegit.Remote.list(nodegitRepository)).thenResolve(['origin']);
-  td.when(this.nodegit.Remote.lookup(nodegitRepository, 'origin')).thenResolve(nodegitRemote);
+  td.when(this.git.simpleGit(process.cwd())).thenReturn(simpleGitInstance);
+  td.when(simpleGitInstance.checkIsRepo('root')).thenResolve(true);
+  td.when(simpleGitInstance.listRemote()).thenResolve(['origin']);
+  td.when(simpleGitInstance.remote(['get-url', 'origin']))
+    .thenResolve(`git@github.com:${any.word()}/${this.projectName}.git`);
 });
