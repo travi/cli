@@ -6,6 +6,7 @@
   ],
   "exclude": [
     "src/**/*-test.js",
+    "src/**/*.test.js",
     "test/",
     "thirdparty-wrappers/",
     "vendor/"
