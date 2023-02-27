@@ -97,7 +97,7 @@
   "devDependencies": {
     "@babel/node": "7.20.7",
     "@babel/register": "7.21.0",
-    "@cucumber/cucumber": "8.11.1",
+    "@cucumber/cucumber": "9.0.0",
     "@form8ion/core": "2.0.0",
     "@rollup/plugin-babel": "6.0.3",
     "@rollup/plugin-node-resolve": "15.0.1",
