@@ -131,7 +131,7 @@
     "rollup-plugin-executable": "1.6.3",
     "rollup-plugin-json": "4.0.0",
     "sinon": "15.0.2",
-    "testdouble": "3.17.0",
+    "testdouble": "3.17.1",
     "unist-util-find": "1.0.2",
     "vitest": "0.29.3"
   },
