@@ -1,4 +1,3 @@
 extends:
   - '@travi'
-  - '@travi/mocha'
   - '@travi/cucumber'
