@@ -133,7 +133,7 @@
     "sinon": "15.0.2",
     "testdouble": "3.17.1",
     "unist-util-find": "1.0.2",
-    "vitest": "0.29.3"
+    "vitest": "0.29.7"
   },
   "snyk": true
 }
