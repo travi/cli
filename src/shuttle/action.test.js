@@ -13,7 +13,7 @@ describe('ski-patrol action', () => {
     vi.clearAllMocks();
   });
 
-  it('should assess the project with ski-patrol', async () => {
+  it('should move the project with shuttle', async () => {
     await shuttleAction();
 
     expect(shuttle.shuttle).toHaveBeenCalled();
