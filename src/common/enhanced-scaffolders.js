@@ -2,7 +2,8 @@ import {scaffold as scaffoldJavaScript} from '@form8ion/javascript';
 import {scaffold as scaffoldShell} from '@travi/shell-scaffolder';
 import {scaffold as scaffoldTravisForShell} from '@travi/travis-scaffolder-shell';
 import {prompt} from '@travi/gitlab-scaffolder';
-import {defineScaffoldJavascriptOptions} from './javascript-options';
+
+import {defineScaffoldJavascriptOptions} from './javascript-options.js';
 
 export function javascriptScaffolderFactory(decisions) {
   return options => scaffoldJavaScript(defineScaffoldJavascriptOptions(decisions, options));

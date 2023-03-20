@@ -4,7 +4,7 @@ import {load} from 'js-yaml';
 import {fileExists} from '@form8ion/core';
 import {assert} from 'chai';
 import any from '@travi/any';
-import td from 'testdouble';
+import * as td from 'testdouble';
 
 function versionSegment() {
   return any.integer({max: 20});
@@ -18,10 +18,10 @@ function semverStringFactory() {
 
 let questionNames, jsQuestionNames, projectTypes;
 
-Before(function () {
-  ({questionNames} = require('@form8ion/project'));
-  ({questionNames: jsQuestionNames} = require('@form8ion/javascript'));
-  ({projectTypes} = require('@form8ion/javascript-core'));
+Before(async function () {
+  ({questionNames} = await import('@form8ion/project'));
+  ({questionNames: jsQuestionNames} = await import('@form8ion/javascript'));
+  ({projectTypes} = await import('@form8ion/javascript-core'));
 });
 
 Given(/^the project language should be JavaScript$/, async function () {
@@ -32,9 +32,10 @@ Given(/^the project language should be JavaScript$/, async function () {
   huskyVersionError.command = 'npm ls husky --json';
   huskyVersionError.exitCode = 1;
 
-  td.when(this.execa('npm run generate:md && npm test', {shell: true})).thenReturn({stdout: {pipe: () => undefined}});
-  td.when(this.execa('npm', ['whoami'])).thenResolve(any.word());
-  td.when(this.execa('npm', ['ls', 'husky', '--json'])).thenReject(huskyVersionError);
+  td.when(this.execa.default('npm run generate:md && npm test', {shell: true}))
+    .thenReturn({stdout: {pipe: () => undefined}});
+  td.when(this.execa.default('npm', ['whoami'])).thenResolve(any.word());
+  td.when(this.execa.default('npm', ['ls', 'husky', '--json'])).thenReject(huskyVersionError);
 });
 
 Given('the project will use the {string} dialect', async function (dialect) {
@@ -49,9 +50,10 @@ Given('the project is a presentation', async function () {
 Given(/^nvm is properly configured$/, function () {
   const latestLtsVersion = semverStringFactory();
 
-  td.when(this.execa('. ~/.nvm/nvm.sh && nvm ls-remote --lts', {shell: true}))
+  td.when(this.execa.default('. ~/.nvm/nvm.sh && nvm ls-remote --lts', {shell: true}))
     .thenResolve({stdout: [...any.listOf(semverStringFactory), latestLtsVersion, ''].join('\n')});
-  td.when(this.execa('. ~/.nvm/nvm.sh && nvm install', {shell: true})).thenReturn({stdout: {pipe: () => undefined}});
+  td.when(this.execa.default('. ~/.nvm/nvm.sh && nvm install', {shell: true}))
+    .thenReturn({stdout: {pipe: () => undefined}});
 });
 
 Then(/^JavaScript ignores are defined$/, async function () {

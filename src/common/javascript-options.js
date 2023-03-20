@@ -16,7 +16,7 @@ import {scaffold as scaffoldRollup} from '@form8ion/rollup';
 import {scaffold as scaffoldVite} from '@form8ion/vite';
 import {scaffold as scaffoldOctoherdScript} from '@form8ion/octoherd-script';
 
-import {unitTestFrameworks} from './test-frameworks';
+import {unitTestFrameworks} from './test-frameworks.js';
 
 export function defineScaffoldJavascriptOptions(decisions, options) {
   return {

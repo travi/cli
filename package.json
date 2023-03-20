@@ -3,6 +3,7 @@
   "description": "cli for my various tools",
   "license": "MIT",
   "version": "0.0.0-semantically-released",
+  "type": "module",
   "engines": {
     "node": ">= 18 || ^16.13.0"
   },
@@ -31,7 +32,7 @@
     "prepare": "husky install",
     "lint:gherkin": "gherkin-lint",
     "test:integration": "run-s 'test:integration:base -- --profile noWip'",
-    "test:integration:base": "DEBUG=any cucumber-js test/integration --profile base",
+    "test:integration:base": "NODE_OPTIONS=\"--loader=testdouble --enable-source-maps --no-experimental-fetch\" DEBUG=any cucumber-js test/integration",
     "test:integration:debug": "DEBUG=nock.* run-s test:integration",
     "test:integration:wip": "run-s 'test:integration:base -- --profile wip'",
     "test:integration:focus": "run-s 'test:integration:base -- --profile focus'"
@@ -93,14 +94,10 @@
     "update-notifier": "5.1.0"
   },
   "devDependencies": {
-    "@babel/node": "7.20.7",
-    "@babel/register": "7.21.0",
     "@cucumber/cucumber": "9.0.1",
     "@form8ion/core": "2.0.0",
-    "@rollup/plugin-babel": "6.0.3",
     "@rollup/plugin-node-resolve": "15.0.1",
     "@travi/any": "2.1.8",
-    "@travi/babel-preset": "3.0.96",
     "@travi/eslint-config": "3.0.25",
     "@travi/eslint-config-cucumber": "1.0.6",
     "c8": "7.13.0",
