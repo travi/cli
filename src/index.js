@@ -1,4 +1,4 @@
-import program from 'commander';
+import {program} from 'commander';
 import inquander from 'inquander';
 import updateNotifier from 'update-notifier';
 import pkg from '../package.json';
