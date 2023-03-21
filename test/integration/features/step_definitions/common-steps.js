@@ -9,7 +9,7 @@ import * as td from 'testdouble';
 import {World} from '../support/world.js';
 import {githubToken} from './vcs/github-api-steps.js';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+const __dirname = dirname(fileURLToPath(import.meta.url));        // eslint-disable-line no-underscore-dangle
 
 const projectDescription = any.sentence();
 const visibility = any.fromList(['Public', 'Private']);
