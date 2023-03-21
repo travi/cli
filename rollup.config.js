@@ -12,5 +12,5 @@ export default {
     json(),
     executable()
   ],
-  output: [{file: 'bin/travi.js', format: 'cjs', sourcemap: true, banner: '#!/usr/bin/env node'}]
+  output: [{file: 'bin/travi.js', format: 'esm', sourcemap: true, banner: '#!/usr/bin/env node'}]
 };
