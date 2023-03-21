@@ -1,5 +1,5 @@
 import {scaffold as scaffoldProject} from '@form8ion/project';
-import {defineScaffoldProjectOptions} from '../common/project-options';
+import {defineScaffoldProjectOptions} from '../common/project-options.js';
 
 export default function (decisions) {
   return () => scaffoldProject(defineScaffoldProjectOptions(decisions))

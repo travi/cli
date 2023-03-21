@@ -1,14 +1,15 @@
-import {resolve} from 'path';
+import {dirname, resolve} from 'node:path';
+import {fileURLToPath} from 'node:url';
 
 import {After, Before, setWorldConstructor, When} from '@cucumber/cucumber';
 import any from '@travi/any';
-import importFresh from 'import-fresh';
-import clearModule from 'clear-module';
 import stubbedFs from 'mock-fs';
-import td from 'testdouble';
+import * as td from 'testdouble';
 
-import {World} from '../support/world';
-import {githubToken} from './vcs/github-api-steps';
+import {World} from '../support/world.js';
+import {githubToken} from './vcs/github-api-steps.js';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));        // eslint-disable-line no-underscore-dangle
 
 const projectDescription = any.sentence();
 const visibility = any.fromList(['Public', 'Private']);
@@ -27,38 +28,27 @@ Before(async function () {
 
   // work around for overly aggressive mock-fs, see:
   // https://github.com/tschaub/mock-fs/issues/213#issuecomment-347002795
-  require('validate-npm-package-name'); // eslint-disable-line import/no-extraneous-dependencies
-  require('color-convert'); // eslint-disable-line import/no-extraneous-dependencies
+  await import('validate-npm-package-name'); // eslint-disable-line import/no-extraneous-dependencies
+  await import('color-convert'); // eslint-disable-line import/no-extraneous-dependencies
 
-  this.execa = td.replace('execa');
-  this.git = td.replace('simple-git');
+  this.execa = await td.replaceEsm('@form8ion/execa-wrapper');
+  this.git = await td.replaceEsm('simple-git');
 });
 
 After(function () {
   stubbedFs.restore();
   td.reset();
-  clearModule('@form8ion/add-package-to-monorepo');
-  clearModule('@form8ion/eslint-config-extender');
-  clearModule('@form8ion/replace-travis-ci-with-github-action');
-  clearModule('@form8ion/ruby-scaffolder');
-  clearModule('@form8ion/project');
-  clearModule('@form8ion/lift-javascript');
-  clearModule('@form8ion/javascript-core');
-  clearModule('@form8ion/husky');
-  clearModule('travis-token-updater');
-  clearModule('execa');
-  clearModule('../../../../src/scaffolder/action');
 });
 
 When(/^the project is scaffolded$/, async function () {
-  const {questionNames: projectQuestionNames} = importFresh('@form8ion/project');
-  const {questionNames: javascriptQuestionNames} = importFresh('@form8ion/javascript');
-  const {projectTypes} = require('@form8ion/javascript-core');
+  const {questionNames: projectQuestionNames} = await import('@form8ion/project');
+  const {questionNames: javascriptQuestionNames} = await import('@form8ion/javascript');
+  const {projectTypes} = await import('@form8ion/javascript-core');
   const repoShouldBeCreated = this.getAnswerFor(projectQuestionNames.GIT_REPO);
   const projectLanguage = this.getAnswerFor(projectQuestionNames.PROJECT_LANGUAGE);
   const jsProjectType = this.getAnswerFor(javascriptQuestionNames.PROJECT_TYPE) || projectTypes.PACKAGE;
 
-  const scaffoldProject = importFresh('../../../../src/scaffolder/action').default;
+  const {default: scaffoldProject} = (await import('../../../../src/scaffolder/action.js'));
 
   stubbedFs({
     [`${process.env.HOME}/.netrc`]: `machine api.github.com\n  login ${githubToken}`,
@@ -111,10 +101,10 @@ When(/^the project is scaffolded$/, async function () {
 });
 
 When('a package is added to the monorepo', async function () {
-  const addPackageQuestionNames = importFresh('@form8ion/add-package-to-monorepo').questionNames;
-  const {dialects} = require('@form8ion/javascript-core');
+  const {questionNames: addPackageQuestionNames} = await import('@form8ion/add-package-to-monorepo');
+  const {dialects} = await import('@form8ion/javascript-core');
 
-  const addPackageToMonorepo = importFresh('../../../../src/add-package/action').default;
+  const {default: addPackageToMonorepo} = await import('../../../../src/add-package/action.js');
 
   stubbedFs({
     ...'lerna' === this.monorepoType && {

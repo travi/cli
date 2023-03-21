@@ -4,9 +4,9 @@ import {assert} from 'chai';
 
 let jsQuestionNames, projectTypes;
 
-Before(function () {
-  ({questionNames: jsQuestionNames} = require('@form8ion/javascript'));
-  ({projectTypes} = require('@form8ion/javascript-core'));
+Before(async function () {
+  ({questionNames: jsQuestionNames} = await import('@form8ion/javascript'));
+  ({projectTypes} = await import('@form8ion/javascript-core'));
 });
 
 Given('the project is a monorepo', async function () {

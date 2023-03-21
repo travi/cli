@@ -2,7 +2,7 @@ import {promises as fs} from 'fs';
 import parse from 'mdast-util-from-markdown';
 import find from 'unist-util-find';
 import {Given, Then} from '@cucumber/cucumber';
-import td from 'testdouble';
+import * as td from 'testdouble';
 import {assert} from 'chai';
 
 async function assertReadmeDetailsArePopulatedProperly(projectName) {
@@ -23,8 +23,8 @@ Given('a lerna monorepo exists', async function () {
   huskyVersionError.command = 'npm ls husky --json';
   huskyVersionError.exitCode = 1;
 
-  td.when(this.execa('npm', ['ls', 'husky', '--json'])).thenReject(huskyVersionError);
-  td.when(this.execa('npm run generate:md && npm test', {shell: true, cwd: `packages/${this.projectName}`}))
+  td.when(this.execa.default('npm', ['ls', 'husky', '--json'])).thenReject(huskyVersionError);
+  td.when(this.execa.default('npm run generate:md && npm test', {shell: true, cwd: `packages/${this.projectName}`}))
     .thenReturn({stdout: {pipe: () => undefined}});
 });
 
