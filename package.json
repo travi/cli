@@ -87,7 +87,7 @@
     "@travi/gitlab-scaffolder": "1.1.0",
     "@travi/netlify-scaffolder": "1.6.0",
     "@travi/node-app-engine-standard-scaffolder": "2.0.0",
-    "@travi/shell-scaffolder": "2.0.0-beta.3",
+    "@travi/shell-scaffolder": "2.0.0",
     "@travi/spectacle-scaffolder": "4.0.1",
     "@travi/travis-scaffolder-shell": "1.0.0-alpha.4",
     "commander": "10.0.0",
