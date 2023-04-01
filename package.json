@@ -5,7 +5,7 @@
   "version": "0.0.0-semantically-released",
   "type": "module",
   "engines": {
-    "node": ">= 18 || ^16.13.0"
+    "node": ">= 18 || ^16.14.0"
   },
   "author": "Matt Travi <npm@travi.org> (https://matt.travi.org/)",
   "repository": "travi/cli",
@@ -75,7 +75,7 @@
     "@form8ion/renovate-scaffolder": "1.8.0",
     "@form8ion/replace-travis-ci-with-github-actions": "7.0.0",
     "@form8ion/rollup": "2.1.1",
-    "@form8ion/ruby-scaffolder": "1.0.4",
+    "@form8ion/ruby-scaffolder": "2.0.0",
     "@form8ion/shuttle": "1.0.0-alpha.5",
     "@form8ion/ski-patrol": "1.0.0-alpha.5",
     "@form8ion/slidev": "1.0.1",
