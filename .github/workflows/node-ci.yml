@@ -24,7 +24,7 @@ jobs:
           - 18.0.0
           - 18
           - 19
-          - 16.13.0
+          - 16.14.0
         include:
           - node: 18
             options: '--no-experimental-fetch'
