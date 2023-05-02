@@ -96,7 +96,7 @@
     "update-notifier": "6.0.2"
   },
   "devDependencies": {
-    "@cucumber/cucumber": "9.1.0",
+    "@cucumber/cucumber": "9.1.1",
     "@form8ion/core": "2.0.0",
     "@rollup/plugin-node-resolve": "15.0.2",
     "@travi/any": "2.1.8",
