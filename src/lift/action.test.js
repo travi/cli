@@ -9,6 +9,7 @@ import {removeGreenkeeper} from '@form8ion/remove-greenkeeper';
 import {scaffold as scaffoldCucumber} from '@form8ion/cucumber-scaffolder';
 import {scaffold as scaffoldCypress} from '@form8ion/cypress-scaffolder';
 import {test as jsApplicabilityTest} from '@form8ion/javascript';
+import {scaffold as scaffoldOssfScorecard} from '@form8ion/ossf-scorecard';
 import {
   scaffold as scaffoldGithubActions,
   lift as liftGithubActionsCI,
@@ -43,7 +44,8 @@ describe('lift action', () => {
         Cucumber: scaffoldCucumber,
         Cypress: scaffoldCypress,
         'GitHub Actions CI': scaffoldGithubActions,
-        'Replace Travis CI with GitHub Actions': replaceTravisCiWithGithubActions
+        'Replace Travis CI with GitHub Actions': replaceTravisCiWithGithubActions,
+        'OSSF Scorecard': scaffoldOssfScorecard
       },
       enhancers: {
         JavaScript: {test: jsApplicabilityTest, lift: liftJavascript},

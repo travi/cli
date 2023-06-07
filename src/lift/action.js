@@ -15,6 +15,8 @@ import {
   test as githubActionsCiApplicabilityTest
 } from '@form8ion/github-actions-node-ci';
 import {replace as replaceTravisCiWithGithubActions} from '@form8ion/replace-travis-ci-with-github-actions';
+import {scaffold as scaffoldOssfScorecard} from '@form8ion/ossf-scorecard';
+
 import {javascript as liftJavascript} from './enhanced-lifters';
 import {unitTesting} from './enhanced-scaffolders';
 
@@ -27,7 +29,8 @@ export default function () {
       Cucumber: scaffoldCucumber,
       Cypress: scaffoldCypress,
       'GitHub Actions CI': scaffoldGithubActions,
-      'Replace Travis CI with GitHub Actions': replaceTravisCiWithGithubActions
+      'Replace Travis CI with GitHub Actions': replaceTravisCiWithGithubActions,
+      'OSSF Scorecard': scaffoldOssfScorecard
     },
     enhancers: {
       JavaScript: {test: jsApplicabilityTest, lift: liftJavascript},
