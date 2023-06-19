@@ -24,6 +24,7 @@ jobs:
           - 18.0.0
           - 18
           - 19
+          - 20
           - 16.14.0
         include:
           - node: 18
@@ -31,6 +32,8 @@ jobs:
           - node: 18.0.0
             options: '--no-experimental-fetch'
           - node: 19
+            options: '--no-experimental-fetch'
+          - node: 20
             options: '--no-experimental-fetch'
     steps:
       - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3
