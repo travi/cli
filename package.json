@@ -65,7 +65,7 @@
     "@form8ion/lerna": "2.1.1",
     "@form8ion/lift": "8.0.0",
     "@form8ion/mdx-deck": "1.1.1",
-    "@form8ion/mocha-scaffolder": "3.0.1",
+    "@form8ion/mocha-scaffolder": "3.0.2",
     "@form8ion/nuxt": "2.0.0",
     "@form8ion/octoherd-script": "1.0.0",
     "@form8ion/ossf-scorecard": "1.0.0",
