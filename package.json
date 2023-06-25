@@ -106,7 +106,7 @@
     "c8": "8.0.0",
     "chai": "4.3.7",
     "clear-module": "4.1.2",
-    "commitlint-config-travi": "1.4.31",
+    "commitlint-config-travi": "1.4.32",
     "cross-env": "7.0.3",
     "cz-conventional-changelog": "3.3.0",
     "execa": "7.1.1",
