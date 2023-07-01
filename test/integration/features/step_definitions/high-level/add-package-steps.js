@@ -1,6 +1,6 @@
 import {promises as fs} from 'fs';
 import {fromMarkdown as parse} from 'mdast-util-from-markdown';
-import find from 'unist-util-find';
+import {find} from 'unist-util-find';
 import {Given, Then} from '@cucumber/cucumber';
 import * as td from 'testdouble';
 import {assert} from 'chai';
