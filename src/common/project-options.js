@@ -6,8 +6,6 @@ import {scaffold as scaffoldRenovate} from '@form8ion/renovate-scaffolder';
 
 import {gitlabPrompt, javascriptScaffolderFactory, shell} from './enhanced-scaffolders.js';
 
-const traviName = 'Matt Travi';
-
 export function defineScaffoldProjectOptions(decisions) {
   return {
     languages: {JavaScript: javascriptScaffolderFactory(decisions), Ruby: scaffoldRuby, Shell: shell},
@@ -15,7 +13,6 @@ export function defineScaffoldProjectOptions(decisions) {
       GitHub: {scaffolder: scaffoldGithub, prompt: githubPrompt, public: true, private: true},
       GitLab: {scaffolder: scaffoldGitlab, prompt: gitlabPrompt, private: true}
     },
-    overrides: {copyrightHolder: traviName},
     dependencyUpdaters: {
       Dependabot: {scaffolder: scaffoldDependabot},
       Renovate: {scaffolder: scaffoldRenovate}

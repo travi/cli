@@ -36,7 +36,6 @@ describe('common config', () => {
         Dependabot: {scaffolder: scaffoldDependabot},
         Renovate: {scaffolder: scaffoldRenovate}
       },
-      overrides: {copyrightHolder: 'Matt Travi'},
       decisions
     });
   });
