@@ -26,7 +26,7 @@ Given(/^the GitHub token is valid$/, async function () {
     .reply(StatusCodes.NOT_FOUND);
   githubScope
     .matchHeader('Authorization', `token ${githubToken}`)
-    .post('/user/repos', {name: this.projectName, private: 'Private' === this.projectVisibility})
+    .post('/user/repos', {name: this.projectName, private: 'Private' === this.visibility})
     .reply(StatusCodes.OK, {
       ssh_url: this.repoSshUrl,
       html_url: any.url()

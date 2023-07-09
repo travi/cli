@@ -12,9 +12,7 @@ import {githubToken} from './vcs/github-api-steps.js';
 const __dirname = dirname(fileURLToPath(import.meta.url));        // eslint-disable-line no-underscore-dangle
 
 const projectDescription = any.sentence();
-const visibility = any.fromList(['Public', 'Private']);
 const shouldBeScoped = any.boolean();
-const scope = shouldBeScoped || 'Private' === visibility ? any.word() : undefined;
 
 const pathToNodeModules = [__dirname, '..', '..', '..', '..', 'node_modules'];
 const stubbedNodeModules = stubbedFs.load(resolve(...pathToNodeModules));
@@ -24,7 +22,8 @@ setWorldConstructor(World);
 Before(async function () {
   this.githubUser = any.word();
   this.projectName = any.word();
-  this.projectVisibility = visibility;
+  this.visibility = any.fromList(['Public', 'Private']);
+  this.scope = shouldBeScoped || 'Private' === this.visibility ? any.word() : undefined;
 
   // work around for overly aggressive mock-fs, see:
   // https://github.com/tschaub/mock-fs/issues/213#issuecomment-347002795
@@ -59,14 +58,14 @@ When(/^the project is scaffolded$/, async function () {
   await scaffoldProject({
     [projectQuestionNames.PROJECT_NAME]: this.projectName,
     [projectQuestionNames.DESCRIPTION]: projectDescription,
-    [projectQuestionNames.VISIBILITY]: visibility,
+    [projectQuestionNames.VISIBILITY]: this.visibility,
     [projectQuestionNames.DEPENDENCY_UPDATER]: any.word(),
-    ...'Public' === visibility && {
+    ...'Public' === this.visibility && {
       [projectQuestionNames.LICENSE]: 'MIT',
-      [projectQuestionNames.COPYRIGHT_HOLDER]: any.word(),
+      [projectQuestionNames.COPYRIGHT_HOLDER]: 'Matt Travi',
       [projectQuestionNames.COPYRIGHT_YEAR]: 2000
     },
-    ...'Private' === visibility && {[projectQuestionNames.UNLICENSED]: true},
+    ...'Private' === this.visibility && {[projectQuestionNames.UNLICENSED]: true},
     [projectQuestionNames.GIT_REPO]: repoShouldBeCreated,
     ...repoShouldBeCreated && {
       [projectQuestionNames.REPO_HOST]: 'GitHub',
@@ -93,7 +92,7 @@ When(/^the project is scaffolded$/, async function () {
       [javascriptQuestionNames.PROJECT_TYPE_CHOICE]: this.getAnswerFor(javascriptQuestionNames.PROJECT_TYPE_CHOICE)
         || 'Other',
       [javascriptQuestionNames.SHOULD_BE_SCOPED]: shouldBeScoped,
-      [javascriptQuestionNames.SCOPE]: scope,
+      [javascriptQuestionNames.SCOPE]: this.scope,
       [javascriptQuestionNames.UNIT_TEST_FRAMEWORK]: 'mocha',
       [javascriptQuestionNames.DIALECT]: this.dialect
     }
@@ -120,20 +119,20 @@ When('a package is added to the monorepo', async function () {
   await addPackageToMonorepo({
     [addPackageQuestionNames.PROJECT_NAME]: this.projectName,
     [addPackageQuestionNames.DESCRIPTION]: projectDescription,
-    [addPackageQuestionNames.VISIBILITY]: visibility,
+    [addPackageQuestionNames.VISIBILITY]: this.visibility,
     [addPackageQuestionNames.NODE_VERSION_CATEGORY]: 'LTS',
     [addPackageQuestionNames.PROVIDE_EXAMPLE]: true,
-    ...'Public' === visibility && {
+    ...'Public' === this.visibility && {
       [addPackageQuestionNames.LICENSE]: 'MIT',
       [addPackageQuestionNames.COPYRIGHT_HOLDER]: any.word(),
       [addPackageQuestionNames.COPYRIGHT_YEAR]: 2000
     },
-    ...'Private' === visibility && {[addPackageQuestionNames.UNLICENSED]: true},
+    ...'Private' === this.visibility && {[addPackageQuestionNames.UNLICENSED]: true},
     [addPackageQuestionNames.UNIT_TESTS]: true,
     [addPackageQuestionNames.INTEGRATION_TESTS]: true,
     [addPackageQuestionNames.CONFIGURE_LINTING]: true,
     [addPackageQuestionNames.SHOULD_BE_SCOPED]: shouldBeScoped,
-    [addPackageQuestionNames.SCOPE]: scope,
+    [addPackageQuestionNames.SCOPE]: this.scope,
     [addPackageQuestionNames.AUTHOR_NAME]: any.word(),
     [addPackageQuestionNames.AUTHOR_EMAIL]: any.email(),
     [addPackageQuestionNames.AUTHOR_URL]: any.url(),
