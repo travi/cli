@@ -83,7 +83,7 @@
     "@form8ion/sno-cat-ink": "1.0.0-alpha.3",
     "@form8ion/vite": "1.3.2",
     "@form8ion/vitest": "3.0.2",
-    "@travi/circle-scaffolder-javascript": "1.2.1",
+    "@travi/circle-scaffolder-javascript": "1.2.2",
     "@travi/github-scaffolder": "9.0.1",
     "@travi/gitlab-scaffolder": "1.1.0",
     "@travi/netlify-scaffolder": "1.6.0",
