@@ -99,7 +99,7 @@
   "devDependencies": {
     "@cucumber/cucumber": "9.4.0",
     "@form8ion/core": "3.2.0",
-    "@rollup/plugin-node-resolve": "15.1.0",
+    "@rollup/plugin-node-resolve": "15.2.0",
     "@travi/any": "2.1.8",
     "@travi/eslint-config": "4.0.1",
     "@travi/eslint-config-cucumber": "1.0.6",
