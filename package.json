@@ -52,7 +52,7 @@
     }
   },
   "dependencies": {
-    "@form8ion/add-package-to-monorepo": "10.0.9",
+    "@form8ion/add-package-to-monorepo": "10.0.10",
     "@form8ion/cucumber-scaffolder": "3.1.0",
     "@form8ion/cypress-scaffolder": "3.0.2",
     "@form8ion/dependabot-scaffolder": "1.5.2",
