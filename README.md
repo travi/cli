@@ -6,6 +6,7 @@ cli for my various tools
 
 [![Node CI Workflow Status][github-actions-ci-badge]][github-actions-ci-link]
 [![Codecov][coverage-badge]][coverage-link]
+![SLSA Level 2][slsa-badge]
 
 <!--status-badges end -->
 
@@ -88,3 +89,5 @@ $ NODE_OPTIONS=--no-experimental-fetch npm test
 [coverage-link]: https://codecov.io/github/travi/cli
 
 [coverage-badge]: https://img.shields.io/codecov/c/github/travi/cli?logo=codecov
+
+[slsa-badge]: https://slsa.dev/images/gh-badge-level2.svg
