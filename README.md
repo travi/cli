@@ -82,7 +82,7 @@ $ NODE_OPTIONS=--no-experimental-fetch npm test
 
 [github-actions-ci-link]: https://github.com/travi/cli/actions?query=workflow%3A%22Node.js+CI%22+branch%3Amaster
 
-[github-actions-ci-badge]: https://github.com/travi/cli/workflows/Node.js%20CI/badge.svg
+[github-actions-ci-badge]: https://img.shields.io/github/actions/workflow/status/travi/cli/node-ci.yml.svg?branch=master&logo=github
 
 [node-badge]: https://img.shields.io/node/v/@travi/cli?logo=node.js
 
