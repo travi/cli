@@ -28,9 +28,9 @@ cli for my various tools
 
 <!--consumer-badges start -->
 
-[![npm](https://img.shields.io/npm/v/@travi/cli.svg)](https://www.npmjs.com/package/@travi/cli)
 [![license](https://img.shields.io/github/license/travi/cli.svg)](LICENSE)
 ![node][node-badge]
+[![npm][npm-badge]][npm-link]
 
 <!--consumer-badges end -->
 
@@ -85,6 +85,10 @@ $ NODE_OPTIONS=--no-experimental-fetch npm test
 [github-actions-ci-badge]: https://github.com/travi/cli/workflows/Node.js%20CI/badge.svg
 
 [node-badge]: https://img.shields.io/node/v/@travi/cli?logo=node.js
+
+[npm-link]: https://www.npmjs.com/package/@travi/cli
+
+[npm-badge]: https://img.shields.io/npm/v/@travi/cli?logo=npm
 
 [coverage-link]: https://codecov.io/github/travi/cli
 
