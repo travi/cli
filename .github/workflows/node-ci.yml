@@ -24,20 +24,8 @@ jobs:
     strategy:
       matrix:
         node:
-          - 18.0.0
-          - 18
-          - 19
-          - 20
-          - 16.14.0
-        include:
-          - node: 18
-            options: '--no-experimental-fetch'
-          - node: 18.0.0
-            options: '--no-experimental-fetch'
-          - node: 19
-            options: '--no-experimental-fetch'
-          - node: 20
-            options: '--no-experimental-fetch'
+          - 18.17.0
+          - 20.6.1
     steps:
       - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
       - name: Setup node
