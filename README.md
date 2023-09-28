@@ -4,8 +4,8 @@ cli for my various tools
 
 <!--status-badges start -->
 
-[![Codecov](https://img.shields.io/codecov/c/github/travi/cli.svg)](https://codecov.io/github/travi/cli)
 [![Node CI Workflow Status][github-actions-ci-badge]][github-actions-ci-link]
+[![Codecov][coverage-badge]][coverage-link]
 
 <!--status-badges end -->
 
@@ -84,3 +84,7 @@ $ NODE_OPTIONS=--no-experimental-fetch npm test
 [github-actions-ci-badge]: https://github.com/travi/cli/workflows/Node.js%20CI/badge.svg
 
 [node-badge]: https://img.shields.io/node/v/@travi/cli?logo=node.js
+
+[coverage-link]: https://codecov.io/github/travi/cli
+
+[coverage-badge]: https://img.shields.io/codecov/c/github/travi/cli?logo=codecov
