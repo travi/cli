@@ -5,7 +5,7 @@
   "version": "0.0.0-semantically-released",
   "type": "module",
   "engines": {
-    "node": ">= 18 || ^16.14.0"
+    "node": "^18.17 || >=20.6.1"
   },
   "author": "Matt Travi <npm@travi.org> (https://matt.travi.org/)",
   "repository": "travi/cli",
@@ -32,7 +32,7 @@
     "prepare": "husky install",
     "lint:gherkin": "gherkin-lint",
     "test:integration": "run-s 'test:integration:base -- --profile noWip'",
-    "test:integration:base": "NODE_OPTIONS=\"--loader=testdouble --enable-source-maps $NODE_OPTIONS\" DEBUG=any cucumber-js test/integration",
+    "test:integration:base": "NODE_OPTIONS=\"--loader=testdouble --enable-source-maps --no-experimental-fetch\" DEBUG=any cucumber-js test/integration",
     "test:integration:debug": "DEBUG=nock.* run-s test:integration",
     "test:integration:wip": "run-s 'test:integration:base -- --profile wip'",
     "test:integration:focus": "run-s 'test:integration:base -- --profile focus'",
