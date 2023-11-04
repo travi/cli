@@ -102,7 +102,7 @@
     "@form8ion/core": "3.2.2",
     "@rollup/plugin-node-resolve": "15.2.3",
     "@travi/any": "3.0.1",
-    "@travi/eslint-config": "5.0.2",
+    "@travi/eslint-config": "5.0.3",
     "@travi/eslint-config-cucumber": "1.0.6",
     "c8": "8.0.1",
     "chai": "4.3.10",
