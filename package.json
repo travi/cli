@@ -54,7 +54,7 @@
   },
   "dependencies": {
     "@form8ion/add-package-to-monorepo": "11.0.0",
-    "@form8ion/cucumber-scaffolder": "3.1.0",
+    "@form8ion/cucumber-scaffolder": "3.1.1",
     "@form8ion/cypress-scaffolder": "3.0.2",
     "@form8ion/dependabot-scaffolder": "1.5.2",
     "@form8ion/eslint-config-extender": "8.0.3",
