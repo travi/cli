@@ -83,7 +83,7 @@
     "@form8ion/slidev": "1.0.2",
     "@form8ion/sno-cat-ink": "1.0.0-alpha.3",
     "@form8ion/vite": "2.0.0",
-    "@form8ion/vitest": "4.0.0",
+    "@form8ion/vitest": "4.0.1",
     "@travi/circle-scaffolder-javascript": "1.2.2",
     "@travi/github-scaffolder": "10.0.0",
     "@travi/gitlab-scaffolder": "1.1.1",
