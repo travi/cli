@@ -29,6 +29,7 @@ Feature: JavaScript Project
     And the project language should be JavaScript
     And the project will use the "common-js" dialect
     And nvm is properly configured
+    And the GitHub token is valid
     When the project is scaffolded
     Then the project will have repository details defined
     And the lerna details are configured
