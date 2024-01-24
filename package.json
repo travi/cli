@@ -105,7 +105,7 @@
     "@travi/eslint-config": "5.0.7",
     "@travi/eslint-config-cucumber": "1.0.6",
     "c8": "9.1.0",
-    "chai": "4.4.1",
+    "chai": "5.0.0",
     "clear-module": "4.1.2",
     "commitlint-config-travi": "1.4.46",
     "cross-env": "7.0.3",
