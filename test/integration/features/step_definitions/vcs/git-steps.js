@@ -15,7 +15,7 @@ Before(async () => {
 Given(/^the project should be versioned in git$/, async function () {
   this.setAnswerFor(questionNames.GIT_REPO, true);
 
-  td.when(this.git.simpleGit(process.cwd())).thenReturn(simpleGitInstance);
+  td.when(this.git.simpleGit({baseDir: process.cwd()})).thenReturn(simpleGitInstance);
   td.when(simpleGitInstance.checkIsRepo('root')).thenResolve(false);
   td.when(simpleGitInstance.listRemote()).thenResolve([]);
 });
