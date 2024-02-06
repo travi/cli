@@ -101,7 +101,7 @@
     "@cucumber/cucumber": "10.3.1",
     "@form8ion/core": "4.2.0",
     "@rollup/plugin-node-resolve": "15.2.3",
-    "@travi/any": "3.0.2",
+    "@travi/any": "3.1.0",
     "@travi/eslint-config": "5.0.7",
     "@travi/eslint-config-cucumber": "1.0.6",
     "c8": "9.1.0",
