@@ -4,7 +4,7 @@ import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
 import any from '@travi/any';
 import {when} from 'jest-when';
 
-import {javascript} from './enhanced-lifters';
+import {javascript} from './enhanced-lifters.js';
 
 describe('enhanced lifters', () => {
   beforeEach(() => {
