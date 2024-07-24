@@ -4,9 +4,9 @@ import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
 import any from '@travi/any';
 import {when} from 'jest-when';
 
-import * as commonOptions from '../common/project-options';
-import {javascriptScaffolderFactory} from '../common/enhanced-scaffolders';
-import extendAction from './action';
+import * as commonOptions from '../common/project-options.js';
+import {javascriptScaffolderFactory} from '../common/enhanced-scaffolders.js';
+import extendAction from './action.js';
 
 describe('extend-eslint-config action', () => {
   beforeEach(() => {

@@ -7,8 +7,8 @@ import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
 import any from '@travi/any';
 import {when} from 'jest-when';
 
-import * as commonJavascriptOptions from './javascript-options';
-import {gitlabPrompt, javascriptScaffolderFactory, shell} from './enhanced-scaffolders';
+import * as commonJavascriptOptions from './javascript-options.js';
+import {gitlabPrompt, javascriptScaffolderFactory, shell} from './enhanced-scaffolders.js';
 
 describe('scaffolder factories', () => {
   const options = any.simpleObject();

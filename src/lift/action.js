@@ -17,8 +17,8 @@ import {
 import {replace as replaceTravisCiWithGithubActions} from '@form8ion/replace-travis-ci-with-github-actions';
 import {scaffold as scaffoldOssfScorecard} from '@form8ion/ossf-scorecard';
 
-import {javascript as liftJavascript} from './enhanced-lifters';
-import {unitTesting} from './enhanced-scaffolders';
+import {javascript as liftJavascript} from './enhanced-lifters.js';
+import {unitTesting} from './enhanced-scaffolders.js';
 
 export default function () {
   return lift({
