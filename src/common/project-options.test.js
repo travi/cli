@@ -1,6 +1,7 @@
 import * as rubyPlugin from '@form8ion/ruby-scaffolder';
-import {prompt as githubPrompt, scaffold as scaffoldGithub} from '@travi/github-scaffolder';
-import {scaffold as scaffoldGitlab} from '@travi/gitlab-scaffolder';
+import * as githubPlugin from '@travi/github-scaffolder';
+import {prompt as githubPrompt} from '@travi/github-scaffolder';
+import * as gitlabPrompt from '@travi/gitlab-scaffolder';
 import * as dependabotPlugin from '@form8ion/dependabot-scaffolder';
 import * as renovatePlugin from '@form8ion/renovate-scaffolder';
 
@@ -24,16 +25,16 @@ describe('common config', () => {
     shellPluginFactory.mockReturnValue(shellPlugin);
 
     expect(defineScaffoldProjectOptions(decisions)).toEqual({
-      vcsHosts: {
-        GitHub: {scaffolder: scaffoldGithub, prompt: githubPrompt, public: true, private: true},
-        GitLab: {scaffolder: scaffoldGitlab, prompt: enhancedScaffolders.gitlabPrompt, private: true}
-      },
       plugins: {
         dependencyUpdaters: {
           Dependabot: dependabotPlugin,
           Renovate: renovatePlugin
         },
-        languages: {JavaScript: jsPlugin, Ruby: rubyPlugin, Shell: shellPlugin}
+        languages: {JavaScript: jsPlugin, Ruby: rubyPlugin, Shell: shellPlugin},
+        vcsHosts: {
+          GitHub: {...githubPlugin, prompt: githubPrompt, public: true, private: true},
+          GitLab: {...gitlabPrompt, prompt: enhancedScaffolders.gitlabPrompt, private: true}
+        }
       },
       decisions
     });
