@@ -11,6 +11,7 @@ Feature: JavaScript Project
     And core ignores are defined
     And the base git files should be present
     And the project will have repository details defined
+    And next-steps are added as issues on GitHub
 #    And JavaScript ignores are defined
 
   Scenario: presentation
