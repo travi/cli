@@ -69,7 +69,7 @@ When(/^the project is scaffolded$/, async function () {
     [projectQuestionNames.GIT_REPO]: repoShouldBeCreated,
     ...repoShouldBeCreated && {
       [projectQuestionNames.REPO_HOST]: 'GitHub',
-      [projectQuestionNames.REPO_OWNER]: this.githubUser
+      githubAccount: this.githubUser
     },
     [projectQuestionNames.PROJECT_LANGUAGE]: projectLanguage,
     ...'JavaScript' === projectLanguage && {
