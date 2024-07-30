@@ -13,6 +13,7 @@ import {
   scaffold as scaffoldGithubActions,
   test as githubActionsCiApplicabilityTest
 } from '@form8ion/github-actions-node-ci';
+import * as githubPlugin from '@form8ion/github';
 import {replace as replaceTravisCiWithGithubActions} from '@form8ion/replace-travis-ci-with-github-actions';
 import {scaffold as scaffoldOssfScorecard} from '@form8ion/ossf-scorecard';
 
@@ -35,6 +36,7 @@ export default function () {
       JavaScript: javascriptPluginFactory({}),
       Renovate: {test: renovatePredicate, lift: liftRenovate},
       Dependabot: {test: dependabotPredicate, lift: liftDependabot},
+      GitHub: githubPlugin,
       'GitHub Actions CI': {test: githubActionsCiApplicabilityTest, lift: liftGithubActionsCI}
     }
   });
