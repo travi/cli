@@ -1,10 +1,11 @@
 import {StatusCodes} from 'http-status-codes';
 import deepEqual from 'deep-equal';
 
-import {AfterAll, BeforeAll, Given} from '@cucumber/cucumber';
+import {AfterAll, BeforeAll, Given, Then} from '@cucumber/cucumber';
 import any from '@travi/any';
 import {http, HttpResponse} from 'msw';
 import {setupServer} from 'msw/node';
+import {assert} from 'chai';
 
 export const githubToken = any.word();
 
@@ -29,6 +30,7 @@ AfterAll(() => {
 
 Given(/^the GitHub token is valid$/, async function () {
   this.repoSshUrl = any.url();
+  this.nextStepsFiledOnGithub = [];
 
   server.use(
     http.get(`https://api.github.com/repos/${this.githubUser}/${this.projectName}`, ({request}) => {
@@ -55,8 +57,10 @@ Given(/^the GitHub token is valid$/, async function () {
     })
   );
   server.use(
-    http.post(`https://api.github.com/repos/${this.githubUser}/${this.projectName}/issues`, ({request}) => {
+    http.post(`https://api.github.com/repos/${this.githubUser}/${this.projectName}/issues`, async ({request}) => {
       if (authorizationHeaderIncludesToken(request)) {
+        this.nextStepsFiledOnGithub.push(await request.json());
+
         return HttpResponse.json({
           ssh_url: any.url(),
           html_url: any.url()
@@ -83,5 +87,18 @@ Given(/^the GitHub token is valid$/, async function () {
 
       return new HttpResponse(null, {status: StatusCodes.UNAUTHORIZED});
     })
+  );
+});
+
+Then('next-steps are added as issues on GitHub', async function () {
+  assert.deepEqual(
+    this.nextStepsFiledOnGithub,
+    [
+      {title: 'Add the appropriate `save` flag to the installation instructions in the README'},
+      {title: 'Publish pre-release versions to npm until package is stable enough to publish v1.0.0'},
+      {title: 'Remove the canary test for mocha once more valuable tests exist'},
+      {title: 'Commit scaffolded files'},
+      {title: 'Set local `master` branch to track upstream `origin/master`'}
+    ]
   );
 });

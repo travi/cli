@@ -1,5 +1,6 @@
 import {dirname, resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {promptConstants as githubPromptConstants} from '@form8ion/github';
 
 import {After, Before, setWorldConstructor, When} from '@cucumber/cucumber';
 import any from '@travi/any';
@@ -69,7 +70,7 @@ When(/^the project is scaffolded$/, async function () {
     [projectQuestionNames.GIT_REPO]: repoShouldBeCreated,
     ...repoShouldBeCreated && {
       [projectQuestionNames.REPO_HOST]: 'GitHub',
-      [projectQuestionNames.REPO_OWNER]: this.githubUser
+      [githubPromptConstants.questionNames[githubPromptConstants.ids.GITHUB_DETAILS].GITHUB_ACCOUNT]: this.githubUser
     },
     [projectQuestionNames.PROJECT_LANGUAGE]: projectLanguage,
     ...'JavaScript' === projectLanguage && {
