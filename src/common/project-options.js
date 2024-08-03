@@ -16,7 +16,7 @@ export function defineScaffoldProjectOptions(decisions) {
       },
       languages: {JavaScript: javascriptPluginFactory(decisions), Ruby: rubyPlugin, Shell: shellPluginFactory()},
       vcsHosts: {
-        GitHub: {...githubPlugin, public: true, private: true},
+        GitHub: githubPlugin,
         GitLab: {...gitlabPlugin, prompt: gitlabPrompt, private: true}
       }
     },

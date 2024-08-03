@@ -31,7 +31,7 @@ describe('common config', () => {
         },
         languages: {JavaScript: jsPlugin, Ruby: rubyPlugin, Shell: shellPlugin},
         vcsHosts: {
-          GitHub: {...githubPlugin, public: true, private: true},
+          GitHub: githubPlugin,
           GitLab: {...gitlabPrompt, prompt: enhancedScaffolders.gitlabPrompt, private: true}
         }
       },
