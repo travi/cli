@@ -26,11 +26,6 @@ Before(async function () {
   this.visibility = any.fromList(['Public', 'Private']);
   this.scope = shouldBeScoped || 'Private' === this.visibility ? any.word() : undefined;
 
-  // work around for overly aggressive mock-fs, see:
-  // https://github.com/tschaub/mock-fs/issues/213#issuecomment-347002795
-  await import('validate-npm-package-name'); // eslint-disable-line import/no-extraneous-dependencies
-  await import('color-convert'); // eslint-disable-line import/no-extraneous-dependencies
-
   this.execa = await td.replaceEsm('@form8ion/execa-wrapper');
   this.git = await td.replaceEsm('simple-git');
 });

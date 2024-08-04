@@ -1,7 +1,7 @@
 import {StatusCodes} from 'http-status-codes';
 import deepEqual from 'deep-equal';
 
-import {AfterAll, BeforeAll, Given, Then} from '@cucumber/cucumber';
+import {After, AfterAll, BeforeAll, Given, Then} from '@cucumber/cucumber';
 import any from '@travi/any';
 import {http, HttpResponse} from 'msw';
 import {setupServer} from 'msw/node';
@@ -22,6 +22,10 @@ function authorizationHeaderIncludesToken(request) {
 
 BeforeAll(async () => {
   server.listen();
+});
+
+After(function () {
+  server.resetHandlers();
 });
 
 AfterAll(() => {
