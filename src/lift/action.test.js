@@ -1,10 +1,7 @@
 import * as lifter from '@form8ion/lift';
-import {
-  lift as liftRenovate,
-  scaffold as scaffoldRenovate,
-  test as renovatePredicate
-} from '@form8ion/renovate-scaffolder';
-import {lift as liftDependabot, test as dependabotPredicate} from '@form8ion/dependabot-scaffolder';
+import * as renovatePlugin from '@form8ion/renovate-scaffolder';
+import {scaffold as scaffoldRenovate} from '@form8ion/renovate-scaffolder';
+import * as dependabotPlugin from '@form8ion/dependabot-scaffolder';
 import {removeGreenkeeper} from '@form8ion/remove-greenkeeper';
 import {scaffold as scaffoldCucumber} from '@form8ion/cucumber-scaffolder';
 import {scaffold as scaffoldCypress} from '@form8ion/cypress-scaffolder';
@@ -46,8 +43,8 @@ describe('lift action', () => {
       },
       enhancers: {
         JavaScript: enhancedJavascriptPlugin,
-        Renovate: {test: renovatePredicate, lift: liftRenovate},
-        Dependabot: {test: dependabotPredicate, lift: liftDependabot},
+        Renovate: renovatePlugin,
+        Dependabot: dependabotPlugin,
         GitHub: githubPlugin,
         'GitHub Actions CI': {test: githubActionsCiApplicabilityTest, lift: liftGithubActionsCI}
       }
