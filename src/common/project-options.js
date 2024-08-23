@@ -4,7 +4,6 @@ import * as gitlabPlugin from '@travi/gitlab-scaffolder';
 import * as dependabotPlugin from '@form8ion/dependabot-scaffolder';
 import * as renovatePlugin from '@form8ion/renovate-scaffolder';
 
-import {gitlabPrompt} from './enhanced-scaffolders.js';
 import {javascriptPluginFactory, shellPluginFactory} from './enhanced-plugins.js';
 
 export function defineScaffoldProjectOptions(decisions) {
@@ -17,7 +16,7 @@ export function defineScaffoldProjectOptions(decisions) {
       languages: {JavaScript: javascriptPluginFactory(decisions), Ruby: rubyPlugin, Shell: shellPluginFactory()},
       vcsHosts: {
         GitHub: githubPlugin,
-        GitLab: {...gitlabPlugin, prompt: gitlabPrompt, private: true}
+        GitLab: gitlabPlugin
       }
     },
     decisions

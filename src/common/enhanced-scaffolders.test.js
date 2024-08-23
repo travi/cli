@@ -1,6 +1,5 @@
 import * as javascriptPlugin from '@form8ion/javascript';
 import * as shellScaffolder from '@travi/shell-scaffolder';
-import gitlabScaffolder from '@travi/gitlab-scaffolder';
 import {scaffold as scaffoldTravisForShell} from '@travi/travis-scaffolder-shell';
 
 import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
@@ -8,7 +7,7 @@ import any from '@travi/any';
 import {when} from 'jest-when';
 
 import * as commonJavascriptOptions from './javascript-options.js';
-import {gitlabPrompt, javascriptScaffolderFactory, shell} from './enhanced-scaffolders.js';
+import {javascriptScaffolderFactory, shell} from './enhanced-scaffolders.js';
 
 describe('scaffolder factories', () => {
   const options = any.simpleObject();
@@ -42,11 +41,5 @@ describe('scaffolder factories', () => {
       .mockResolvedValue(output);
 
     expect(await shell(options)).toBe(output);
-  });
-
-  it('should pass the owner account to the github prompts', async () => {
-    when(gitlabScaffolder.prompt).calledWith({account: 'travi'}).mockResolvedValue(output);
-
-    expect(await gitlabPrompt()).toBe(output);
   });
 });

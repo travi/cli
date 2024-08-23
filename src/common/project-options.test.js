@@ -1,6 +1,6 @@
 import * as rubyPlugin from '@form8ion/ruby-scaffolder';
 import * as githubPlugin from '@form8ion/github';
-import * as gitlabPrompt from '@travi/gitlab-scaffolder';
+import * as gitlabPlugin from '@travi/gitlab-scaffolder';
 import * as dependabotPlugin from '@form8ion/dependabot-scaffolder';
 import * as renovatePlugin from '@form8ion/renovate-scaffolder';
 
@@ -9,7 +9,6 @@ import any from '@travi/any';
 import {when} from 'jest-when';
 
 import {javascriptPluginFactory, shellPluginFactory} from './enhanced-plugins.js';
-import * as enhancedScaffolders from './enhanced-scaffolders.js';
 import {defineScaffoldProjectOptions} from './project-options.js';
 
 vi.mock('./enhanced-plugins.js');
@@ -32,7 +31,7 @@ describe('common config', () => {
         languages: {JavaScript: jsPlugin, Ruby: rubyPlugin, Shell: shellPlugin},
         vcsHosts: {
           GitHub: githubPlugin,
-          GitLab: {...gitlabPrompt, prompt: enhancedScaffolders.gitlabPrompt, private: true}
+          GitLab: gitlabPlugin
         }
       },
       decisions
