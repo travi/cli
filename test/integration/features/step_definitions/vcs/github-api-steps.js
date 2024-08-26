@@ -99,6 +99,7 @@ Then('next-steps are added as issues on GitHub', async function () {
     this.nextStepsFiledOnGithub,
     [
       {title: 'Add the appropriate `save` flag to the installation instructions in the README'},
+      {title: 'Define supported node.js versions as `engines.node` in the `package.json` file'},
       {title: 'Publish pre-release versions to npm until package is stable enough to publish v1.0.0'},
       {title: 'Remove the canary test for mocha once more valuable tests exist'},
       {title: 'Commit scaffolded files'},
