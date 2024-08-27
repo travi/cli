@@ -95,7 +95,7 @@
     "commander": "12.1.0",
     "inquander": "1.1.1",
     "snyk": "^1.355.0",
-    "update-notifier": "7.2.0"
+    "update-notifier": "7.3.0"
   },
   "devDependencies": {
     "@cucumber/cucumber": "10.9.0",
