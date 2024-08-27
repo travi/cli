@@ -15,6 +15,7 @@ import {scaffold as scaffoldRollup} from '@form8ion/rollup';
 import {scaffold as scaffoldVite} from '@form8ion/vite';
 import {questionNames as jsQuestionNames} from '@form8ion/javascript';
 import {packageManagers} from '@form8ion/javascript-core';
+import {scaffold as scaffoldEslintConfig} from '@form8ion/eslint-config-extender';
 
 import {describe, expect, it} from 'vitest';
 import any from '@travi/any';
@@ -53,7 +54,8 @@ describe('common javascript config', () => {
       },
       packageTypes: {
         'React Component Library': {scaffolder: scaffoldReactComponents},
-        'Octoherd Script': {scaffolder: scaffoldOctoherdScript}
+        'Octoherd Script': {scaffolder: scaffoldOctoherdScript},
+        'ESLint Config': {scaffolder: scaffoldEslintConfig}
       },
       monorepoTypes: {Lerna: {scaffolder: scaffoldLerna}},
       unitTestFrameworks,

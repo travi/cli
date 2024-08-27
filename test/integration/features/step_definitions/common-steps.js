@@ -12,19 +12,19 @@ import {githubToken} from './vcs/github-api-steps.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));        // eslint-disable-line no-underscore-dangle
 
-const projectDescription = any.sentence();
-const shouldBeScoped = any.boolean();
-
 const pathToNodeModules = [__dirname, '..', '..', '..', '..', 'node_modules'];
-const stubbedNodeModules = stubbedFs.load(resolve(...pathToNodeModules));
+export const stubbedNodeModules = stubbedFs.load(resolve(...pathToNodeModules));
 
 setWorldConstructor(World);
 
 Before(async function () {
+  this.projectRoot = process.cwd();
   this.githubUser = any.word();
   this.projectName = any.word();
   this.visibility = any.fromList(['Public', 'Private']);
-  this.scope = shouldBeScoped || 'Private' === this.visibility ? any.word() : undefined;
+  this.shouldBeScoped = any.boolean();
+  this.scope = this.shouldBeScoped || 'Private' === this.visibility ? any.word() : undefined;
+  this.projectDescription = any.sentence();
 
   this.execa = await td.replaceEsm('@form8ion/execa-wrapper');
   this.git = await td.replaceEsm('simple-git');
@@ -53,7 +53,7 @@ When(/^the project is scaffolded$/, async function () {
 
   await scaffoldProject({
     [projectQuestionNames.PROJECT_NAME]: this.projectName,
-    [projectQuestionNames.DESCRIPTION]: projectDescription,
+    [projectQuestionNames.DESCRIPTION]: this.projectDescription,
     [projectQuestionNames.VISIBILITY]: this.visibility,
     [projectQuestionNames.DEPENDENCY_UPDATER]: any.word(),
     ...'Public' === this.visibility && {
@@ -87,7 +87,7 @@ When(/^the project is scaffolded$/, async function () {
       [javascriptQuestionNames.CONFIGURE_LINTING]: true,
       [javascriptQuestionNames.PROJECT_TYPE_CHOICE]: this.getAnswerFor(javascriptQuestionNames.PROJECT_TYPE_CHOICE)
         || 'Other',
-      [javascriptQuestionNames.SHOULD_BE_SCOPED]: shouldBeScoped,
+      [javascriptQuestionNames.SHOULD_BE_SCOPED]: this.shouldBeScoped,
       [javascriptQuestionNames.SCOPE]: this.scope,
       [javascriptQuestionNames.UNIT_TEST_FRAMEWORK]: 'mocha',
       [javascriptQuestionNames.DIALECT]: this.dialect
@@ -114,7 +114,7 @@ When('a package is added to the monorepo', async function () {
 
   await addPackageToMonorepo({
     [addPackageQuestionNames.PROJECT_NAME]: this.projectName,
-    [addPackageQuestionNames.DESCRIPTION]: projectDescription,
+    [addPackageQuestionNames.DESCRIPTION]: this.projectDescription,
     [addPackageQuestionNames.VISIBILITY]: this.visibility,
     [addPackageQuestionNames.NODE_VERSION_CATEGORY]: 'LTS',
     [addPackageQuestionNames.PROVIDE_EXAMPLE]: true,
@@ -127,7 +127,7 @@ When('a package is added to the monorepo', async function () {
     [addPackageQuestionNames.UNIT_TESTS]: true,
     [addPackageQuestionNames.INTEGRATION_TESTS]: true,
     [addPackageQuestionNames.CONFIGURE_LINTING]: true,
-    [addPackageQuestionNames.SHOULD_BE_SCOPED]: shouldBeScoped,
+    [addPackageQuestionNames.SHOULD_BE_SCOPED]: this.shouldBeScoped,
     [addPackageQuestionNames.SCOPE]: this.scope,
     [addPackageQuestionNames.AUTHOR_NAME]: any.word(),
     [addPackageQuestionNames.AUTHOR_EMAIL]: any.email(),

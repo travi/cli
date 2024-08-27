@@ -1,7 +1,8 @@
-import {promises as fs} from 'fs';
-import {Before, Given, Then} from '@cucumber/cucumber';
-import {load} from 'js-yaml';
+import {promises as fs} from 'node:fs';
 import {fileExists} from '@form8ion/core';
+import {load as loadConfig} from '@form8ion/config-file';
+
+import {Before, Given, Then} from '@cucumber/cucumber';
 import {assert} from 'chai';
 import any from '@travi/any';
 import * as td from 'testdouble';
@@ -68,7 +69,7 @@ Then(/^JavaScript ignores are defined$/, async function () {
 });
 
 Then(/^the core JavaScript files are present$/, async function () {
-  const config = load(await fs.readFile(`${process.cwd()}/.eslintrc.yml`));
+  const config = await loadConfig({name: 'eslint'});
 
   assert.isTrue(await fileExists(`${process.cwd()}/package.json`));
   assert.deepEqual(config.extends, ['@travi', '@travi/mocha']);

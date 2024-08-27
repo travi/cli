@@ -5,7 +5,7 @@ import any from '@travi/any';
 import {when} from 'jest-when';
 
 import * as commonOptions from '../common/project-options.js';
-import {javascriptScaffolderFactory} from '../common/enhanced-scaffolders.js';
+import {javascriptPluginFactory} from '../common/enhanced-plugins.js';
 import extendAction from './action.js';
 
 describe('extend-eslint-config action', () => {
@@ -24,7 +24,7 @@ describe('extend-eslint-config action', () => {
     const extendResults = any.simpleObject();
     when(commonOptions.defineScaffoldProjectOptions).calledWith(decisions).mockReturnValue(scaffoldOptions);
     when(eslintConfigExtender.extendEslintConfig)
-      .calledWith(scaffoldOptions, javascriptScaffolderFactory)
+      .calledWith(scaffoldOptions, javascriptPluginFactory)
       .mockResolvedValue(extendResults);
 
     expect(await extendAction(decisions)).toBe(extendResults);
