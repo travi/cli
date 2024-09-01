@@ -1,20 +1,14 @@
 import {lift} from '@form8ion/lift';
-import * as renovatePlugin from '@form8ion/renovate-scaffolder';
 import {scaffold as scaffoldRenovate} from '@form8ion/renovate-scaffolder';
-import * as dependabotPlugin from '@form8ion/dependabot-scaffolder';
 import {removeGreenkeeper} from '@form8ion/remove-greenkeeper';
 import {scaffold as scaffoldCucumber} from '@form8ion/cucumber-scaffolder';
 import {scaffold as scaffoldCypress} from '@form8ion/cypress-scaffolder';
-import {
-  lift as liftGithubActionsCI,
-  scaffold as scaffoldGithubActions,
-  test as githubActionsCiApplicabilityTest
-} from '@form8ion/github-actions-node-ci';
-import * as githubPlugin from '@form8ion/github';
+import * as githubWorkflowsPlugin from '@form8ion/github-actions-node-ci';
+import {scaffold as scaffoldGithubActions} from '@form8ion/github-actions-node-ci';
 import {replace as replaceTravisCiWithGithubActions} from '@form8ion/replace-travis-ci-with-github-actions';
 import {scaffold as scaffoldOssfScorecard} from '@form8ion/ossf-scorecard';
 
-import {javascriptPluginFactory} from '../common/enhanced-plugins.js';
+import {project as projectPlugins} from '../common/plugins.js';
 import {unitTesting} from './enhanced-scaffolders.js';
 
 export default function () {
@@ -30,11 +24,8 @@ export default function () {
       'OSSF Scorecard': scaffoldOssfScorecard
     },
     enhancers: {
-      JavaScript: javascriptPluginFactory({}),
-      Renovate: renovatePlugin,
-      Dependabot: dependabotPlugin,
-      GitHub: githubPlugin,
-      'GitHub Actions CI': {test: githubActionsCiApplicabilityTest, lift: liftGithubActionsCI}
+      ...Object.values(projectPlugins({})).reduce((acc, pluginGroup) => ({...acc, ...pluginGroup}), {}),
+      'GitHub Actions CI': githubWorkflowsPlugin
     }
   });
 }
