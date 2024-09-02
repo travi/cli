@@ -1,17 +1,17 @@
-import {scaffold as scaffoldMocha} from '@form8ion/mocha-scaffolder';
-import {scaffold as scaffoldJest} from '@form8ion/jest-scaffolder';
-import {scaffold as scaffoldVitest} from '@form8ion/vitest';
+import * as mochaPlugin from '@form8ion/mocha-scaffolder';
+import * as jestPlugin from '@form8ion/jest-scaffolder';
+import * as vitestPlugin from '@form8ion/vitest';
 
 import {describe, expect, it} from 'vitest';
 
-import {unitTestFrameworks} from './test-frameworks';
+import {unitTestFrameworks} from './test-frameworks.js';
 
 describe('common test frameworks', () => {
   it('should define the unit test frameworks', () => {
     expect(unitTestFrameworks).toEqual({
-      mocha: {scaffolder: scaffoldMocha},
-      jest: {scaffolder: scaffoldJest},
-      vitest: {scaffolder: scaffoldVitest}
+      vitest: vitestPlugin,
+      mocha: mochaPlugin,
+      jest: jestPlugin
     });
   });
 });
