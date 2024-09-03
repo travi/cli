@@ -2,8 +2,8 @@ import {packageManagers} from '@form8ion/javascript-core';
 import {questionNames as jsQuestionNames} from '@form8ion/javascript';
 import {scaffold as scaffoldCircle} from '@travi/circle-scaffolder-javascript';
 import {scaffold as scaffoldGithubActionsCI} from '@form8ion/github-actions-node-ci';
-import {scaffold as scaffoldNetlify} from '@travi/netlify-scaffolder';
-import {scaffold as scaffoldAppEngine} from '@travi/node-app-engine-standard-scaffolder';
+import * as netlifyPlugin from '@travi/netlify-scaffolder';
+import * as appEngineStandardPlugin from '@travi/node-app-engine-standard-scaffolder';
 import * as mdxDeckPlugin from '@form8ion/mdx-deck';
 import * as slidevPlugin from '@form8ion/slidev';
 import * as spectaclePlugin from '@travi/spectacle-scaffolder';
@@ -53,21 +53,15 @@ export function defineScaffoldJavascriptOptions(decisions, options) {
       packageBundlers: {
         Rollup: rollupPlugin,
         Vite: vitePlugin
+      },
+      hosts: {
+        Netlify: netlifyPlugin,
+        'App Engine Standard': appEngineStandardPlugin
       }
     },
     ciServices: {
       Circle: {scaffolder: scaffoldCircle, public: true, private: true},
       'GitHub Actions': {scaffolder: scaffoldGithubActionsCI, public: true, private: true}
-    },
-    hosts: {
-      Netlify: {
-        projectTypes: ['static'],
-        scaffolder: scaffoldNetlify
-      },
-      'App Engine Standard': {
-        projectTypes: ['node'],
-        scaffolder: scaffoldAppEngine
-      }
     },
     decisions: {
       ...decisions,
