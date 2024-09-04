@@ -1,3 +1,4 @@
+import {ungroupObject} from '@form8ion/core';
 import * as lifter from '@form8ion/lift';
 import {scaffold as scaffoldRenovate} from '@form8ion/renovate-scaffolder';
 import {removeGreenkeeper} from '@form8ion/remove-greenkeeper';
@@ -13,13 +14,12 @@ import any from '@travi/any';
 
 import {project} from '../common/plugins.js';
 import {javascriptPluginFactory} from '../common/enhanced-plugins.js';
-import ungroupPlugins from '../common/plugin-ungrouper.js';
 import {unitTesting} from './enhanced-scaffolders.js';
 import liftAction from './action.js';
 
+vi.mock('@form8ion/core');
 vi.mock('@form8ion/lift');
 vi.mock('../common/enhanced-plugins.js');
-vi.mock('../common/plugin-ungrouper.js');
 vi.mock('../common/plugins.js');
 
 describe('lift action', () => {
@@ -28,7 +28,7 @@ describe('lift action', () => {
     const enhancedJavascriptPlugin = any.simpleObject();
     const projectPluginGroups = any.objectWithKeys(any.listOf(any.word), {factory: any.simpleObject});
     const ungroupedPlugins = any.simpleObject();
-    when(ungroupPlugins).calledWith(projectPluginGroups).mockReturnValue(ungroupedPlugins);
+    when(ungroupObject).calledWith(projectPluginGroups).mockReturnValue(ungroupedPlugins);
     when(javascriptPluginFactory).calledWith({}).mockReturnValue(enhancedJavascriptPlugin);
     when(project).calledWith({}).mockReturnValue(projectPluginGroups);
     when(lifter.lift).calledWith({

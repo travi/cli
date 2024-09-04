@@ -1,3 +1,4 @@
+import {ungroupObject} from '@form8ion/core';
 import {lift} from '@form8ion/lift';
 import {scaffold as scaffoldRenovate} from '@form8ion/renovate-scaffolder';
 import {removeGreenkeeper} from '@form8ion/remove-greenkeeper';
@@ -8,7 +9,6 @@ import {replace as replaceTravisCiWithGithubActions} from '@form8ion/replace-tra
 import {scaffold as scaffoldOssfScorecard} from '@form8ion/ossf-scorecard';
 
 import {project as projectPlugins} from '../common/plugins.js';
-import ungroupPlugins from '../common/plugin-ungrouper.js';
 import {unitTesting} from './enhanced-scaffolders.js';
 
 export default function () {
@@ -23,6 +23,6 @@ export default function () {
       'Replace Travis CI with GitHub Actions': replaceTravisCiWithGithubActions,
       'OSSF Scorecard': scaffoldOssfScorecard
     },
-    enhancers: ungroupPlugins(projectPlugins({}))
+    enhancers: ungroupObject(projectPlugins({}))
   });
 }
