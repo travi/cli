@@ -21,7 +21,7 @@ import {describe, expect, it} from 'vitest';
 import any from '@travi/any';
 
 import {unitTestFrameworks} from './test-frameworks.js';
-import {defineScaffoldJavascriptOptions} from './javascript-options.js';
+import {defineScaffoldJavascriptOptions, plugins} from './javascript-options.js';
 
 describe('common javascript config', () => {
   it('should define scaffold-js options', () => {
@@ -36,38 +36,42 @@ describe('common javascript config', () => {
         babelPreset: {name: '@travi', packageName: '@travi/babel-preset'},
         remark: 'remark-preset-lint-travi'
       },
-      plugins: {
-        unitTestFrameworks,
-        applicationTypes: {
-          'MDX Deck': mdxDeckPlugin,
-          Slidev: slidevPlugin,
-          Spectacle: spectaclePlugin,
-          Hapi: hapiPlugin,
-          Nuxt: nuxtPlugin,
-          Probot: probotPlugin
-        },
-        packageTypes: {
-          'React Component Library': reactComponentsPlugin,
-          'Octoherd Script': octoherdScriptPlugin,
-          'ESLint Config': eslintConfigPlugin
-        },
-        monorepoTypes: {Lerna: lernaPlugin},
-        packageBundlers: {
-          Rollup: rollupPlugin,
-          Vite: vitePlugin
-        },
-        hosts: {
-          Netlify: netlifyPlugin,
-          'App Engine Standard': appEngineStandardPlugin
-        },
-        ciServices: {
-          Circle: circleCiPlugin,
-          'GitHub Actions': githubWorkflowsPlugin
-        }
-      },
+      plugins: plugins(),
       decisions: {
         ...decisions,
         [jsQuestionNames.PACKAGE_MANAGER]: packageManagers.NPM
+      }
+    });
+  });
+
+  it('defines the javascript plugins', () => {
+    expect(plugins()).toEqual({
+      unitTestFrameworks,
+      applicationTypes: {
+        'MDX Deck': mdxDeckPlugin,
+        Slidev: slidevPlugin,
+        Spectacle: spectaclePlugin,
+        Hapi: hapiPlugin,
+        Nuxt: nuxtPlugin,
+        Probot: probotPlugin
+      },
+      packageTypes: {
+        'React Component Library': reactComponentsPlugin,
+        'Octoherd Script': octoherdScriptPlugin,
+        'ESLint Config': eslintConfigPlugin
+      },
+      monorepoTypes: {Lerna: lernaPlugin},
+      packageBundlers: {
+        Rollup: rollupPlugin,
+        Vite: vitePlugin
+      },
+      hosts: {
+        Netlify: netlifyPlugin,
+        'App Engine Standard': appEngineStandardPlugin
+      },
+      ciServices: {
+        'GitHub Actions': githubWorkflowsPlugin,
+        Circle: circleCiPlugin
       }
     });
   });
