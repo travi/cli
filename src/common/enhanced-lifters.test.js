@@ -1,12 +1,10 @@
 import * as jsLifter from '@form8ion/javascript';
-import * as githubWorkflowsPlugin from '@form8ion/github-actions-node-ci';
-import * as rollupPlugin from '@form8ion/rollup';
-import * as vitePlugin from '@form8ion/vite';
 
 import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
 import any from '@travi/any';
 import {when} from 'jest-when';
 
+import {plugins} from './javascript-options.js';
 import {javascript} from './enhanced-lifters.js';
 
 describe('enhanced lifters', () => {
@@ -25,11 +23,7 @@ describe('enhanced lifters', () => {
       .calledWith({
         ...options,
         configs: {eslint: {scope: '@travi'}},
-        enhancers: {
-          'GitHub Actions CI': githubWorkflowsPlugin,
-          Rollup: rollupPlugin,
-          Vite: vitePlugin
-        }
+        enhancers: plugins()
       })
       .mockResolvedValue(results);
 
