@@ -12,12 +12,14 @@ import {when} from 'jest-when';
 import any from '@travi/any';
 
 import {project} from '../common/plugins.js';
-import {unitTesting} from './enhanced-scaffolders.js';
 import {javascriptPluginFactory} from '../common/enhanced-plugins.js';
+import ungroupPlugins from '../common/plugin-ungrouper.js';
+import {unitTesting} from './enhanced-scaffolders.js';
 import liftAction from './action.js';
 
 vi.mock('@form8ion/lift');
 vi.mock('../common/enhanced-plugins.js');
+vi.mock('../common/plugin-ungrouper.js');
 vi.mock('../common/plugins.js');
 
 describe('lift action', () => {
@@ -25,8 +27,8 @@ describe('lift action', () => {
     const liftingResults = any.simpleObject();
     const enhancedJavascriptPlugin = any.simpleObject();
     const projectPluginGroups = any.objectWithKeys(any.listOf(any.word), {factory: any.simpleObject});
-    const flattenedPlugins = Object.values(projectPluginGroups)
-      .reduce((acc, pluginGroup) => ({...acc, ...pluginGroup}), {});
+    const ungroupedPlugins = any.simpleObject();
+    when(ungroupPlugins).calledWith(projectPluginGroups).mockReturnValue(ungroupedPlugins);
     when(javascriptPluginFactory).calledWith({}).mockReturnValue(enhancedJavascriptPlugin);
     when(project).calledWith({}).mockReturnValue(projectPluginGroups);
     when(lifter.lift).calledWith({
@@ -40,7 +42,7 @@ describe('lift action', () => {
         'Replace Travis CI with GitHub Actions': replaceTravisCiWithGithubActions,
         'OSSF Scorecard': scaffoldOssfScorecard
       },
-      enhancers: flattenedPlugins
+      enhancers: ungroupedPlugins
     }).mockResolvedValue(liftingResults);
 
     expect(await liftAction()).toEqual(liftingResults);

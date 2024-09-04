@@ -8,6 +8,7 @@ import {replace as replaceTravisCiWithGithubActions} from '@form8ion/replace-tra
 import {scaffold as scaffoldOssfScorecard} from '@form8ion/ossf-scorecard';
 
 import {project as projectPlugins} from '../common/plugins.js';
+import ungroupPlugins from '../common/plugin-ungrouper.js';
 import {unitTesting} from './enhanced-scaffolders.js';
 
 export default function () {
@@ -22,6 +23,6 @@ export default function () {
       'Replace Travis CI with GitHub Actions': replaceTravisCiWithGithubActions,
       'OSSF Scorecard': scaffoldOssfScorecard
     },
-    enhancers: Object.values(projectPlugins({})).reduce((acc, pluginGroup) => ({...acc, ...pluginGroup}), {})
+    enhancers: ungroupPlugins(projectPlugins({}))
   });
 }
