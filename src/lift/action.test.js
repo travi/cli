@@ -7,6 +7,7 @@ import {scaffold as scaffoldCypress} from '@form8ion/cypress-scaffolder';
 import {scaffold as scaffoldOssfScorecard} from '@form8ion/ossf-scorecard';
 import {scaffold as scaffoldGithubActions} from '@form8ion/github-actions-node-ci';
 import {replace as replaceTravisCiWithGithubActions} from '@form8ion/replace-travis-ci-with-github-actions';
+import * as jetbrainsPlugin from '@form8ion/jetbrains';
 
 import {describe, expect, it, vi} from 'vitest';
 import {when} from 'jest-when';
@@ -42,7 +43,7 @@ describe('lift action', () => {
         'Replace Travis CI with GitHub Actions': replaceTravisCiWithGithubActions,
         'OSSF Scorecard': scaffoldOssfScorecard
       },
-      enhancers: ungroupedPlugins
+      enhancers: {...ungroupedPlugins, JetBrains: jetbrainsPlugin}
     }).mockResolvedValue(liftingResults);
 
     expect(await liftAction()).toEqual(liftingResults);

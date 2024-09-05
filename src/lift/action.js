@@ -7,6 +7,7 @@ import {scaffold as scaffoldCypress} from '@form8ion/cypress-scaffolder';
 import {scaffold as scaffoldGithubActions} from '@form8ion/github-actions-node-ci';
 import {replace as replaceTravisCiWithGithubActions} from '@form8ion/replace-travis-ci-with-github-actions';
 import {scaffold as scaffoldOssfScorecard} from '@form8ion/ossf-scorecard';
+import * as jetbrainsPlugin from '@form8ion/jetbrains';
 
 import {project as projectPlugins} from '../common/plugins.js';
 import {unitTesting} from './enhanced-scaffolders.js';
@@ -23,6 +24,9 @@ export default function () {
       'Replace Travis CI with GitHub Actions': replaceTravisCiWithGithubActions,
       'OSSF Scorecard': scaffoldOssfScorecard
     },
-    enhancers: ungroupObject(projectPlugins({}))
+    enhancers: {
+      ...ungroupObject(projectPlugins({})),
+      JetBrains: jetbrainsPlugin
+    }
   });
 }
