@@ -100,7 +100,7 @@
     "update-notifier": "7.3.1"
   },
   "devDependencies": {
-    "@cucumber/cucumber": "11.0.0",
+    "@cucumber/cucumber": "11.0.1",
     "@form8ion/config-file": "1.1.2",
     "@rollup/plugin-node-resolve": "15.2.3",
     "@travi/any": "3.1.2",
