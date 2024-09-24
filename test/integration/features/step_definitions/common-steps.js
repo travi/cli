@@ -97,7 +97,6 @@ When(/^the project is scaffolded$/, async function () {
 
 When('a package is added to the monorepo', async function () {
   const {questionNames: addPackageQuestionNames} = await import('@form8ion/add-package-to-monorepo');
-  const {dialects} = await import('@form8ion/javascript-core');
 
   const {default: addPackageToMonorepo} = await import('../../../../src/add-package/action.js');
 
@@ -135,6 +134,6 @@ When('a package is added to the monorepo', async function () {
     [addPackageQuestionNames.PROJECT_TYPE_CHOICE]: 'Other',
     [addPackageQuestionNames.UNIT_TEST_FRAMEWORK]: 'mocha',
     [addPackageQuestionNames.PACKAGE_BUNDLER]: 'Rollup',
-    [addPackageQuestionNames.DIALECT]: dialects.BABEL
+    [addPackageQuestionNames.DIALECT]: this.dialect
   });
 });
