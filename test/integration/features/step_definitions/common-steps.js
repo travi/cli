@@ -26,7 +26,7 @@ Before(async function () {
   this.scope = this.shouldBeScoped || 'Private' === this.visibility ? any.word() : undefined;
   this.projectDescription = any.sentence();
 
-  this.execa = await td.replaceEsm('@form8ion/execa-wrapper');
+  ({execa: this.execa} = (await td.replaceEsm('execa')));
   this.git = await td.replaceEsm('simple-git');
 });
 
