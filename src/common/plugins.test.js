@@ -1,6 +1,7 @@
 import * as dependabotPlugin from '@form8ion/dependabot-scaffolder';
 import * as renovatePlugin from '@form8ion/renovate-scaffolder';
 import * as rubyPlugin from '@form8ion/ruby-scaffolder';
+import * as phpPlugin from '@form8ion/php';
 import * as githubPlugin from '@form8ion/github';
 import * as gitlabPlugin from '@travi/gitlab-scaffolder';
 
@@ -27,7 +28,12 @@ describe('plugins', () => {
         Dependabot: dependabotPlugin,
         Renovate: renovatePlugin
       },
-      languages: {JavaScript: jsPlugin, Ruby: rubyPlugin, Shell: shellPlugin},
+      languages: {
+        JavaScript: jsPlugin,
+        Ruby: rubyPlugin,
+        Shell: shellPlugin,
+        PHP: phpPlugin
+      },
       vcsHosts: {
         GitHub: githubPlugin,
         GitLab: gitlabPlugin
