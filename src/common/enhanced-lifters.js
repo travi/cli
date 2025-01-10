@@ -6,7 +6,18 @@ import {plugins} from './javascript-options.js';
 export function javascript(options) {
   return lift({
     ...options,
-    configs: {eslint: {scope: '@travi'}},
+    configs: {
+      eslint: {scope: '@travi'},
+      commitlint: {
+        name: 'travi',
+        packageName: 'commitlint-config-travi'
+      },
+      babelPreset: {
+        name: '@travi',
+        packageName: '@travi/babel-preset'
+      },
+      remark: 'remark-preset-lint-travi'
+    },
     enhancers: ungroupObject(plugins())
   });
 }

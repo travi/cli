@@ -16,7 +16,9 @@ import * as netlifyPlugin from '@travi/netlify-scaffolder';
 import * as appEngineStandardPlugin from '@travi/node-app-engine-standard-scaffolder';
 import * as githubWorkflowsPlugin from '@form8ion/github-actions-node-ci';
 import * as circleCiPlugin from '@travi/circle-scaffolder-javascript';
+
 import {unitTestFrameworks} from './test-frameworks.js';
+import configs from './javascript-configs.js';
 
 export function plugins() {
   return {
@@ -53,18 +55,7 @@ export function plugins() {
 export function defineScaffoldJavascriptOptions(decisions, options) {
   return {
     ...options,
-    configs: {
-      eslint: {scope: '@travi'},
-      commitlint: {
-        name: 'travi',
-        packageName: 'commitlint-config-travi'
-      },
-      babelPreset: {
-        name: '@travi',
-        packageName: '@travi/babel-preset'
-      },
-      remark: 'remark-preset-lint-travi'
-    },
+    configs,
     plugins: plugins(),
     decisions: {
       ...decisions,

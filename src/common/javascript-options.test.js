@@ -21,6 +21,7 @@ import {describe, expect, it} from 'vitest';
 import any from '@travi/any';
 
 import {unitTestFrameworks} from './test-frameworks.js';
+import configs from './javascript-configs.js';
 import {defineScaffoldJavascriptOptions, plugins} from './javascript-options.js';
 
 describe('common javascript config', () => {
@@ -30,12 +31,7 @@ describe('common javascript config', () => {
 
     expect(defineScaffoldJavascriptOptions(decisions, options)).toEqual({
       ...options,
-      configs: {
-        eslint: {scope: '@travi'},
-        commitlint: {name: 'travi', packageName: 'commitlint-config-travi'},
-        babelPreset: {name: '@travi', packageName: '@travi/babel-preset'},
-        remark: 'remark-preset-lint-travi'
-      },
+      configs,
       plugins: plugins(),
       decisions: {
         ...decisions,

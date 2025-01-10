@@ -7,6 +7,7 @@ import {when} from 'jest-when';
 
 import {plugins} from './javascript-options.js';
 import {javascript} from './enhanced-lifters.js';
+import configs from './javascript-configs.js';
 
 vi.mock('@form8ion/core');
 vi.mock('./javascript-options.js');
@@ -28,7 +29,7 @@ describe('enhanced lifters', () => {
     plugins.mockReturnValue(groupedPlugins);
     when(ungroupObject).calledWith(groupedPlugins).mockReturnValue(ungroupedPlugins);
     when(jsLifter.lift)
-      .calledWith({...options, configs: {eslint: {scope: '@travi'}}, enhancers: ungroupedPlugins})
+      .calledWith({...options, configs, enhancers: ungroupedPlugins})
       .mockResolvedValue(results);
 
     expect(await javascript(options)).toEqual(results);
