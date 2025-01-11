@@ -73,7 +73,7 @@
     "@form8ion/nuxt": "2.0.0",
     "@form8ion/octoherd-script": "1.0.0",
     "@form8ion/ossf-scorecard": "1.2.1",
-    "@form8ion/php": "1.4.0",
+    "@form8ion/php": "1.5.0",
     "@form8ion/probot-scaffolder": "1.0.0-alpha.5",
     "@form8ion/project": "20.0.0",
     "@form8ion/react-components-scaffolder": "3.0.3",

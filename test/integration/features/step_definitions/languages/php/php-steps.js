@@ -15,4 +15,5 @@ Given('the project language should be PHP', async function () {
 
 Then('the core PHP files are present', async function () {
   assert(await fileExists(`${this.projectRoot}/composer.json`));
+  assert(await fileExists(`${this.projectRoot}/build.xml`));
 });
