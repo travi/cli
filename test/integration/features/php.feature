@@ -6,3 +6,4 @@ Feature: PHP Project
     And the project language should be PHP
     When the project is scaffolded
     Then the core PHP files are present
+    And the php project is verified after scaffolding

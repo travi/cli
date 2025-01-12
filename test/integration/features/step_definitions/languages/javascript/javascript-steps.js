@@ -86,3 +86,7 @@ Then('the project will have repository details defined', async function () {
     `${this.githubUser}/${this.projectName}`
   );
 });
+
+Then('the JavaScript project is verified after scaffolding', async function () {
+  td.verify(this.execa('npm run generate:md && npm test', {shell: true}));
+});

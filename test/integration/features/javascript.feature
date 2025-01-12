@@ -13,6 +13,7 @@ Feature: JavaScript Project
     And the project will have repository details defined
     And next-steps are added as issues on GitHub
 #    And JavaScript ignores are defined
+    And the JavaScript project is verified after scaffolding
 
   Scenario: presentation
     Given the project should be versioned in git
