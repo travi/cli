@@ -1,4 +1,4 @@
-import {promises as fs} from 'node:fs';
+import {promises as fs, writeFileSync} from 'node:fs';
 import {fileExists} from '@form8ion/core';
 import {load as loadConfig} from '@form8ion/config-file';
 
@@ -37,6 +37,10 @@ Given(/^the project language should be JavaScript$/, async function () {
     .thenReturn({stdout: {pipe: () => undefined}});
   td.when(this.execa('npm', ['whoami'])).thenResolve(any.word());
   td.when(this.execa('npm', ['ls', 'husky', '--json'])).thenReject(huskyVersionError);
+  td.when(this.execa(
+    td.matchers.contains('. ~/.nvm/nvm.sh && nvm use && npm install'),
+    {shell: true, cwd: this.projectRoot}
+  )).thenDo(() => writeFileSync(`${this.projectRoot}/package-lock.json`, JSON.stringify(any.simpleObject())));
 });
 
 Given('the project will use the {string} dialect', async function (dialect) {
@@ -58,7 +62,7 @@ Given(/^nvm is properly configured$/, function () {
 });
 
 Then(/^JavaScript ignores are defined$/, async function () {
-  const gitIgnore = await fs.readFile(`${process.cwd()}/.gitignore`);
+  const gitIgnore = await fs.readFile(`${this.projectRoot}/.gitignore`);
 
   assert.equal(gitIgnore.toString(), `/node_modules/
 /lib/
@@ -71,7 +75,8 @@ Then(/^JavaScript ignores are defined$/, async function () {
 Then(/^the core JavaScript files are present$/, async function () {
   const config = await loadConfig({name: 'eslint'});
 
-  assert.isTrue(await fileExists(`${process.cwd()}/package.json`));
+  assert.isTrue(await fileExists(`${this.projectRoot}/package.json`));
+  assert.isTrue(await fileExists(`${this.projectRoot}/package-lock.json`));
   assert.deepEqual(config.extends, ['@travi', '@travi/mocha']);
   if ('Slidev' === this.getAnswerFor(jsQuestionNames.PROJECT_TYPE_CHOICE)) {
     assert.deepEqual(config.overrides, [{files: 'test/smoke/**/*-spec.js', extends: '@travi/cypress'}]);
@@ -82,7 +87,7 @@ Then(/^the core JavaScript files are present$/, async function () {
 
 Then('the project will have repository details defined', async function () {
   assert.deepEqual(
-    JSON.parse(await fs.readFile(`${process.cwd()}/package.json`)).repository,
+    JSON.parse(await fs.readFile(`${this.projectRoot}/package.json`)).repository,
     `${this.githubUser}/${this.projectName}`
   );
 });
