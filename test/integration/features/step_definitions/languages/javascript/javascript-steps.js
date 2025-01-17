@@ -41,6 +41,7 @@ Given(/^the project language should be JavaScript$/, async function () {
     td.matchers.contains('. ~/.nvm/nvm.sh && nvm use && npm install'),
     {shell: true, cwd: this.projectRoot}
   )).thenDo(() => writeFileSync(`${this.projectRoot}/package-lock.json`, JSON.stringify(any.simpleObject())));
+  td.when(this.execa('npm', ['--version'])).thenResolve({stdout: any.word()});
 });
 
 Given('the project will use the {string} dialect', async function (dialect) {
@@ -73,16 +74,16 @@ Then(/^JavaScript ignores are defined$/, async function () {
 });
 
 Then(/^the core JavaScript files are present$/, async function () {
-  const config = await loadConfig({name: 'eslint'});
+  const eslintConfig = await loadConfig({name: 'eslint'});
 
   assert.isTrue(await fileExists(`${this.projectRoot}/package.json`));
-  assert.isTrue(await fileExists(`${this.projectRoot}/package-lock.json`));
-  assert.deepEqual(config.extends, ['@travi', '@travi/mocha']);
+  assert.deepEqual(eslintConfig.extends, ['@travi', '@travi/mocha']);
   if ('Slidev' === this.getAnswerFor(jsQuestionNames.PROJECT_TYPE_CHOICE)) {
-    assert.deepEqual(config.overrides, [{files: 'test/smoke/**/*-spec.js', extends: '@travi/cypress'}]);
+    assert.deepEqual(eslintConfig.overrides, [{files: 'test/smoke/**/*-spec.js', extends: '@travi/cypress'}]);
   } else {
-    assert.isUndefined(config.overrides);
+    assert.isUndefined(eslintConfig.overrides);
   }
+  assert.isTrue(await fileExists(`${this.projectRoot}/package-lock.json`));
 });
 
 Then('the project will have repository details defined', async function () {
