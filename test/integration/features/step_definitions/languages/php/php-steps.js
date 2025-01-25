@@ -26,3 +26,7 @@ Then('the core PHP files are present', async function () {
 Then('the php project is verified after scaffolding', async function () {
   td.verify(this.execa('./vendor/bin/phing', {shell: true}));
 });
+
+Then('php dependencies are installed', async function () {
+  td.verify(this.execa('composer', ['require', 'phing/phing', 'phpunit/phpunit', '--dev'], {cwd: this.projectRoot}));
+});

@@ -4,6 +4,7 @@ import {find} from 'unist-util-find';
 import {Given, Then} from '@cucumber/cucumber';
 import * as td from 'testdouble';
 import {assert} from 'chai';
+import any from '@travi/any';
 
 async function assertReadmeDetailsArePopulatedProperly(projectName) {
   const readmeTree = parse(await fs.readFile(`${process.cwd()}/packages/${projectName}/README.md`, 'utf-8'));
@@ -26,6 +27,7 @@ Given('a lerna monorepo exists', async function () {
   td.when(this.execa('npm', ['ls', 'husky', '--json'])).thenReject(huskyVersionError);
   td.when(this.execa('npm run generate:md && npm test', {shell: true, cwd: `packages/${this.projectName}`}))
     .thenReturn({stdout: {pipe: () => undefined}});
+  td.when(this.execa('npm', ['--version'])).thenResolve({stdout: any.word()});
 });
 
 Then('the package will have repository details defined', async function () {
