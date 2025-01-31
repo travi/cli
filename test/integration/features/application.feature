@@ -9,3 +9,4 @@ Feature: Scaffold an application
     And the project is a Hapi application
     When the project is scaffolded
     Then the Hapi server is configured
+    And cucumber is configured
