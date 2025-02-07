@@ -31,6 +31,7 @@ cli for my various tools
 [![license](https://img.shields.io/github/license/travi/cli.svg)](LICENSE)
 ![node][node-badge]
 [![npm][npm-badge]][npm-link]
+[![license][license-badge]][license-link]
 
 <!--consumer-badges end -->
 
@@ -99,3 +100,7 @@ $ npm test
 [semantic-release-link]: https://github.com/semantic-release/semantic-release
 
 [semantic-release-badge]: https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release
+
+[license-link]: LICENSE
+
+[license-badge]: https://img.shields.io/github/license/travi/cli.svg?logo=opensourceinitiative
