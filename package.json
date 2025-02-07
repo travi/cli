@@ -38,7 +38,8 @@
     "test:integration:focus": "run-s 'test:integration:base -- --profile focus'",
     "pretest:e2e": "run-s build",
     "test:e2e": "node ./test/e2e/smoke-test.js",
-    "lint:publish": "publint --strict"
+    "lint:publish": "publint --strict",
+    "lint:lockfile": "lockfile-lint"
   },
   "files": [
     "bin/"
@@ -122,6 +123,7 @@
     "import-fresh": "3.3.0",
     "jest-when": "3.7.0",
     "js-yaml": "4.1.0",
+    "lockfile-lint": "4.14.0",
     "ls-engines": "0.9.3",
     "mdast-util-from-markdown": "2.0.2",
     "mock-fs": "5.4.1",
