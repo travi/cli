@@ -20,6 +20,10 @@
     "lint:js": "eslint . --cache",
     "lint:engines": "ls-engines",
     "lint:peer": "npm ls >/dev/null",
+    "prelint:publish": "run-s build",
+    "lint:publish": "publint --strict",
+    "lint:js:fix": "run-s 'lint:js -- --fix'",
+    "lint:lockfile": "lockfile-lint",
     "test:unit": "cross-env NODE_ENV=test c8 run-s test:unit:base",
     "test:unit:base": "DEBUG=any vitest run",
     "test": "npm-run-all --print-label --parallel lint:* --parallel test:*",
@@ -37,10 +41,7 @@
     "test:integration:wip": "run-s 'test:integration:base -- --profile wip'",
     "test:integration:focus": "run-s 'test:integration:base -- --profile focus'",
     "pretest:e2e": "run-s build",
-    "test:e2e": "node ./test/e2e/smoke-test.js",
-    "lint:publish": "publint --strict",
-    "lint:js:fix": "run-s 'lint:js -- --fix'",
-    "lint:lockfile": "lockfile-lint"
+    "test:e2e": "node ./test/e2e/smoke-test.js"
   },
   "files": [
     "bin/"
