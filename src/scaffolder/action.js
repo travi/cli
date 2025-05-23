@@ -2,9 +2,5 @@ import {scaffold as scaffoldProject} from '@form8ion/project';
 import {defineScaffoldProjectOptions} from '../common/project-options.js';
 
 export default function scaffoldAction(decisions) {
-  return () => scaffoldProject(defineScaffoldProjectOptions(decisions))
-    .catch(err => {
-      console.error(err);     // eslint-disable-line no-console
-      process.exitCode = (err.data && err.data.code) || 1;
-    });
+  return () => scaffoldProject(defineScaffoldProjectOptions(decisions));
 }

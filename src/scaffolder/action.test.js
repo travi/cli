@@ -32,25 +32,4 @@ describe('scaffolder action', () => {
 
     expect(await getAction(decisions)()).toEqual(scaffoldResults);
   });
-
-  it('should set the exit-code to `1` upon failure when a code is not provided', async () => {
-    const error = new Error();
-    when(projectScaffolder.scaffold).mockRejectedValue(error);
-
-    await getAction()();
-
-    expect(process.exitCode).toEqual(1);
-    expect(console.error).toHaveBeenCalledWith(error);        // eslint-disable-line no-console
-  });
-
-  it('should provide language and vcs-host scaffolders to the project scaffolder', async () => {
-    const code = any.integer();
-    const error = new Error();
-    error.data = {code};
-    when(projectScaffolder.scaffold).mockRejectedValue(error);
-
-    await getAction()();
-
-    expect(process.exitCode).toEqual(code);
-  });
 });
