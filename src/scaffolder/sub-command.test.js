@@ -1,8 +1,8 @@
 import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
 import {when} from 'jest-when';
 
-import * as scaffolderActionFactory from './action';
-import scaffolderCommand from './sub-command';
+import * as scaffolderActionFactory from './action.js';
+import scaffolderCommand from './sub-command.js';
 
 describe('scaffold-project sub-command', () => {
   beforeEach(() => {

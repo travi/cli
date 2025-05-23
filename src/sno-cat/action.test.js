@@ -2,7 +2,7 @@ import * as snoCat from '@form8ion/sno-cat-ink';
 
 import {afterEach, beforeEach, describe, it, vi, expect} from 'vitest';
 
-import snoCatAction from './action';
+import snoCatAction from './action.js';
 
 describe('sno-cat action', () => {
   beforeEach(() => {

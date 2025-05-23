@@ -2,7 +2,7 @@ import * as skiPatrol from '@form8ion/ski-patrol';
 
 import {afterEach, beforeEach, describe, it, vi, expect} from 'vitest';
 
-import skiPatrolAction from './action';
+import skiPatrolAction from './action.js';
 
 describe('ski-patrol action', () => {
   beforeEach(() => {

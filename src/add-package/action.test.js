@@ -4,8 +4,8 @@ import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
 import any from '@travi/any';
 import {when} from 'jest-when';
 
-import * as jsOptions from '../common/javascript-options';
-import addPackageAction from './action';
+import * as jsOptions from '../common/javascript-options.js';
+import addPackageAction from './action.js';
 
 describe('add-package action', () => {
   beforeEach(() => {

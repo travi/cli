@@ -1,6 +1,6 @@
-import shuttleAction from './action';
+import shuttleAction from './action.js';
 
-export default function (program) {
+export default function shuttleCommand(program) {
   program
     .command('shuttle')
     .description('Shuttle a project to a different organization')

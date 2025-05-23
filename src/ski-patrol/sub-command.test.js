@@ -1,8 +1,8 @@
 import {describe, it, vi, expect} from 'vitest';
 import {when} from 'jest-when';
 
-import skiPatrolCommand from './sub-command';
-import skiPatrolAction from './action';
+import skiPatrolCommand from './sub-command.js';
+import skiPatrolAction from './action.js';
 
 describe('add-package action', () => {
   it('that the ski-patrol command is available', async () => {

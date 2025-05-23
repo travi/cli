@@ -1,8 +1,8 @@
 import {describe, expect, it, vi} from 'vitest';
 import {when} from 'jest-when';
 
-import extendAction from './action';
-import liftCommand from './sub-command';
+import extendAction from './action.js';
+import liftCommand from './sub-command.js';
 
 describe('extend-eslint-config sub-command', () => {
   it('should make the extend-eslint-config command available', async () => {

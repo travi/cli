@@ -1,1 +1,1 @@
-export {default} from './sub-command';
+export {default} from './sub-command.js';

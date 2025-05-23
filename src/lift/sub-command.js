@@ -1,6 +1,6 @@
-import liftAction from './action';
+import liftAction from './action.js';
 
-export default function (program) {
+export default function liftCommand(program) {
   program
     .command('lift')
     .description('Lift an existing project with additional functionality')

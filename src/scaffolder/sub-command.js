@@ -1,4 +1,4 @@
-import getAction from './action';
+import getAction from './action.js';
 
 export default function addSubCommand(program) {
   program

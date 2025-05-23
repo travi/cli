@@ -1,8 +1,8 @@
 import {describe, it, vi, expect} from 'vitest';
 import {when} from 'jest-when';
 
-import snoCatAction from './action';
-import snoCatCommand from './sub-command';
+import snoCatAction from './action.js';
+import snoCatCommand from './sub-command.js';
 
 describe('sno-cat sub-command', () => {
   it('should make the sno-cat command available', async () => {

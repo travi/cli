@@ -1,8 +1,8 @@
 import {describe, expect, it, vi} from 'vitest';
 import {when} from 'jest-when';
 
-import addPackageAction from './action';
-import addPackageCommand from './sub-command';
+import addPackageAction from './action.js';
+import addPackageCommand from './sub-command.js';
 
 describe('add-package sub-command', () => {
   it('should make the add-package command available', async () => {

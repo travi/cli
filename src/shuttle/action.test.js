@@ -2,7 +2,7 @@ import * as shuttle from '@form8ion/shuttle';
 
 import {describe, it, expect, afterEach, vi, beforeEach} from 'vitest';
 
-import shuttleAction from './action';
+import shuttleAction from './action.js';
 
 describe('ski-patrol action', () => {
   beforeEach(() => {

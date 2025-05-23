@@ -4,8 +4,8 @@ import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
 import any from '@travi/any';
 import {when} from 'jest-when';
 
-import * as commonOptions from '../common/project-options';
-import getAction from './action';
+import * as commonOptions from '../common/project-options.js';
+import getAction from './action.js';
 
 describe('scaffolder action', () => {
   const originalConsoleError = console.error;                 // eslint-disable-line no-console

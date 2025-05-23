@@ -4,8 +4,8 @@ import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
 import any from '@travi/any';
 import {when} from 'jest-when';
 
-import {unitTesting} from './enhanced-scaffolders';
-import {unitTestFrameworks} from '../common/test-frameworks';
+import {unitTesting} from './enhanced-scaffolders.js';
+import {unitTestFrameworks} from '../common/test-frameworks.js';
 
 describe('enhanced lift scaffolders', () => {
   beforeEach(() => {

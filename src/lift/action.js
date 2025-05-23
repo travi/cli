@@ -12,7 +12,7 @@ import * as jetbrainsPlugin from '@form8ion/jetbrains';
 import {project as projectPlugins} from '../common/plugins.js';
 import {unitTesting} from './enhanced-scaffolders.js';
 
-export default function () {
+export default function liftAction() {
   return lift({
     scaffolders: {
       Renovate: scaffoldRenovate,

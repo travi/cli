@@ -1,8 +1,8 @@
 import {describe, expect, it, vi} from 'vitest';
 import {when} from 'jest-when';
 
-import liftAction from './action';
-import liftCommand from './sub-command';
+import liftAction from './action.js';
+import liftCommand from './sub-command.js';
 
 describe('lift sub-command', () => {
   it('should make the lift command available', async () => {
