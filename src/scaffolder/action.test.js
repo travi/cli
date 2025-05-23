@@ -2,7 +2,7 @@ import * as projectScaffolder from '@form8ion/project';
 
 import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
 import any from '@travi/any';
-import {when} from 'jest-when';
+import {when} from 'vitest-when';
 
 import * as commonOptions from '../common/project-options.js';
 import getAction from './action.js';
@@ -27,8 +27,8 @@ describe('scaffolder action', () => {
     const decisions = any.simpleObject();
     const scaffoldOptions = any.simpleObject();
     const scaffoldResults = any.simpleObject();
-    when(commonOptions.defineScaffoldProjectOptions).calledWith(decisions).mockReturnValue(scaffoldOptions);
-    when(projectScaffolder.scaffold).calledWith(scaffoldOptions).mockResolvedValue(scaffoldResults);
+    when(commonOptions.defineScaffoldProjectOptions).calledWith(decisions).thenReturn(scaffoldOptions);
+    when(projectScaffolder.scaffold).calledWith(scaffoldOptions).thenResolve(scaffoldResults);
 
     expect(await getAction(decisions)()).toEqual(scaffoldResults);
   });

@@ -3,7 +3,7 @@ import * as jsLifter from '@form8ion/javascript';
 
 import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
 import any from '@travi/any';
-import {when} from 'jest-when';
+import {when} from 'vitest-when';
 
 import {plugins} from './javascript-options.js';
 import {javascript} from './enhanced-lifters.js';
@@ -27,10 +27,10 @@ describe('enhanced lifters', () => {
     const groupedPlugins = any.simpleObject();
     const ungroupedPlugins = any.simpleObject();
     plugins.mockReturnValue(groupedPlugins);
-    when(ungroupObject).calledWith(groupedPlugins).mockReturnValue(ungroupedPlugins);
+    when(ungroupObject).calledWith(groupedPlugins).thenReturn(ungroupedPlugins);
     when(jsLifter.lift)
       .calledWith({...options, configs, enhancers: ungroupedPlugins})
-      .mockResolvedValue(results);
+      .thenResolve(results);
 
     expect(await javascript(options)).toEqual(results);
   });

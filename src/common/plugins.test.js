@@ -10,7 +10,7 @@ import * as gitlabPlugin from '@travi/gitlab-scaffolder';
 
 import any from '@travi/any';
 import {describe, expect, it, vi} from 'vitest';
-import {when} from 'jest-when';
+import {when} from 'vitest-when';
 
 import {getGithubPrompt} from './prompts.js';
 import {javascriptPluginFactory, shellPluginFactory} from './enhanced-plugins.js';
@@ -32,16 +32,16 @@ describe('plugins', () => {
     const githubPluginDependencies = {logger, prompt: githubPrompt, octokit: octokitInstance};
     const enhancedGithubScaffolder = any.simpleObject();
     const enhancedGithubLifter = any.simpleObject();
-    when(javascriptPluginFactory).calledWith(decisions).mockReturnValue(jsPlugin);
+    when(javascriptPluginFactory).calledWith(decisions).thenReturn(jsPlugin);
     shellPluginFactory.mockReturnValue(shellPlugin);
-    when(getGithubPrompt).calledWith(decisions).mockReturnValue(githubPrompt);
-    when(octokit.getNetrcAuthenticatedInstance).calledWith().mockReturnValue(octokitInstance);
+    when(getGithubPrompt).calledWith(decisions).thenReturn(githubPrompt);
+    when(octokit.getNetrcAuthenticatedInstance).calledWith().thenReturn(octokitInstance);
     when(composeDependenciesInto)
       .calledWith(githubPlugin.scaffold, githubPluginDependencies)
-      .mockReturnValue(enhancedGithubScaffolder);
+      .thenReturn(enhancedGithubScaffolder);
     when(composeDependenciesInto)
       .calledWith(githubPlugin.lift, githubPluginDependencies)
-      .mockReturnValue(enhancedGithubLifter);
+      .thenReturn(enhancedGithubLifter);
 
     expect(project(decisions)).toEqual({
       dependencyUpdaters: {

@@ -3,7 +3,7 @@ import {promptConstants as githubPromptConstants} from '@form8ion/github';
 
 import {describe, expect, it, vi, beforeEach} from 'vitest';
 import any from '@travi/any';
-import {when} from 'jest-when';
+import {when} from 'vitest-when';
 
 import {getGithubPrompt} from './prompts.js';
 
@@ -23,13 +23,13 @@ describe('prompts', () => {
     beforeEach(() => {
       prompt = vi.fn();
 
-      when(getPrompt).calledWith(decisions).mockReturnValue(prompt);
+      when(getPrompt).calledWith(decisions).thenReturn(prompt);
     });
 
     it('should define the `form8ion` organization as the github account', async () => {
       const promptDetails = {id: githubPromptConstants.ids.GITHUB_DETAILS, ...any.simpleObject()};
       const promptAnswers = any.simpleObject();
-      when(prompt).calledWith(promptDetails).mockResolvedValue(promptAnswers);
+      when(prompt).calledWith(promptDetails).thenResolve(promptAnswers);
 
       expect(await getGithubPrompt(decisions)(promptDetails)).toEqual(promptAnswers);
     });

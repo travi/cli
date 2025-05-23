@@ -3,6 +3,7 @@ root: true
 extends:
   - '@travi'
   - '@travi/cucumber'
+  - '@form8ion/vitest'
 
 parserOptions:
   ecmaVersion: 2022

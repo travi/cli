@@ -2,7 +2,7 @@ import * as eslintConfigExtender from '@form8ion/eslint-config-extender';
 
 import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
 import any from '@travi/any';
-import {when} from 'jest-when';
+import {when} from 'vitest-when';
 
 import * as commonOptions from '../common/project-options.js';
 import {javascriptPluginFactory} from '../common/enhanced-plugins.js';
@@ -22,10 +22,10 @@ describe('extend-eslint-config action', () => {
     const decisions = any.simpleObject();
     const scaffoldOptions = any.simpleObject();
     const extendResults = any.simpleObject();
-    when(commonOptions.defineScaffoldProjectOptions).calledWith(decisions).mockReturnValue(scaffoldOptions);
+    when(commonOptions.defineScaffoldProjectOptions).calledWith(decisions).thenReturn(scaffoldOptions);
     when(eslintConfigExtender.extendEslintConfig)
       .calledWith(scaffoldOptions, javascriptPluginFactory)
-      .mockResolvedValue(extendResults);
+      .thenResolve(extendResults);
 
     expect(await extendAction(decisions)).toBe(extendResults);
   });

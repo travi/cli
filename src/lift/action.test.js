@@ -10,7 +10,7 @@ import {replace as replaceTravisCiWithGithubActions} from '@form8ion/replace-tra
 import * as jetbrainsPlugin from '@form8ion/jetbrains';
 
 import {describe, expect, it, vi} from 'vitest';
-import {when} from 'jest-when';
+import {when} from 'vitest-when';
 import any from '@travi/any';
 
 import {project} from '../common/plugins.js';
@@ -29,9 +29,9 @@ describe('lift action', () => {
     const enhancedJavascriptPlugin = any.simpleObject();
     const projectPluginGroups = any.objectWithKeys(any.listOf(any.word), {factory: any.simpleObject});
     const ungroupedPlugins = any.simpleObject();
-    when(ungroupObject).calledWith(projectPluginGroups).mockReturnValue(ungroupedPlugins);
-    when(javascriptPluginFactory).calledWith({}).mockReturnValue(enhancedJavascriptPlugin);
-    when(project).calledWith({}).mockReturnValue(projectPluginGroups);
+    when(ungroupObject).calledWith(projectPluginGroups).thenReturn(ungroupedPlugins);
+    when(javascriptPluginFactory).calledWith({}).thenReturn(enhancedJavascriptPlugin);
+    when(project).calledWith({}).thenReturn(projectPluginGroups);
     when(lifter.lift).calledWith({
       scaffolders: {
         Renovate: scaffoldRenovate,
@@ -44,7 +44,7 @@ describe('lift action', () => {
         'OSSF Scorecard': scaffoldOssfScorecard
       },
       enhancers: {...ungroupedPlugins, JetBrains: jetbrainsPlugin}
-    }).mockResolvedValue(liftingResults);
+    }).thenResolve(liftingResults);
 
     expect(await liftAction()).toEqual(liftingResults);
   });

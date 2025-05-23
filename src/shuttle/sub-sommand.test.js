@@ -1,5 +1,5 @@
 import {describe, it, vi, expect} from 'vitest';
-import {when} from 'jest-when';
+import {when} from 'vitest-when';
 
 import shuttleAction from './action.js';
 import shuttleCommand from './sub-command.js';
@@ -9,8 +9,8 @@ describe('shuttle sub-command', () => {
     const command = vi.fn();
     const description = vi.fn();
     const action = vi.fn();
-    when(command).calledWith('shuttle').mockReturnValue({description});
-    when(description).calledWith('Shuttle a project to a different organization').mockReturnValue({action});
+    when(command).calledWith('shuttle').thenReturn({description});
+    when(description).calledWith('Shuttle a project to a different organization').thenReturn({action});
 
     shuttleCommand({command});
 

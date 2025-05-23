@@ -1,5 +1,5 @@
 import {describe, it, vi, expect} from 'vitest';
-import {when} from 'jest-when';
+import {when} from 'vitest-when';
 
 import snoCatAction from './action.js';
 import snoCatCommand from './sub-command.js';
@@ -9,8 +9,8 @@ describe('sno-cat sub-command', () => {
     const command = vi.fn();
     const description = vi.fn();
     const action = vi.fn();
-    when(command).calledWith('sno-cat').mockReturnValue({description});
-    when(description).calledWith('Groom the GitHub notification list').mockReturnValue({action});
+    when(command).calledWith('sno-cat').thenReturn({description});
+    when(description).calledWith('Groom the GitHub notification list').thenReturn({action});
 
     snoCatCommand({command});
 

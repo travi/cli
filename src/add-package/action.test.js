@@ -2,7 +2,7 @@ import * as addPackage from '@form8ion/add-package-to-monorepo';
 
 import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
 import any from '@travi/any';
-import {when} from 'jest-when';
+import {when} from 'vitest-when';
 
 import * as jsOptions from '../common/javascript-options.js';
 import addPackageAction from './action.js';
@@ -21,8 +21,8 @@ describe('add-package action', () => {
     const decisions = any.simpleObject();
     const options = any.simpleObject();
     const results = any.simpleObject();
-    when(jsOptions.defineScaffoldJavascriptOptions).calledWith(decisions).mockReturnValue(options);
-    when(addPackage.scaffold).calledWith(options).mockResolvedValue(results);
+    when(jsOptions.defineScaffoldJavascriptOptions).calledWith(decisions).thenReturn(options);
+    when(addPackage.scaffold).calledWith(options).thenResolve(results);
 
     expect(await addPackageAction(decisions)).toEqual(results);
   });
