@@ -129,7 +129,7 @@
     "husky": "9.1.7",
     "import-fresh": "3.3.1",
     "js-yaml": "4.1.0",
-    "lockfile-lint": "4.14.0",
+    "lockfile-lint": "4.14.1",
     "ls-engines": "0.9.3",
     "mdast-util-from-markdown": "2.0.2",
     "mock-fs": "5.5.0",
