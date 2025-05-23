@@ -5,7 +5,7 @@
   "version": "0.0.0-semantically-released",
   "type": "module",
   "engines": {
-    "node": "^18.19.0 || ^20.9.0 || >=22.11.0"
+    "node": "^20.19.0 || >=22.14.0"
   },
   "author": "Matt Travi <npm@travi.org> (https://matt.travi.org/)",
   "repository": "travi/cli",
@@ -58,13 +58,15 @@
   },
   "dependencies": {
     "@form8ion/add-package-to-monorepo": "12.0.3",
-    "@form8ion/core": "4.8.0",
+    "@form8ion/cli-core": "1.1.0",
+    "@form8ion/core": "4.10.0",
     "@form8ion/cucumber-scaffolder": "5.0.0",
     "@form8ion/cypress-scaffolder": "4.0.0",
     "@form8ion/dependabot-scaffolder": "3.0.0",
     "@form8ion/eslint-config-extender": "10.0.3",
-    "@form8ion/github": "2.1.2",
+    "@form8ion/github": "3.0.0-beta.12",
     "@form8ion/github-actions-node-ci": "5.0.1",
+    "@form8ion/github-core": "1.1.2",
     "@form8ion/hapi-scaffolder": "5.0.0-alpha.6",
     "@form8ion/javascript": "14.3.1",
     "@form8ion/javascript-core": "12.3.0",
@@ -79,7 +81,7 @@
     "@form8ion/ossf-scorecard": "1.2.1",
     "@form8ion/php": "1.9.1",
     "@form8ion/probot-scaffolder": "1.0.0-alpha.5",
-    "@form8ion/project": "21.0.1",
+    "@form8ion/project": "21.0.3",
     "@form8ion/react-components-scaffolder": "3.0.3",
     "@form8ion/remove-greenkeeper": "3.0.1",
     "@form8ion/renovate-scaffolder": "3.0.0",
