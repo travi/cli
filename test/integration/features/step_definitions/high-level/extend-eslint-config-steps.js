@@ -42,7 +42,8 @@ When('the high-level eslint-config scaffolder is executed', async function () {
     [projectQuestionNames.GIT_REPO]: repoShouldBeCreated,
     ...repoShouldBeCreated && {
       [projectQuestionNames.REPO_HOST]: 'GitHub',
-      [githubPromptConstants.questionNames[githubPromptConstants.ids.GITHUB_DETAILS].ACCOUNT_TYPE]: 'user'
+      [githubPromptConstants.questionNames[githubPromptConstants.ids.GITHUB_DETAILS].ACCOUNT_TYPE]: 'user',
+      [githubPromptConstants.questionNames[githubPromptConstants.ids.REQUIRED_CHECK_BYPASS].ADMIN_BYPASS]: true
     },
     [projectQuestionNames.DEPENDENCY_UPDATER]: any.word(),
     [javascriptQuestionNames.NODE_VERSION_CATEGORY]: 'LTS',
