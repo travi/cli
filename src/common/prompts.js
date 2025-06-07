@@ -13,6 +13,7 @@ export function getGithubPrompt(decisions) {
 
     switch (id) {
       case githubPromptConstants.ids.GITHUB_DETAILS:
+      case githubPromptConstants.ids.REQUIRED_CHECK_BYPASS:
         return prompt(promptDetails);
       case githubPromptConstants.ids.ADMIN_SETTINGS:
         return {[repositoryAdminSettingsPromptQuestionNames.SETTINGS_MANAGED_AS_CODE]: true};

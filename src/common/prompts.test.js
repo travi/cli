@@ -26,8 +26,16 @@ describe('prompts', () => {
       when(getPrompt).calledWith(decisions).thenReturn(prompt);
     });
 
-    it('should define the `form8ion` organization as the github account', async () => {
+    it('should enable choosing the github account', async () => {
       const promptDetails = {id: githubPromptConstants.ids.GITHUB_DETAILS, ...any.simpleObject()};
+      const promptAnswers = any.simpleObject();
+      when(prompt).calledWith(promptDetails).thenResolve(promptAnswers);
+
+      expect(await getGithubPrompt(decisions)(promptDetails)).toEqual(promptAnswers);
+    });
+
+    it('should enable defining required check bypass', async () => {
+      const promptDetails = {id: githubPromptConstants.ids.REQUIRED_CHECK_BYPASS, ...any.simpleObject()};
       const promptAnswers = any.simpleObject();
       when(prompt).calledWith(promptDetails).thenResolve(promptAnswers);
 
