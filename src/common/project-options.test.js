@@ -15,6 +15,6 @@ describe('common config', () => {
     const plugins = any.simpleObject();
     when(project).calledWith(decisions).thenReturn(plugins);
 
-    expect(defineScaffoldProjectOptions(decisions)).toEqual({plugins, decisions});
+    expect(defineScaffoldProjectOptions(decisions)).toEqual({plugins});
   });
 });

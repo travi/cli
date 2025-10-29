@@ -1,4 +1,5 @@
-import * as projectScaffolder from '@form8ion/project';
+import {getPrompt} from '@form8ion/cli-core';
+import {scaffold as scaffoldProject} from '@form8ion/project';
 
 import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
 import any from '@travi/any';
@@ -11,6 +12,7 @@ describe('scaffolder action', () => {
   const originalConsoleError = console.error;                 // eslint-disable-line no-console
 
   beforeEach(() => {
+    vi.mock('@form8ion/cli-core');
     vi.mock('@form8ion/project');
     vi.mock('../common/project-options');
 
@@ -27,8 +29,10 @@ describe('scaffolder action', () => {
     const decisions = any.simpleObject();
     const scaffoldOptions = any.simpleObject();
     const scaffoldResults = any.simpleObject();
+    const prompt = () => undefined;
     when(commonOptions.defineScaffoldProjectOptions).calledWith(decisions).thenReturn(scaffoldOptions);
-    when(projectScaffolder.scaffold).calledWith(scaffoldOptions).thenResolve(scaffoldResults);
+    when(getPrompt).calledWith(decisions).thenReturn(prompt);
+    when(scaffoldProject).calledWith(scaffoldOptions, {prompt}).thenResolve(scaffoldResults);
 
     expect(await getAction(decisions)()).toEqual(scaffoldResults);
   });

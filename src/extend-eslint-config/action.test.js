@@ -1,4 +1,5 @@
-import * as eslintConfigExtender from '@form8ion/eslint-config-extender';
+import {getPrompt} from '@form8ion/cli-core';
+import {extendEslintConfig} from '@form8ion/eslint-config-extender';
 
 import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
 import any from '@travi/any';
@@ -10,6 +11,7 @@ import extendAction from './action.js';
 
 describe('extend-eslint-config action', () => {
   beforeEach(() => {
+    vi.mock('@form8ion/cli-core');
     vi.mock('@form8ion/eslint-config-extender');
     vi.mock('../common/project-options');
   });
@@ -22,9 +24,11 @@ describe('extend-eslint-config action', () => {
     const decisions = any.simpleObject();
     const scaffoldOptions = any.simpleObject();
     const extendResults = any.simpleObject();
+    const prompt = () => undefined;
     when(commonOptions.defineScaffoldProjectOptions).calledWith(decisions).thenReturn(scaffoldOptions);
-    when(eslintConfigExtender.extendEslintConfig)
-      .calledWith(scaffoldOptions, javascriptPluginFactory)
+    when(getPrompt).calledWith(decisions).thenReturn(prompt);
+    when(extendEslintConfig)
+      .calledWith({...scaffoldOptions, decisions}, javascriptPluginFactory, {prompt})
       .thenResolve(extendResults);
 
     expect(await extendAction(decisions)).toBe(extendResults);
