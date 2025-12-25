@@ -123,6 +123,7 @@
     "cz-conventional-changelog": "3.3.0",
     "deep-equal": "2.2.3",
     "execa": "9.6.1",
+    "get-bin-path": "11.0.1",
     "gherkin-lint": "4.2.4",
     "globstar": "1.0.0",
     "http-status-codes": "2.3.0",

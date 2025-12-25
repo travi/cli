@@ -1,3 +1,4 @@
 import {execa} from 'execa';
+import {getBinPath} from 'get-bin-path';
 
-await execa('./bin/travi.js', ['--help']);
+await execa(await getBinPath(), ['--help']);
