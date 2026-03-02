@@ -131,7 +131,7 @@
     "import-fresh": "4.0.0",
     "js-yaml": "4.1.1",
     "lockfile-lint": "5.0.0",
-    "ls-engines": "0.9.4",
+    "ls-engines": "0.10.0",
     "mdast-util-from-markdown": "2.0.3",
     "mock-fs": "5.5.0",
     "msw": "2.12.10",
