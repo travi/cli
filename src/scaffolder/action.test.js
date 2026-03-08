@@ -1,4 +1,5 @@
 import {getPrompt} from '@form8ion/cli-core';
+import {reportResults} from '@form8ion/results-reporter';
 import {scaffold as scaffoldProject} from '@form8ion/project';
 
 import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
@@ -8,19 +9,19 @@ import {when} from 'vitest-when';
 import * as commonOptions from '../common/project-options.js';
 import getAction from './action.js';
 
+vi.mock('@form8ion/cli-core');
+vi.mock('@form8ion/results-reporter');
+vi.mock('@form8ion/project');
+vi.mock('../common/project-options');
+
 describe('scaffolder action', () => {
   const originalConsoleError = console.error;                 // eslint-disable-line no-console
 
   beforeEach(() => {
-    vi.mock('@form8ion/cli-core');
-    vi.mock('@form8ion/project');
-    vi.mock('../common/project-options');
-
     console.error = vi.fn();                                  // eslint-disable-line no-console
   });
 
   afterEach(() => {
-    vi.clearAllMocks();
     process.exitCode = 0;
     console.error = originalConsoleError;                     // eslint-disable-line no-console
   });
@@ -35,5 +36,7 @@ describe('scaffolder action', () => {
     when(scaffoldProject).calledWith(scaffoldOptions, {prompt}).thenResolve(scaffoldResults);
 
     expect(await getAction(decisions)()).toEqual(scaffoldResults);
+
+    expect(reportResults).toHaveBeenCalledWith(scaffoldResults);
   });
 });
