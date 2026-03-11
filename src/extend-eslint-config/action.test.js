@@ -1,4 +1,4 @@
-import {getPrompt} from '@form8ion/cli-core';
+import {getPrompt, logger} from '@form8ion/cli-core';
 import {extendEslintConfig} from '@form8ion/eslint-config-extender';
 
 import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
@@ -28,7 +28,7 @@ describe('extend-eslint-config action', () => {
     when(commonOptions.defineScaffoldProjectOptions).calledWith(decisions).thenReturn(scaffoldOptions);
     when(getPrompt).calledWith(decisions).thenReturn(prompt);
     when(extendEslintConfig)
-      .calledWith({...scaffoldOptions, decisions}, javascriptPluginFactory, {prompt})
+      .calledWith({...scaffoldOptions, decisions}, javascriptPluginFactory, {prompt, logger})
       .thenResolve(extendResults);
 
     expect(await extendAction(decisions)).toBe(extendResults);

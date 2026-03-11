@@ -1,4 +1,4 @@
-import {getPrompt} from '@form8ion/cli-core';
+import {getPrompt, logger} from '@form8ion/cli-core';
 import {reportResults} from '@form8ion/results-reporter';
 import {scaffold as scaffoldProject} from '@form8ion/project';
 
@@ -33,7 +33,7 @@ describe('scaffolder action', () => {
     const prompt = () => undefined;
     when(commonOptions.defineScaffoldProjectOptions).calledWith(decisions).thenReturn(scaffoldOptions);
     when(getPrompt).calledWith(decisions).thenReturn(prompt);
-    when(scaffoldProject).calledWith(scaffoldOptions, {prompt}).thenResolve(scaffoldResults);
+    when(scaffoldProject).calledWith(scaffoldOptions, {prompt, logger}).thenResolve(scaffoldResults);
 
     expect(await getAction(decisions)()).toEqual(scaffoldResults);
 
