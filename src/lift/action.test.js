@@ -1,4 +1,5 @@
 import {ungroupObject} from '@form8ion/core';
+import {reportResults} from '@form8ion/results-reporter';
 import * as lifter from '@form8ion/lift';
 import {scaffold as scaffoldRenovate} from '@form8ion/renovate-scaffolder';
 import {removeGreenkeeper} from '@form8ion/remove-greenkeeper';
@@ -19,6 +20,7 @@ import {unitTesting} from './enhanced-scaffolders.js';
 import liftAction from './action.js';
 
 vi.mock('@form8ion/core');
+vi.mock('@form8ion/results-reporter');
 vi.mock('@form8ion/lift');
 vi.mock('../common/enhanced-plugins.js');
 vi.mock('../common/plugins.js');
@@ -47,5 +49,7 @@ describe('lift action', () => {
     }).thenResolve(liftingResults);
 
     expect(await liftAction()).toEqual(liftingResults);
+
+    expect(reportResults).toHaveBeenCalledWith(liftingResults);
   });
 });

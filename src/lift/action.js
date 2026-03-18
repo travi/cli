@@ -1,4 +1,5 @@
 import {ungroupObject} from '@form8ion/core';
+import {reportResults} from '@form8ion/results-reporter';
 import {lift} from '@form8ion/lift';
 import {scaffold as scaffoldRenovate} from '@form8ion/renovate-scaffolder';
 import {removeGreenkeeper} from '@form8ion/remove-greenkeeper';
@@ -12,8 +13,8 @@ import * as jetbrainsPlugin from '@form8ion/jetbrains';
 import {project as projectPlugins} from '../common/plugins.js';
 import {unitTesting} from './enhanced-scaffolders.js';
 
-export default function liftAction() {
-  return lift({
+export default async function liftAction() {
+  const results = await lift({
     scaffolders: {
       Renovate: scaffoldRenovate,
       'Remove Greenkeeper': removeGreenkeeper,
@@ -29,4 +30,8 @@ export default function liftAction() {
       JetBrains: jetbrainsPlugin
     }
   });
+
+  reportResults(results);
+
+  return results;
 }
