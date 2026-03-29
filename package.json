@@ -60,7 +60,7 @@
     "@form8ion/add-package-to-monorepo": "13.0.1",
     "@form8ion/cli-core": "1.1.0",
     "@form8ion/core": "4.11.1",
-    "@form8ion/cucumber-scaffolder": "5.2.0",
+    "@form8ion/cucumber-scaffolder": "5.3.0",
     "@form8ion/cypress-scaffolder": "4.0.0",
     "@form8ion/dependabot-scaffolder": "3.0.0",
     "@form8ion/eslint-config-extender": "11.0.0",
