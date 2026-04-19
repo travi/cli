@@ -10,7 +10,7 @@ Then('GitHub is configured', async function () {
 
   assert.equal(
     repositorySettings.repository.homepage,
-    `https://npm.im/${this.scope ? `@${this.scope}/` : ''}${this.projectName}`
+    `https://www.npmjs.com/package/${this.scope ? `@${this.scope}/` : ''}${this.projectName}`
   );
   assert.equal(bypassActor.actor_type, 'RepositoryRole');
   assert.equal(bypassActor.actor_id, ADMIN_ROLE);
