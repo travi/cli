@@ -114,7 +114,7 @@
     "@form8ion/eslint-config-vitest": "1.1.0",
     "@rollup/plugin-node-resolve": "16.0.3",
     "@travi/any": "3.3.0",
-    "@travi/eslint-config": "5.0.13",
+    "@travi/eslint-config": "5.0.15",
     "@travi/eslint-config-cucumber": "1.0.6",
     "@vitest/coverage-v8": "4.1.4",
     "chai": "6.2.2",
