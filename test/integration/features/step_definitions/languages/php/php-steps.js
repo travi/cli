@@ -4,14 +4,15 @@ import {Before, Given, Then} from '@cucumber/cucumber';
 import assert from 'node:assert';
 import * as td from 'testdouble';
 
-let questionNames;
+let projectQuestionNames;
 
 Before(async function () {
-  ({questionNames} = await import('@form8ion/project'));
+  const {promptConstants} = await import('@form8ion/project');
+  projectQuestionNames = promptConstants.questionNames[promptConstants.ids.PROJECT_LANGUAGE];
 });
 
 Given('the project language should be PHP', async function () {
-  this.setAnswerFor(questionNames.PROJECT_LANGUAGE, 'PHP');
+  this.setAnswerFor(projectQuestionNames.PROJECT_LANGUAGE, 'PHP');
 
   td.when(this.execa('./vendor/bin/phing', {shell: true}))
     .thenReturn({stdout: {pipe: () => undefined}});

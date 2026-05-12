@@ -2,14 +2,15 @@ import {fileExists} from '@form8ion/core';
 import {Before, Given, Then} from '@cucumber/cucumber';
 import {assert} from 'chai';
 
-let questionNames;
+let projectQuestionNames;
 
 Before(async () => {
-  ({questionNames} = (await import('@form8ion/project')));
+  const {promptConstants} = await import('@form8ion/project');
+  projectQuestionNames = promptConstants.questionNames[promptConstants.ids.PROJECT_LANGUAGE];
 });
 
 Given(/^the project language should be Other$/, async function () {
-  this.setAnswerFor(questionNames.PROJECT_LANGUAGE, 'Other');
+  this.setAnswerFor(projectQuestionNames.PROJECT_LANGUAGE, 'Other');
 });
 
 Then(/^core ignores are defined$/, async function () {

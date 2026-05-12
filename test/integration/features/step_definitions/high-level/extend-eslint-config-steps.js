@@ -17,8 +17,14 @@ Given('the eslint config to be extended exists from the form8ion scope', async f
 });
 
 When('the high-level eslint-config scaffolder is executed', async function () {
-  const {questionNames: projectQuestionNames} = await import('@form8ion/project');
+  const {promptConstants: projectPromptConstants} = await import('@form8ion/project');
   const {questionNames: javascriptQuestionNames} = await import('@form8ion/javascript');
+  const projectQuestionNames = {
+    ...projectPromptConstants.questionNames[projectPromptConstants.ids.BASE_DETAILS],
+    ...projectPromptConstants.questionNames[projectPromptConstants.ids.GIT_REPOSITORY],
+    ...projectPromptConstants.questionNames[projectPromptConstants.ids.REPOSITORY_HOST],
+    ...projectPromptConstants.questionNames[projectPromptConstants.ids.DEPENDENCY_UPDATER]
+  };
   const repoShouldBeCreated = this.getAnswerFor(projectQuestionNames.GIT_REPO);
 
   const {default: extendEslintConfig} = (await import('../../../../../src/extend-eslint-config/action.js'));

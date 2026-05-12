@@ -5,15 +5,16 @@ import {Before, Given, Then} from '@cucumber/cucumber';
 import {assert} from 'chai';
 import any from '@travi/any';
 
-let questionNames;
+let gitPromptQuestionNames;
 const simpleGitInstance = td.object(['checkIsRepo', 'listRemote', 'remote', 'addRemote', 'init']);
 
 Before(async () => {
-  ({questionNames} = (await import('@form8ion/project')));
+  const {promptConstants} = await import('@form8ion/project');
+  gitPromptQuestionNames = promptConstants.questionNames[promptConstants.ids.GIT_REPOSITORY];
 });
 
 Given(/^the project should be versioned in git$/, async function () {
-  this.setAnswerFor(questionNames.GIT_REPO, true);
+  this.setAnswerFor(gitPromptQuestionNames.GIT_REPO, true);
 
   td.when(this.git.simpleGit({baseDir: process.cwd()})).thenReturn(simpleGitInstance);
   td.when(simpleGitInstance.checkIsRepo('root')).thenResolve(false, true);
@@ -21,7 +22,7 @@ Given(/^the project should be versioned in git$/, async function () {
 });
 
 Given(/^the project should not be versioned in git$/, async function () {
-  this.setAnswerFor(questionNames.GIT_REPO, false);
+  this.setAnswerFor(gitPromptQuestionNames.GIT_REPO, false);
 });
 
 Then(/^the base git files should be present$/, async function () {

@@ -17,16 +17,17 @@ function semverStringFactory() {
   return `v${majorVersion}.${versionSegment()}.${versionSegment()}`;
 }
 
-let questionNames, jsQuestionNames, projectTypes;
+let projectQuestionNames, jsQuestionNames, projectTypes;
 
 Before(async function () {
-  ({questionNames} = await import('@form8ion/project'));
+  const {promptConstants} = await import('@form8ion/project');
+  projectQuestionNames = promptConstants.questionNames[promptConstants.ids.PROJECT_LANGUAGE];
   ({questionNames: jsQuestionNames} = await import('@form8ion/javascript'));
   ({projectTypes} = await import('@form8ion/javascript-core'));
 });
 
 Given(/^the project language should be JavaScript$/, async function () {
-  this.setAnswerFor(questionNames.PROJECT_LANGUAGE, 'JavaScript');
+  this.setAnswerFor(projectQuestionNames.PROJECT_LANGUAGE, 'JavaScript');
   this.setAnswerFor(jsQuestionNames.PACKAGE_BUNDLER, 'Rollup');
   const huskyVersionError = new Error();
   huskyVersionError.stdout = JSON.stringify({});
