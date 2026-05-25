@@ -2,27 +2,21 @@ import * as javascriptPlugin from '@form8ion/javascript';
 import * as shellScaffolder from '@travi/shell-scaffolder';
 import {scaffold as scaffoldTravisForShell} from '@travi/travis-scaffolder-shell';
 
-import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
+import {describe, expect, it, vi} from 'vitest';
 import any from '@travi/any';
 import {when} from 'vitest-when';
 
 import * as commonJavascriptOptions from './javascript-options.js';
 import {javascriptScaffolderFactory, shell} from './enhanced-scaffolders.js';
 
+vi.mock('@form8ion/javascript');
+vi.mock('@travi/shell-scaffolder');
+vi.mock('@travi/gitlab-scaffolder');
+vi.mock('./javascript-options.js');
+
 describe('scaffolder factories', () => {
   const options = any.simpleObject();
   const output = any.simpleObject();
-
-  beforeEach(() => {
-    vi.mock('@form8ion/javascript');
-    vi.mock('@travi/shell-scaffolder');
-    vi.mock('@travi/gitlab-scaffolder');
-    vi.mock('./javascript-options');
-  });
-
-  afterEach(() => {
-    vi.clearAllMocks();
-  });
 
   it('should pass the custom properties along with the provided options to the js scaffolder', async () => {
     const decisions = any.simpleObject();
