@@ -78,7 +78,7 @@ Then(/^the core JavaScript files are present$/, async function () {
   const eslintConfig = await loadConfig({name: 'eslint'});
 
   assert.isTrue(await fileExists(`${this.projectRoot}/package.json`));
-  assert.deepEqual(eslintConfig.extends, ['@travi', '@travi/mocha']);
+  assert.deepEqual(eslintConfig.extends, ['@travi', '@travi/mocha', '@travi/cucumber']);
   if ('Slidev' === this.getAnswerFor(jsQuestionNames.PROJECT_TYPE_CHOICE)) {
     assert.deepEqual(eslintConfig.overrides, [{files: 'test/smoke/**/*-spec.js', extends: '@travi/cypress'}]);
   } else {

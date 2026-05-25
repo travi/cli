@@ -20,7 +20,7 @@ import {packageManagers} from '@form8ion/javascript-core';
 import {describe, expect, it} from 'vitest';
 import any from '@travi/any';
 
-import {unitTestFrameworks} from './test-frameworks.js';
+import {integrationTestFrameworks, unitTestFrameworks} from './test-frameworks.js';
 import configs from './javascript-configs.js';
 import {defineScaffoldJavascriptOptions, plugins} from './javascript-options.js';
 
@@ -43,6 +43,7 @@ describe('common javascript config', () => {
   it('defines the javascript plugins', () => {
     expect(plugins()).toEqual({
       unitTestFrameworks,
+      integrationTestFrameworks,
       applicationTypes: {
         'MDX Deck': mdxDeckPlugin,
         Slidev: slidevPlugin,

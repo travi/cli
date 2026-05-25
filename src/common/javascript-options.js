@@ -17,12 +17,13 @@ import * as appEngineStandardPlugin from '@travi/node-app-engine-standard-scaffo
 import * as githubWorkflowsPlugin from '@form8ion/github-actions-node-ci';
 import * as circleCiPlugin from '@travi/circle-scaffolder-javascript';
 
-import {unitTestFrameworks} from './test-frameworks.js';
+import {unitTestFrameworks, integrationTestFrameworks} from './test-frameworks.js';
 import configs from './javascript-configs.js';
 
 export function plugins() {
   return {
     unitTestFrameworks,
+    integrationTestFrameworks,
     applicationTypes: {
       'MDX Deck': mdxDeckPlugin,
       Slidev: slidevPlugin,

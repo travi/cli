@@ -91,6 +91,7 @@ When(/^the project is scaffolded$/, async function () {
       },
       [javascriptQuestionNames.UNIT_TESTS]: true,
       [javascriptQuestionNames.INTEGRATION_TESTS]: true,
+      [javascriptQuestionNames.INTEGRATION_TEST_FRAMEWORK]: 'cucumber',
       [javascriptQuestionNames.CI_SERVICE]: 'Travis',
       [javascriptQuestionNames.CONFIGURE_LINTING]: true,
       [javascriptQuestionNames.PROJECT_TYPE_CHOICE]: this.getAnswerFor(javascriptQuestionNames.PROJECT_TYPE_CHOICE)
@@ -133,6 +134,7 @@ When('a package is added to the monorepo', async function () {
     ...'Private' === this.visibility && {[addPackageQuestionNames.UNLICENSED]: true},
     [addPackageQuestionNames.UNIT_TESTS]: true,
     [addPackageQuestionNames.INTEGRATION_TESTS]: true,
+    [addPackageQuestionNames.INTEGRATION_TEST_FRAMEWORK]: 'cucumber',
     [addPackageQuestionNames.CONFIGURE_LINTING]: true,
     [addPackageQuestionNames.SHOULD_BE_SCOPED]: this.shouldBeScoped,
     [addPackageQuestionNames.SCOPE]: this.scope,
