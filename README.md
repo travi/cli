@@ -93,7 +93,7 @@ $ npm test
 
 [coverage-link]: https://codecov.io/github/travi/cli
 
-[coverage-badge]: https://img.shields.io/codecov/c/github/travi/cli?logo=codecov
+[coverage-badge]: https://img.shields.io/codecov/c/github/travi/cli/master?logo=codecov
 
 [slsa-badge]: https://slsa.dev/images/gh-badge-level2.svg
 
