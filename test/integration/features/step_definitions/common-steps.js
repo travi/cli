@@ -145,3 +145,26 @@ When('a package is added to the monorepo', async function () {
     [addPackageQuestionNames.DIALECT]: this.dialect
   });
 });
+
+When('the project is lifted', async function () {
+  const {questionNames: liftQuestionNames} = await import('@form8ion/lift');
+
+  stubbedFs({
+    node_modules: stubbedNodeModules,
+    'README.md': `# project-name
+
+<!--status-badges start -->
+<!--status-badges end -->
+
+<!--consumer-badges start -->
+<!--consumer-badges end -->
+
+<!--contribution-badges start -->
+<!--contribution-badges end -->
+`
+  });
+
+  const {default: liftProject} = (await import('../../../../src/lift/action.js'));
+
+  await liftProject({decisions: {[liftQuestionNames.SCAFFOLDER]: 'Codecov'}});
+});

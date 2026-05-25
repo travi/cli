@@ -25,6 +25,14 @@ Given(/^the project should not be versioned in git$/, async function () {
   this.setAnswerFor(gitPromptQuestionNames.GIT_REPO, false);
 });
 
+Given('the repository is initialized', async function () {
+  td.when(this.git.simpleGit({baseDir: process.cwd()})).thenReturn(simpleGitInstance);
+  td.when(simpleGitInstance.checkIsRepo('root')).thenResolve(true);
+  td.when(simpleGitInstance.listRemote()).thenResolve(['origin']);
+  td.when(simpleGitInstance.remote(['get-url', 'origin']))
+    .thenResolve(`git@github.com:${this.repoOwner}/${this.repoName}.git\n`);
+});
+
 Then(/^the base git files should be present$/, async function () {
   const gitAttributes = await promises.readFile(`${process.cwd()}/.gitattributes`);
 

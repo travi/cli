@@ -1,4 +1,5 @@
 import {ungroupObject} from '@form8ion/core';
+import {logger} from '@form8ion/cli-core';
 import {reportResults} from '@form8ion/results-reporter';
 import * as lifter from '@form8ion/lift';
 import {scaffold as scaffoldRenovate} from '@form8ion/renovate-scaffolder';
@@ -31,6 +32,7 @@ describe('lift action', () => {
     const enhancedJavascriptPlugin = any.simpleObject();
     const projectPluginGroups = any.objectWithKeys(any.listOf(any.word), {factory: any.simpleObject});
     const ungroupedPlugins = any.simpleObject();
+    const decisions = any.simpleObject();
     when(ungroupObject).calledWith(projectPluginGroups).thenReturn(ungroupedPlugins);
     when(javascriptPluginFactory).calledWith({}).thenReturn(enhancedJavascriptPlugin);
     when(project).calledWith({}).thenReturn(projectPluginGroups);
@@ -45,10 +47,11 @@ describe('lift action', () => {
         'Replace Travis CI with GitHub Actions': replaceTravisCiWithGithubActions,
         'OSSF Scorecard': scaffoldOssfScorecard
       },
-      enhancers: {...ungroupedPlugins, JetBrains: jetbrainsPlugin}
-    }).thenResolve(liftingResults);
+      enhancers: {...ungroupedPlugins, JetBrains: jetbrainsPlugin},
+      decisions
+    }, {logger}).thenResolve(liftingResults);
 
-    expect(await liftAction()).toEqual(liftingResults);
+    expect(await liftAction({decisions})).toEqual(liftingResults);
 
     expect(reportResults).toHaveBeenCalledWith(liftingResults);
   });
