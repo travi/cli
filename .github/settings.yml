@@ -2,7 +2,7 @@ _extends: .github
 repository:
   name: cli
   description: cli for my various tools
-  homepage: https://npm.im/@travi/cli
+  homepage: https://www.npmjs.com/package/@travi/cli
   private: false
 branches:
   - name: master

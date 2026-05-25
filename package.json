@@ -10,7 +10,7 @@
   "author": "Matt Travi <npm@travi.org> (https://matt.travi.org/)",
   "repository": "travi/cli",
   "bugs": "https://github.com/travi/cli/issues",
-  "homepage": "https://npm.im/@travi/cli",
+  "homepage": "https://www.npmjs.com/package/@travi/cli",
   "bin": {
     "travi": "bin/travi.js"
   },
