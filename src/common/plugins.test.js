@@ -32,7 +32,7 @@ describe('plugins', () => {
     const githubPluginDependencies = {logger, prompt: githubPrompt, octokit: octokitInstance};
     const enhancedGithubScaffolder = any.simpleObject();
     const enhancedGithubLifter = any.simpleObject();
-    when(javascriptPluginFactory).calledWith(decisions).thenReturn(jsPlugin);
+    when(javascriptPluginFactory).calledWith(decisions, {logger}).thenReturn(jsPlugin);
     shellPluginFactory.mockReturnValue(shellPlugin);
     when(getGithubPrompt).calledWith(decisions).thenReturn(githubPrompt);
     when(octokit.getNetrcAuthenticatedInstance).calledWith().thenReturn(octokitInstance);

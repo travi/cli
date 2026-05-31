@@ -21,7 +21,7 @@ export function project(decisions) {
       Renovate: renovatePlugin
     },
     languages: {
-      JavaScript: javascriptPluginFactory(decisions),
+      JavaScript: javascriptPluginFactory(decisions, {logger}),
       Ruby: rubyPlugin,
       Shell: shellPluginFactory(),
       PHP: phpPlugin

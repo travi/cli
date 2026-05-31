@@ -1,4 +1,5 @@
 import * as addPackage from '@form8ion/add-package-to-monorepo';
+import {logger} from '@form8ion/cli-core';
 
 import {describe, expect, it, vi} from 'vitest';
 import any from '@travi/any';
@@ -16,7 +17,7 @@ describe('add-package action', () => {
     const options = any.simpleObject();
     const results = any.simpleObject();
     when(jsOptions.defineScaffoldJavascriptOptions).calledWith(decisions).thenReturn(options);
-    when(addPackage.scaffold).calledWith(options).thenResolve(results);
+    when(addPackage.scaffold).calledWith(options, {logger}).thenResolve(results);
 
     expect(await addPackageAction(decisions)).toEqual(results);
   });

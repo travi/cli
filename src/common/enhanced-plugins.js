@@ -2,13 +2,14 @@ import * as javascriptPlugin from '@form8ion/javascript';
 import * as shellPlugin from '@travi/shell-scaffolder';
 
 import {javascriptScaffolderFactory, shell} from './enhanced-scaffolders.js';
-import {javascript as enhancedLiftJavascript} from './enhanced-lifters.js';
+import {javascriptLifterFactory, javascriptTesterFactory} from './enhanced-lifters.js';
 
-export function javascriptPluginFactory(decisions) {
+export function javascriptPluginFactory(decisions, dependencies) {
   return {
     ...javascriptPlugin,
-    scaffold: javascriptScaffolderFactory(decisions),
-    lift: enhancedLiftJavascript
+    test: javascriptTesterFactory(dependencies),
+    scaffold: javascriptScaffolderFactory(decisions, dependencies),
+    lift: javascriptLifterFactory(dependencies)
   };
 }
 

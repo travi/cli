@@ -39,12 +39,12 @@ When('the high-level eslint-config scaffolder is executed', async function () {
     [projectQuestionNames.PROJECT_NAME]: this.projectName,
     [projectQuestionNames.DESCRIPTION]: this.projectDescription,
     [projectQuestionNames.VISIBILITY]: this.visibility,
-    ...'Public' === this.visibility && {
+    ...'OSS' === this.visibility && {
       [projectQuestionNames.LICENSE]: 'MIT',
       [projectQuestionNames.COPYRIGHT_HOLDER]: 'Matt Travi',
       [projectQuestionNames.COPYRIGHT_YEAR]: 2000
     },
-    ...'Private' === this.visibility && {[projectQuestionNames.UNLICENSED]: true},
+    ...['ISS', 'CS'].includes(this.visibility) && {[projectQuestionNames.UNLICENSED]: true},
     [projectQuestionNames.GIT_REPO]: repoShouldBeCreated,
     ...repoShouldBeCreated && {
       [projectQuestionNames.REPO_HOST]: 'GitHub',

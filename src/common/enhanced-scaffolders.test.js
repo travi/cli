@@ -21,12 +21,13 @@ describe('scaffolder factories', () => {
   it('should pass the custom properties along with the provided options to the js scaffolder', async () => {
     const decisions = any.simpleObject();
     const scaffoldJavascriptOptions = any.simpleObject();
+    const dependencies = any.simpleObject();
     when(commonJavascriptOptions.defineScaffoldJavascriptOptions)
       .calledWith(decisions, options)
       .thenReturn(scaffoldJavascriptOptions);
-    when(javascriptPlugin.scaffold).calledWith(scaffoldJavascriptOptions).thenResolve(output);
+    when(javascriptPlugin.scaffold).calledWith(scaffoldJavascriptOptions, dependencies).thenResolve(output);
 
-    expect(await javascriptScaffolderFactory(decisions)(options)).toBe(output);
+    expect(await javascriptScaffolderFactory(decisions, dependencies)(options)).toBe(output);
   });
 
   it('should pass the custom properties along with the provided options to the shell scaffolder', async () => {

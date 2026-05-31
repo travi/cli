@@ -1,5 +1,6 @@
 import {dirname, resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {visibilityOptions} from '@form8ion/core';
 import {promptConstants as githubPromptConstants} from '@form8ion/github';
 
 import {After, Before, setWorldConstructor, When} from '@cucumber/cucumber';
@@ -21,9 +22,9 @@ Before(async function () {
   this.projectRoot = process.cwd();
   this.githubUser = any.word();
   this.projectName = any.word();
-  this.visibility = any.fromList(['Public', 'Private']);
+  this.visibility = any.fromList(Object.keys(visibilityOptions));
   this.shouldBeScoped = any.boolean();
-  this.scope = this.shouldBeScoped || 'Private' === this.visibility ? any.word() : undefined;
+  this.scope = this.shouldBeScoped || ['ISS', 'CS'].includes(this.visibility) ? any.word() : undefined;
   this.projectDescription = any.sentence();
 
   ({execa: this.execa} = (await td.replaceEsm('execa')));
@@ -63,12 +64,12 @@ When(/^the project is scaffolded$/, async function () {
     [projectQuestionNames.DESCRIPTION]: this.projectDescription,
     [projectQuestionNames.VISIBILITY]: this.visibility,
     [projectQuestionNames.DEPENDENCY_UPDATER]: any.word(),
-    ...'Public' === this.visibility && {
+    ...'OSS' === this.visibility && {
       [projectQuestionNames.LICENSE]: 'MIT',
       [projectQuestionNames.COPYRIGHT_HOLDER]: 'Matt Travi',
       [projectQuestionNames.COPYRIGHT_YEAR]: 2000
     },
-    ...'Private' === this.visibility && {[projectQuestionNames.UNLICENSED]: true},
+    ...['ISS', 'CS'].includes(this.visibility) && {[projectQuestionNames.UNLICENSED]: true},
     [projectQuestionNames.GIT_REPO]: repoShouldBeCreated,
     ...repoShouldBeCreated && {
       [projectQuestionNames.REPO_HOST]: 'GitHub',
@@ -126,12 +127,12 @@ When('a package is added to the monorepo', async function () {
     [addPackageQuestionNames.VISIBILITY]: this.visibility,
     [addPackageQuestionNames.NODE_VERSION_CATEGORY]: 'LTS',
     [addPackageQuestionNames.PROVIDE_EXAMPLE]: true,
-    ...'Public' === this.visibility && {
+    ...'OSS' === this.visibility && {
       [addPackageQuestionNames.LICENSE]: 'MIT',
       [addPackageQuestionNames.COPYRIGHT_HOLDER]: any.word(),
       [addPackageQuestionNames.COPYRIGHT_YEAR]: 2000
     },
-    ...'Private' === this.visibility && {[addPackageQuestionNames.UNLICENSED]: true},
+    ...['ISS', 'CS'].includes(this.visibility) && {[addPackageQuestionNames.UNLICENSED]: true},
     [addPackageQuestionNames.UNIT_TESTS]: true,
     [addPackageQuestionNames.INTEGRATION_TESTS]: true,
     [addPackageQuestionNames.INTEGRATION_TEST_FRAMEWORK]: 'cucumber',
