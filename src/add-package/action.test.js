@@ -1,5 +1,6 @@
 import * as addPackage from '@form8ion/add-package-to-monorepo';
 import {logger} from '@form8ion/cli-core';
+import {reportResults} from '@form8ion/results-reporter';
 
 import {describe, expect, it, vi} from 'vitest';
 import any from '@travi/any';
@@ -9,6 +10,7 @@ import * as jsOptions from '../common/javascript-options.js';
 import addPackageAction from './action.js';
 
 vi.mock('@form8ion/add-package-to-monorepo');
+vi.mock('@form8ion/results-reporter');
 vi.mock('../common/javascript-options.js');
 
 describe('add-package action', () => {
@@ -20,5 +22,7 @@ describe('add-package action', () => {
     when(addPackage.scaffold).calledWith(options, {logger}).thenResolve(results);
 
     expect(await addPackageAction(decisions)).toEqual(results);
+
+    expect(reportResults).toHaveBeenCalledWith(results);
   });
 });
