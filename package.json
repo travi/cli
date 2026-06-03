@@ -59,7 +59,7 @@
   "dependencies": {
     "@form8ion/add-package-to-monorepo": "14.0.0-beta.4",
     "@form8ion/cli-core": "1.1.1",
-    "@form8ion/core": "5.0.0-beta.12",
+    "@form8ion/core": "5.0.0-beta.13",
     "@form8ion/cucumber-scaffolder": "5.9.0",
     "@form8ion/cypress-scaffolder": "4.0.0",
     "@form8ion/dependabot-scaffolder": "3.0.0",
