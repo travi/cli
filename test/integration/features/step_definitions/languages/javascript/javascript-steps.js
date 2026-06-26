@@ -90,7 +90,10 @@ Then(/^the core JavaScript files are present$/, async function () {
 Then('the project will have repository details defined', async function () {
   assert.deepEqual(
     JSON.parse(await fs.readFile(`${this.projectRoot}/package.json`)).repository,
-    `${this.githubUser}/${this.projectName}`
+    {
+      type: 'git',
+      url: `git+https://github.com/${this.githubUser}/${this.projectName}.git`
+    }
   );
 });
 

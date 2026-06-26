@@ -36,7 +36,7 @@ Then('the package will have repository details defined', async function () {
     {
       directory: `packages/${this.projectName}`,
       type: 'git',
-      url: `https://github.com/${this.githubUser}/${this.projectName}.git`
+      url: `git+https://github.com/${this.githubUser}/${this.projectName}.git`
     }
   );
   await assertReadmeDetailsArePopulatedProperly(this.projectName);
