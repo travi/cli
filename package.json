@@ -119,7 +119,7 @@
     "@vitest/coverage-v8": "4.1.9",
     "chai": "6.2.2",
     "clear-module": "4.1.3",
-    "commitlint-config-travi": "1.4.67",
+    "commitlint-config-travi": "1.4.68",
     "cz-conventional-changelog": "3.3.0",
     "deep-equal": "2.2.3",
     "execa": "9.6.1",
