@@ -23,7 +23,8 @@ When('the high-level eslint-config scaffolder is executed', async function () {
     ...projectPromptConstants.questionNames[projectPromptConstants.ids.BASE_DETAILS],
     ...projectPromptConstants.questionNames[projectPromptConstants.ids.GIT_REPOSITORY],
     ...projectPromptConstants.questionNames[projectPromptConstants.ids.REPOSITORY_HOST],
-    ...projectPromptConstants.questionNames[projectPromptConstants.ids.DEPENDENCY_UPDATER]
+    ...projectPromptConstants.questionNames[projectPromptConstants.ids.DEPENDENCY_UPDATER],
+    ...projectPromptConstants.questionNames[projectPromptConstants.ids.COVERAGE_SERVICE]
   };
   const repoShouldBeCreated = this.getAnswerFor(projectQuestionNames.GIT_REPO);
 
@@ -39,6 +40,7 @@ When('the high-level eslint-config scaffolder is executed', async function () {
     [projectQuestionNames.PROJECT_NAME]: this.projectName,
     [projectQuestionNames.DESCRIPTION]: this.projectDescription,
     [projectQuestionNames.VISIBILITY]: this.visibility,
+    [projectQuestionNames.COVERAGE_SERVICE]: 'Codecov',
     ...'OSS' === this.visibility && {
       [projectQuestionNames.LICENSE]: 'MIT',
       [projectQuestionNames.COPYRIGHT_HOLDER]: 'Matt Travi',

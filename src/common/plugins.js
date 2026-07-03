@@ -7,6 +7,7 @@ import * as rubyPlugin from '@form8ion/ruby-scaffolder';
 import * as phpPlugin from '@form8ion/php';
 import * as githubPlugin from '@form8ion/github';
 import * as gitlabPlugin from '@travi/gitlab-scaffolder';
+import * as codecovPlugin from '@form8ion/codecov';
 
 import {getGithubPrompt} from './prompts.js';
 import {javascriptPluginFactory, shellPluginFactory} from './enhanced-plugins.js';
@@ -33,6 +34,7 @@ export function project(decisions) {
         lift: composeDependenciesInto(githubPlugin.lift, githubPluginDependencies)
       },
       GitLab: gitlabPlugin
-    }
+    },
+    coverageServices: {Codecov: codecovPlugin}
   };
 }

@@ -45,7 +45,8 @@ When(/^the project is scaffolded$/, async function () {
     ...projectPromptConstants.questionNames[projectPromptConstants.ids.GIT_REPOSITORY],
     ...projectPromptConstants.questionNames[projectPromptConstants.ids.REPOSITORY_HOST],
     ...projectPromptConstants.questionNames[projectPromptConstants.ids.PROJECT_LANGUAGE],
-    ...projectPromptConstants.questionNames[projectPromptConstants.ids.DEPENDENCY_UPDATER]
+    ...projectPromptConstants.questionNames[projectPromptConstants.ids.DEPENDENCY_UPDATER],
+    ...projectPromptConstants.questionNames[projectPromptConstants.ids.COVERAGE_SERVICE]
   };
   const repoShouldBeCreated = this.getAnswerFor(projectQuestionNames.GIT_REPO);
   const projectLanguage = this.getAnswerFor(projectQuestionNames.PROJECT_LANGUAGE);
@@ -64,6 +65,7 @@ When(/^the project is scaffolded$/, async function () {
     [projectQuestionNames.DESCRIPTION]: this.projectDescription,
     [projectQuestionNames.VISIBILITY]: this.visibility,
     [projectQuestionNames.DEPENDENCY_UPDATER]: any.word(),
+    [projectQuestionNames.COVERAGE_SERVICE]: 'Codecov',
     ...'OSS' === this.visibility && {
       [projectQuestionNames.LICENSE]: 'MIT',
       [projectQuestionNames.COPYRIGHT_HOLDER]: 'Matt Travi',

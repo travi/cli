@@ -7,6 +7,7 @@ import * as rubyPlugin from '@form8ion/ruby-scaffolder';
 import * as phpPlugin from '@form8ion/php';
 import * as githubPlugin from '@form8ion/github';
 import * as gitlabPlugin from '@travi/gitlab-scaffolder';
+import * as codecovPlugin from '@form8ion/codecov';
 
 import any from '@travi/any';
 import {describe, expect, it, vi} from 'vitest';
@@ -57,7 +58,8 @@ describe('plugins', () => {
       vcsHosts: {
         GitHub: {...githubPlugin, scaffold: enhancedGithubScaffolder, lift: enhancedGithubLifter},
         GitLab: gitlabPlugin
-      }
+      },
+      coverageServices: {Codecov: codecovPlugin}
     });
   });
 });
