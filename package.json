@@ -123,7 +123,7 @@
     "commitlint-config-travi": "1.4.70",
     "cz-conventional-changelog": "3.3.0",
     "deep-equal": "2.2.3",
-    "execa": "9.6.1",
+    "execa": "10.0.0",
     "get-bin-path": "11.0.1",
     "globstar": "1.0.0",
     "gplint": "2.5.2",
