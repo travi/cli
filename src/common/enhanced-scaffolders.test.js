@@ -27,7 +27,7 @@ describe('scaffolder factories', () => {
       .thenReturn(scaffoldJavascriptOptions);
     when(javascriptPlugin.scaffold).calledWith(scaffoldJavascriptOptions, dependencies).thenResolve(output);
 
-    expect(await javascriptScaffolderFactory(decisions, dependencies)(options)).toBe(output);
+    expect(await javascriptScaffolderFactory(decisions)(options, dependencies)).toBe(output);
   });
 
   it('should pass the custom properties along with the provided options to the shell scaffolder', async () => {

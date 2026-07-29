@@ -22,7 +22,7 @@ export function project(decisions) {
       Renovate: renovatePlugin
     },
     languages: {
-      JavaScript: javascriptPluginFactory(decisions, {logger}),
+      JavaScript: javascriptPluginFactory(decisions),
       Ruby: rubyPlugin,
       Shell: shellPluginFactory(),
       PHP: phpPlugin

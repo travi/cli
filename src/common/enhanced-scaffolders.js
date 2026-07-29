@@ -4,8 +4,11 @@ import {scaffold as scaffoldTravisForShell} from '@travi/travis-scaffolder-shell
 
 import {defineScaffoldJavascriptOptions} from './javascript-options.js';
 
-export function javascriptScaffolderFactory(decisions, dependencies) {
-  return options => scaffoldJavaScript(defineScaffoldJavascriptOptions(decisions, options), dependencies);
+export function javascriptScaffolderFactory(decisions) {
+  return (options, dependencies) => scaffoldJavaScript(
+    defineScaffoldJavascriptOptions(decisions, options),
+    dependencies
+  );
 }
 
 export function shell(options) {
