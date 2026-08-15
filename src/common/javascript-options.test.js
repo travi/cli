@@ -14,9 +14,6 @@ import * as lernaPlugin from '@form8ion/lerna';
 import * as rollupPlugin from '@form8ion/rollup';
 import * as vitePlugin from '@form8ion/vite';
 import * as eslintConfigPlugin from '@form8ion/eslint-config-extender';
-import {questionNames as jsQuestionNames} from '@form8ion/javascript';
-import {packageManagers} from '@form8ion/javascript-core';
-
 import {describe, expect, it} from 'vitest';
 import any from '@travi/any';
 
@@ -27,16 +24,11 @@ import {defineScaffoldJavascriptOptions, plugins} from './javascript-options.js'
 describe('common javascript config', () => {
   it('should define scaffold-js options', () => {
     const options = any.simpleObject();
-    const decisions = any.simpleObject();
 
-    expect(defineScaffoldJavascriptOptions(decisions, options)).toEqual({
+    expect(defineScaffoldJavascriptOptions(options)).toEqual({
       ...options,
       configs,
-      plugins: plugins(),
-      decisions: {
-        ...decisions,
-        [jsQuestionNames.PACKAGE_MANAGER]: packageManagers.NPM
-      }
+      plugins: plugins()
     });
   });
 

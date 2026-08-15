@@ -1,5 +1,3 @@
-import {packageManagers} from '@form8ion/javascript-core';
-import {questionNames as jsQuestionNames} from '@form8ion/javascript';
 import * as mdxDeckPlugin from '@form8ion/mdx-deck';
 import * as slidevPlugin from '@form8ion/slidev';
 import * as spectaclePlugin from '@travi/spectacle-scaffolder';
@@ -53,14 +51,10 @@ export function plugins() {
   };
 }
 
-export function defineScaffoldJavascriptOptions(decisions, options) {
+export function defineScaffoldJavascriptOptions(options) {
   return {
     ...options,
     configs,
-    plugins: plugins(),
-    decisions: {
-      ...decisions,
-      [jsQuestionNames.PACKAGE_MANAGER]: packageManagers.NPM
-    }
+    plugins: plugins()
   };
 }

@@ -17,18 +17,24 @@ function semverStringFactory() {
   return `v${majorVersion}.${versionSegment()}.${versionSegment()}`;
 }
 
-let projectQuestionNames, jsQuestionNames, projectTypes;
+let projectQuestionNames, jsBaseDetailsQuestionNames, jsProjectTypePluginQuestionNames,
+  jsPackageBundlerQuestionNames, projectTypes;
 
 Before(async function () {
   const {promptConstants} = await import('@form8ion/project');
   projectQuestionNames = promptConstants.questionNames[promptConstants.ids.PROJECT_LANGUAGE];
-  ({questionNames: jsQuestionNames} = await import('@form8ion/javascript'));
+  const {promptConstants: jsPromptConstants} = await import('@form8ion/javascript');
+  ({
+    BASE_DETAILS: jsBaseDetailsQuestionNames,
+    PROJECT_TYPE_PLUGIN: jsProjectTypePluginQuestionNames,
+    PACKAGE_BUNDLER: jsPackageBundlerQuestionNames
+  } = jsPromptConstants.questionNames);
   ({projectTypes} = await import('@form8ion/javascript-core'));
 });
 
 Given(/^the project language should be JavaScript$/, async function () {
   this.setAnswerFor(projectQuestionNames.PROJECT_LANGUAGE, 'JavaScript');
-  this.setAnswerFor(jsQuestionNames.PACKAGE_BUNDLER, 'Rollup');
+  this.setAnswerFor(jsPackageBundlerQuestionNames.PACKAGE_BUNDLER, 'Rollup');
   const huskyVersionError = new Error();
   huskyVersionError.stdout = JSON.stringify({});
   huskyVersionError.command = 'npm ls husky --json';
@@ -50,8 +56,8 @@ Given('the project will use the {string} dialect', async function (dialect) {
 });
 
 Given('the project is a presentation', async function () {
-  this.setAnswerFor(jsQuestionNames.PROJECT_TYPE, projectTypes.APPLICATION);
-  this.setAnswerFor(jsQuestionNames.PROJECT_TYPE_CHOICE, 'Slidev');
+  this.setAnswerFor(jsBaseDetailsQuestionNames.PROJECT_TYPE, projectTypes.APPLICATION);
+  this.setAnswerFor(jsProjectTypePluginQuestionNames.PROJECT_TYPE_CHOICE, 'Slidev');
 });
 
 Given(/^nvm is properly configured$/, function () {
@@ -79,7 +85,7 @@ Then(/^the core JavaScript files are present$/, async function () {
 
   assert.isTrue(await fileExists(`${this.projectRoot}/package.json`));
   assert.deepEqual(eslintConfig.extends, ['@travi', '@travi/mocha', '@travi/cucumber']);
-  if ('Slidev' === this.getAnswerFor(jsQuestionNames.PROJECT_TYPE_CHOICE)) {
+  if ('Slidev' === this.getAnswerFor(jsProjectTypePluginQuestionNames.PROJECT_TYPE_CHOICE)) {
     assert.deepEqual(eslintConfig.overrides, [{files: 'test/smoke/**/*-spec.js', extends: '@travi/cypress'}]);
   } else {
     assert.isUndefined(eslintConfig.overrides);
