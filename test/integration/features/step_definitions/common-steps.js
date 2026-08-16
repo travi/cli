@@ -38,7 +38,7 @@ After(function () {
 
 When(/^the project is scaffolded$/, async function () {
   const {promptConstants: projectPromptConstants} = await import('@form8ion/project');
-  const {questionNames: javascriptQuestionNames} = await import('@form8ion/javascript');
+  const {promptConstants: javascriptPromptConstants} = await import('@form8ion/javascript');
   const {projectTypes} = await import('@form8ion/javascript-core');
   const projectQuestionNames = {
     ...projectPromptConstants.questionNames[projectPromptConstants.ids.BASE_DETAILS],
@@ -48,9 +48,16 @@ When(/^the project is scaffolded$/, async function () {
     ...projectPromptConstants.questionNames[projectPromptConstants.ids.DEPENDENCY_UPDATER],
     ...projectPromptConstants.questionNames[projectPromptConstants.ids.COVERAGE_SERVICE]
   };
+  const {
+    JAVASCRIPT_BASE_DETAILS: javascriptBaseDetailsQuestionNames,
+    PROJECT_TYPE_PLUGIN: javascriptProjectTypePluginQuestionNames,
+    PACKAGE_BUNDLER: javascriptPackageBundlerQuestionNames,
+    UNIT_TESTING: javascriptUnitTestingQuestionNames,
+    INTEGRATION_TESTING: javascriptIntegrationTestingQuestionNames
+  } = javascriptPromptConstants.questionNames;
   const repoShouldBeCreated = this.getAnswerFor(projectQuestionNames.GIT_REPO);
   const projectLanguage = this.getAnswerFor(projectQuestionNames.PROJECT_LANGUAGE);
-  const jsProjectType = this.getAnswerFor(javascriptQuestionNames.PROJECT_TYPE) || projectTypes.PACKAGE;
+  const jsProjectType = this.getAnswerFor(javascriptBaseDetailsQuestionNames.PROJECT_TYPE) || projectTypes.PACKAGE;
 
   const {default: scaffoldProject} = (await import('../../../../src/scaffolder/action.js'));
 
@@ -80,35 +87,44 @@ When(/^the project is scaffolded$/, async function () {
     },
     [projectQuestionNames.PROJECT_LANGUAGE]: projectLanguage,
     ...'JavaScript' === projectLanguage && {
-      [javascriptQuestionNames.NODE_VERSION_CATEGORY]: 'LTS',
-      [javascriptQuestionNames.AUTHOR_NAME]: any.word(),
-      [javascriptQuestionNames.AUTHOR_EMAIL]: any.email(),
-      [javascriptQuestionNames.AUTHOR_URL]: any.url(),
-      [javascriptQuestionNames.PROJECT_TYPE]: jsProjectType,
+      [javascriptBaseDetailsQuestionNames.NODE_VERSION_CATEGORY]: 'LTS',
+      [javascriptBaseDetailsQuestionNames.AUTHOR_NAME]: any.word(),
+      [javascriptBaseDetailsQuestionNames.AUTHOR_EMAIL]: any.email(),
+      [javascriptBaseDetailsQuestionNames.AUTHOR_URL]: any.url(),
+      [javascriptBaseDetailsQuestionNames.PROJECT_TYPE]: jsProjectType,
       ...projectTypes.APPLICATION === jsProjectType && {
-        [javascriptQuestionNames.HOST]: 'Other'
+        [javascriptBaseDetailsQuestionNames.HOST]: 'Other'
       },
       ...projectTypes.PACKAGE === jsProjectType && {
-        [javascriptQuestionNames.PACKAGE_BUNDLER]: this.getAnswerFor(javascriptQuestionNames.PACKAGE_BUNDLER),
-        [javascriptQuestionNames.PROVIDE_EXAMPLE]: true
+        [javascriptPackageBundlerQuestionNames.PACKAGE_BUNDLER]:
+          this.getAnswerFor(javascriptPackageBundlerQuestionNames.PACKAGE_BUNDLER),
+        [javascriptBaseDetailsQuestionNames.PROVIDE_EXAMPLE]: true
       },
-      [javascriptQuestionNames.UNIT_TESTS]: true,
-      [javascriptQuestionNames.INTEGRATION_TESTS]: true,
-      [javascriptQuestionNames.INTEGRATION_TEST_FRAMEWORK]: 'cucumber',
-      [javascriptQuestionNames.CI_SERVICE]: 'Travis',
-      [javascriptQuestionNames.CONFIGURE_LINTING]: true,
-      [javascriptQuestionNames.PROJECT_TYPE_CHOICE]: this.getAnswerFor(javascriptQuestionNames.PROJECT_TYPE_CHOICE)
-        || 'Other',
-      [javascriptQuestionNames.SHOULD_BE_SCOPED]: this.shouldBeScoped,
-      [javascriptQuestionNames.SCOPE]: this.scope,
-      [javascriptQuestionNames.UNIT_TEST_FRAMEWORK]: 'mocha',
-      [javascriptQuestionNames.DIALECT]: this.dialect
+      [javascriptBaseDetailsQuestionNames.UNIT_TESTS]: true,
+      [javascriptBaseDetailsQuestionNames.INTEGRATION_TESTS]: true,
+      [javascriptIntegrationTestingQuestionNames.INTEGRATION_TEST_FRAMEWORK]: 'cucumber',
+      [javascriptBaseDetailsQuestionNames.CONFIGURE_LINTING]: true,
+      [javascriptProjectTypePluginQuestionNames.PROJECT_TYPE_CHOICE]:
+        this.getAnswerFor(javascriptProjectTypePluginQuestionNames.PROJECT_TYPE_CHOICE) || 'Other',
+      [javascriptBaseDetailsQuestionNames.SHOULD_BE_SCOPED]: this.shouldBeScoped,
+      [javascriptBaseDetailsQuestionNames.SCOPE]: this.scope,
+      [javascriptUnitTestingQuestionNames.UNIT_TEST_FRAMEWORK]: 'mocha',
+      [javascriptBaseDetailsQuestionNames.DIALECT]: this.dialect
     }
   })();
 });
 
 When('a package is added to the monorepo', async function () {
-  const {questionNames: addPackageQuestionNames} = await import('@form8ion/add-package-to-monorepo');
+  const {promptConstants: addPackagePromptConstants} = await import('@form8ion/add-package-to-monorepo');
+  const {promptConstants: javascriptPromptConstants} = await import('@form8ion/javascript');
+  const {PACKAGE_DETAILS: addPackageQuestionNames} = addPackagePromptConstants.questionNames;
+  const {
+    JAVASCRIPT_BASE_DETAILS: javascriptBaseDetailsQuestionNames,
+    PROJECT_TYPE_PLUGIN: javascriptProjectTypePluginQuestionNames,
+    PACKAGE_BUNDLER: javascriptPackageBundlerQuestionNames,
+    UNIT_TESTING: javascriptUnitTestingQuestionNames,
+    INTEGRATION_TESTING: javascriptIntegrationTestingQuestionNames
+  } = javascriptPromptConstants.questionNames;
 
   const {default: addPackageToMonorepo} = await import('../../../../src/add-package/action.js');
 
@@ -127,27 +143,26 @@ When('a package is added to the monorepo', async function () {
     [addPackageQuestionNames.PROJECT_NAME]: this.projectName,
     [addPackageQuestionNames.DESCRIPTION]: this.projectDescription,
     [addPackageQuestionNames.VISIBILITY]: this.visibility,
-    [addPackageQuestionNames.NODE_VERSION_CATEGORY]: 'LTS',
-    [addPackageQuestionNames.PROVIDE_EXAMPLE]: true,
+    [javascriptBaseDetailsQuestionNames.PROVIDE_EXAMPLE]: true,
     ...'OSS' === this.visibility && {
       [addPackageQuestionNames.LICENSE]: 'MIT',
       [addPackageQuestionNames.COPYRIGHT_HOLDER]: any.word(),
       [addPackageQuestionNames.COPYRIGHT_YEAR]: 2000
     },
     ...['ISS', 'CS'].includes(this.visibility) && {[addPackageQuestionNames.UNLICENSED]: true},
-    [addPackageQuestionNames.UNIT_TESTS]: true,
-    [addPackageQuestionNames.INTEGRATION_TESTS]: true,
-    [addPackageQuestionNames.INTEGRATION_TEST_FRAMEWORK]: 'cucumber',
-    [addPackageQuestionNames.CONFIGURE_LINTING]: true,
-    [addPackageQuestionNames.SHOULD_BE_SCOPED]: this.shouldBeScoped,
-    [addPackageQuestionNames.SCOPE]: this.scope,
-    [addPackageQuestionNames.AUTHOR_NAME]: any.word(),
-    [addPackageQuestionNames.AUTHOR_EMAIL]: any.email(),
-    [addPackageQuestionNames.AUTHOR_URL]: any.url(),
-    [addPackageQuestionNames.PROJECT_TYPE_CHOICE]: 'Other',
-    [addPackageQuestionNames.UNIT_TEST_FRAMEWORK]: 'mocha',
-    [addPackageQuestionNames.PACKAGE_BUNDLER]: 'Rollup',
-    [addPackageQuestionNames.DIALECT]: this.dialect
+    [javascriptBaseDetailsQuestionNames.UNIT_TESTS]: true,
+    [javascriptBaseDetailsQuestionNames.INTEGRATION_TESTS]: true,
+    [javascriptIntegrationTestingQuestionNames.INTEGRATION_TEST_FRAMEWORK]: 'cucumber',
+    [javascriptBaseDetailsQuestionNames.CONFIGURE_LINTING]: true,
+    [javascriptBaseDetailsQuestionNames.SHOULD_BE_SCOPED]: this.shouldBeScoped,
+    [javascriptBaseDetailsQuestionNames.SCOPE]: this.scope,
+    [javascriptBaseDetailsQuestionNames.AUTHOR_NAME]: any.word(),
+    [javascriptBaseDetailsQuestionNames.AUTHOR_EMAIL]: any.email(),
+    [javascriptBaseDetailsQuestionNames.AUTHOR_URL]: any.url(),
+    [javascriptProjectTypePluginQuestionNames.PROJECT_TYPE_CHOICE]: 'Other',
+    [javascriptUnitTestingQuestionNames.UNIT_TEST_FRAMEWORK]: 'mocha',
+    [javascriptPackageBundlerQuestionNames.PACKAGE_BUNDLER]: 'Rollup',
+    [javascriptBaseDetailsQuestionNames.DIALECT]: this.dialect
   });
 });
 

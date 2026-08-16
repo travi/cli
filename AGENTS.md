@@ -230,6 +230,27 @@ npm test
 `npm test` is the full verification entry point for this repository — it
 runs all `lint:*` and `test:*` scripts in parallel via `npm-run-all2`.
 
+### Never Bypass Verification
+
+The pre-commit hook (husky, running `npm test`) exists to guarantee every
+commit on this repo is verified. Never pass `--no-verify`, never comment out
+or weaken a check to get a commit through, and never open a PR whose branch
+doesn't pass its own verification locally — regardless of how confident the
+change looks or how it was tested by other means (packed tarballs, a manual
+command run, reasoning about the code). If verification is failing:
+
+* fix the actual cause, or
+* if the blocker is external and out of this repo's control (an unpublished
+  upstream fix, for example), leave the change **uncommitted** in the working
+  tree rather than committing around the hook — commit and open the PR once
+  the blocker is resolved and verification genuinely passes.
+
+Confirm the pre-commit hook actually ran (don't assume it's installed; a
+targeted `npm install <pkg>` doesn't always trigger the `prepare` script that
+sets it up — check `git config core.hooksPath` or just watch for its output
+during commit). A commit that skipped the hook silently is exactly as
+unverified as one that used `--no-verify` explicitly.
+
 ---
 
 ## Change Guidance

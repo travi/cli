@@ -9,7 +9,7 @@ import * as githubPlugin from '@form8ion/github';
 import * as gitlabPlugin from '@travi/gitlab-scaffolder';
 import * as codecovPlugin from '@form8ion/codecov';
 
-import {getGithubPrompt} from './prompts.js';
+import {getGithubPrompt, getJavascriptPrompt} from './prompts.js';
 import {javascriptPluginFactory, shellPluginFactory} from './enhanced-plugins.js';
 
 export function project(decisions) {
@@ -22,7 +22,7 @@ export function project(decisions) {
       Renovate: renovatePlugin
     },
     languages: {
-      JavaScript: javascriptPluginFactory(decisions),
+      JavaScript: javascriptPluginFactory({logger, prompt: getJavascriptPrompt(decisions)}),
       Ruby: rubyPlugin,
       Shell: shellPluginFactory(),
       PHP: phpPlugin
