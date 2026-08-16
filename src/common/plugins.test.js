@@ -13,7 +13,7 @@ import any from '@travi/any';
 import {describe, expect, it, vi} from 'vitest';
 import {when} from 'vitest-when';
 
-import {getGithubPrompt} from './prompts.js';
+import {getGithubPrompt, getJavascriptPrompt} from './prompts.js';
 import {javascriptPluginFactory, shellPluginFactory} from './enhanced-plugins.js';
 import {project} from './plugins.js';
 
@@ -30,10 +30,12 @@ describe('plugins', () => {
     const shellPlugin = any.simpleObject();
     const octokitInstance = any.simpleObject();
     const githubPrompt = () => undefined;
+    const javascriptPrompt = () => undefined;
     const githubPluginDependencies = {logger, prompt: githubPrompt, octokit: octokitInstance};
     const enhancedGithubScaffolder = any.simpleObject();
     const enhancedGithubLifter = any.simpleObject();
-    when(javascriptPluginFactory).calledWith(decisions).thenReturn(jsPlugin);
+    when(getJavascriptPrompt).calledWith(decisions).thenReturn(javascriptPrompt);
+    when(javascriptPluginFactory).calledWith({logger, prompt: javascriptPrompt}).thenReturn(jsPlugin);
     shellPluginFactory.mockReturnValue(shellPlugin);
     when(getGithubPrompt).calledWith(decisions).thenReturn(githubPrompt);
     when(octokit.getNetrcAuthenticatedInstance).calledWith().thenReturn(octokitInstance);

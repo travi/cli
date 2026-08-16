@@ -3,10 +3,10 @@ import * as shellPlugin from '@travi/shell-scaffolder';
 
 import {javascriptScaffolderFactory, shell} from './enhanced-scaffolders.js';
 
-export function javascriptPluginFactory(decisions) {
+export function javascriptPluginFactory(dependencies) {
   return {
     ...javascriptPlugin,
-    scaffold: javascriptScaffolderFactory(decisions)
+    scaffold: javascriptScaffolderFactory(dependencies)
   };
 }
 

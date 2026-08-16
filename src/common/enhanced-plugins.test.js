@@ -13,12 +13,11 @@ vi.mock('./enhanced-lifters.js');
 
 describe('enhanced plugins', () => {
   it('should pass the custom properties along with the provided options to the js plugin', async () => {
-    const decisions = any.simpleObject();
     const enhancedScaffolder = () => undefined;
     const dependencies = any.simpleObject();
-    when(javascriptScaffolderFactory).calledWith(decisions).thenReturn(enhancedScaffolder);
+    when(javascriptScaffolderFactory).calledWith(dependencies).thenReturn(enhancedScaffolder);
 
-    expect(await javascriptPluginFactory(decisions, dependencies))
+    expect(await javascriptPluginFactory(dependencies))
       // eslint-disable-next-line prefer-object-spread
       .toEqual(Object.assign(
         {},

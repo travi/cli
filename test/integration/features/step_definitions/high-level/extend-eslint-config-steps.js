@@ -18,7 +18,8 @@ Given('the eslint config to be extended exists from the form8ion scope', async f
 
 When('the high-level eslint-config scaffolder is executed', async function () {
   const {promptConstants: projectPromptConstants} = await import('@form8ion/project');
-  const {questionNames: javascriptQuestionNames} = await import('@form8ion/javascript');
+  const {promptConstants: javascriptPromptConstants} = await import('@form8ion/javascript');
+  const javascriptQuestionNames = javascriptPromptConstants.questionNames.JAVASCRIPT_BASE_DETAILS;
   const projectQuestionNames = {
     ...projectPromptConstants.questionNames[projectPromptConstants.ids.BASE_DETAILS],
     ...projectPromptConstants.questionNames[projectPromptConstants.ids.GIT_REPOSITORY],
@@ -59,7 +60,6 @@ When('the high-level eslint-config scaffolder is executed', async function () {
     [javascriptQuestionNames.AUTHOR_EMAIL]: any.email(),
     [javascriptQuestionNames.AUTHOR_URL]: any.url(),
     [javascriptQuestionNames.PROVIDE_EXAMPLE]: true,
-    [javascriptQuestionNames.CI_SERVICE]: 'Travis',
     [javascriptQuestionNames.SCOPE]: this.scope
   });
 });
