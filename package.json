@@ -104,7 +104,7 @@
     "@travi/shell-scaffolder": "2.0.4",
     "@travi/spectacle-scaffolder": "6.0.2",
     "@travi/travis-scaffolder-shell": "1.0.0-alpha.4",
-    "commander": "15.0.0",
+    "commander": "15.1.0",
     "inquander": "1.1.1",
     "snyk": "^1.355.0",
     "update-notifier": "7.3.1"
